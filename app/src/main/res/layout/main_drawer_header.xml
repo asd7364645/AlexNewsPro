@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:src="@mipmap/main_drawer_header_bg"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.newspro.alexnewspro.customviews.CircleImageView
+        android:id="@+id/md_header_img"
+        android:layout_width="@dimen/main_img_size"
+        android:layout_height="@dimen/main_img_size"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/header_my_img"
+        app:civ_border_color="@android:color/black"
+        app:civ_border_width="2dp" />
+
+    <TextView
+        android:id="@+id/md_header_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/md_header_img"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="Alex"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
+</RelativeLayout>
