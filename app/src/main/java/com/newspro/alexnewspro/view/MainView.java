@@ -1,5 +1,6 @@
 package com.newspro.alexnewspro.view;
 
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -11,6 +12,7 @@ import com.example.alex.mvplibrary.presenter.MvpPresenter;
 import com.example.alex.mvplibrary.view.MvpBaseView;
 import com.newspro.alexnewspro.Presenter.FgNews;
 import com.newspro.alexnewspro.R;
+import com.newspro.alexnewspro.constant.Constant;
 
 /**
  * Created by Alex on 2016/12/23.
@@ -33,6 +35,9 @@ public class MainView extends MvpBaseView {
             case 0:
                 if (fgNews == null){
                     fgNews = new FgNews();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(Constant.NEWS_TYPE_STR,Constant.NEWS_TYPE_TOP);
+                    fgNews.setArguments(bundle);
                     fragmentTransaction.add(R.id.main_center_replace,fgNews);
                 }else {
                     fragmentTransaction.show(fgNews);
