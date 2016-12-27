@@ -3,8 +3,6 @@
     <!--Theme style-->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:windowBackground">@android:color/white</item>
-        <item name="android:textColor">@android:color/black</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -12,6 +10,8 @@
 
     <style name="TransparentStatusTheme" parent="AppTheme"></style>
 
+
+    <style name="NavigationSelectorStyle" parent="Theme.AppCompat.Light"/>
 
     <!--内容style-->
 

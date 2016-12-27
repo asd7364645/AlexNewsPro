@@ -1,6 +1,6 @@
 package com.newspro.alexnewspro.view;
 
-import android.os.Bundle;
+import android.content.res.Resources;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -10,9 +10,8 @@ import android.support.v7.widget.Toolbar;
 
 import com.example.alex.mvplibrary.presenter.MvpPresenter;
 import com.example.alex.mvplibrary.view.MvpBaseView;
-import com.newspro.alexnewspro.Presenter.FgNews;
+import com.newspro.alexnewspro.Presenter.FgNewsType;
 import com.newspro.alexnewspro.R;
-import com.newspro.alexnewspro.constant.Constant;
 
 /**
  * Created by Alex on 2016/12/23.
@@ -26,21 +25,22 @@ public class MainView extends MvpBaseView {
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private DrawerLayout main_drawer_layout;
     private NavigationView main_navigation_view;
-    private FgNews fgNews;
+    private FgNewsType fgNewsType;
 
+    /**
+     * 设置选中后显示fragment
+     * @param tab
+     */
     public void selectFg(int tab){
         FragmentTransaction fragmentTransaction = getContext().getSupportFragmentManager().beginTransaction();
         hideAllFg(fragmentTransaction);
         switch (tab){
             case 0:
-                if (fgNews == null){
-                    fgNews = new FgNews();
-                    Bundle bundle = new Bundle();
-                    bundle.putString(Constant.NEWS_TYPE_STR,Constant.NEWS_TYPE_TOP);
-                    fgNews.setArguments(bundle);
-                    fragmentTransaction.add(R.id.main_center_replace,fgNews);
+                if (fgNewsType == null){
+                    fgNewsType = new FgNewsType();
+                    fragmentTransaction.add(R.id.main_center_replace, fgNewsType);
                 }else {
-                    fragmentTransaction.show(fgNews);
+                    fragmentTransaction.show(fgNewsType);
                 }
                 break;
         }
@@ -49,9 +49,13 @@ public class MainView extends MvpBaseView {
 
     }
 
+    /**
+     * 隐藏所有fragment
+     * @param fragmentTransaction
+     */
     private void hideAllFg(FragmentTransaction fragmentTransaction) {
-        if (fgNews != null)
-            fragmentTransaction.hide(fgNews);
+        if (fgNewsType != null)
+            fragmentTransaction.hide(fgNewsType);
     }
 
     @Override
@@ -71,7 +75,6 @@ public class MainView extends MvpBaseView {
         super.settingActionBar(actionBar);
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            System.out.println(" actionbar!=null");
         }
         actionBarDrawerToggle = new ActionBarDrawerToggle(this.getContext(),main_drawer_layout,base_toolbar,R.string.open,R.string.close);
         main_drawer_layout.addDrawerListener(actionBarDrawerToggle);
@@ -94,6 +97,14 @@ public class MainView extends MvpBaseView {
     protected void setView() {
         super.setView();
         main_navigation_view.setItemIconTintList(null);
+        //设置默认选中颜色
+        Resources resources = getContext().getResources();
+        main_navigation_view.setItemTextColor(resources.getColorStateList(R.color.main_navigation_menu_selector));
+        selectFg(0);
+    }
+
+    public void closeDrawer(){
+        main_drawer_layout.closeDrawers();
     }
 
     @Override

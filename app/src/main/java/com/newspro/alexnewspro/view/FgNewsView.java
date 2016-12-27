@@ -4,10 +4,11 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.example.alex.mvplibrary.presenter.MvpPresenter;
 import com.example.alex.mvplibrary.view.MvpBaseFragView;
 import com.newspro.alexnewspro.R;
-import com.newspro.alexnewspro.adapter.NewsAdapter;
-import com.newspro.alexnewspro.model.bean.NewsBean;
+import com.newspro.alexnewspro.adapter.listview.NewsAdapter;
+import com.newspro.alexnewspro.model.bean.NewsBean.ShowapiResBodyBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class FgNewsView extends MvpBaseFragView {
     private RecyclerView fg_news_recycler;
 
     private NewsAdapter newsAdapter;
-    private List<NewsBean.ResultBean.DataBean> dataBeenList;
+    private List<ShowapiResBodyBean.PagebeanBean.ContentlistBean> dataBeenList;
 
     @Override
     public int setLayoutId() {
@@ -36,6 +37,12 @@ public class FgNewsView extends MvpBaseFragView {
     }
 
     @Override
+    public void bindEvent(MvpPresenter presenter) {
+        super.bindEvent(presenter);
+        fg_news_refresh.setOnRefreshListener((SwipeRefreshLayout.OnRefreshListener) presenter);
+    }
+
+    @Override
     protected void setData() {
         super.setData();
         dataBeenList = new ArrayList<>();
@@ -44,12 +51,27 @@ public class FgNewsView extends MvpBaseFragView {
         fg_news_recycler.setAdapter(newsAdapter);
     }
 
-    public void refresh(List<NewsBean.ResultBean.DataBean> dataBeens){
+    @Override
+    public void ondestroy() {
+        super.ondestroy();
+        System.out.println("œ˙ªŸ¡À£°£°£°");
+    }
+
+    public void refreshOver(List<ShowapiResBodyBean.PagebeanBean.ContentlistBean> dataBeens) {
         dataBeenList.clear();
         dataBeenList.addAll(dataBeens);
         newsAdapter.notifyDataSetChanged();
+        setRefresh(false);
     }
 
+    public void setRefresh(final boolean refresh){
+        fg_news_refresh.post(new Runnable() {
+            @Override
+            public void run() {
+                fg_news_refresh.setRefreshing(refresh);
+            }
+        });
+    }
 
 
 }

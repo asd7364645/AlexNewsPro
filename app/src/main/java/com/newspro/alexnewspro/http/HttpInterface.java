@@ -1,5 +1,6 @@
 package com.newspro.alexnewspro.http;
 
+import com.newspro.alexnewspro.constant.Constant;
 import com.newspro.alexnewspro.model.bean.NewsBean;
 
 import retrofit2.Call;
@@ -13,7 +14,13 @@ import retrofit2.http.Query;
 
 public interface HttpInterface {
     interface NewsInterface{
-        @GET("index?key=5ae42453047b457b665593a901bbebba")
-        Call<NewsBean> getNews(@Query("type") String type);
+        /**
+         * 获取新闻列表
+         * @param channelId 新闻类型
+         * @param page      当前页数
+         * @return
+         */
+        @GET(Constant.NEWS_DEF_PARAM)
+        Call<NewsBean> getNews(@Query("channelId") String channelId,@Query("page") int page);
     }
 }

@@ -1,4 +1,4 @@
-package com.newspro.alexnewspro.adapter;
+package com.newspro.alexnewspro.adapter.listview;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.newspro.alexnewspro.R;
-import com.newspro.alexnewspro.model.bean.NewsBean;
+import com.newspro.alexnewspro.model.bean.NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean;
 import com.newspro.alexnewspro.utils.GlideUtil;
 
 import java.util.List;
@@ -22,11 +22,11 @@ import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter {
 
-    private List<NewsBean.ResultBean.DataBean> resultBeenList;
+    private List<ContentlistBean> resultBeenList;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public NewsAdapter(Context context, List<NewsBean.ResultBean.DataBean> resultBeenList) {
+    public NewsAdapter(Context context, List<ContentlistBean> resultBeenList) {
         this.context = context;
         this.resultBeenList = resultBeenList;
         layoutInflater = LayoutInflater.from(context);
@@ -43,17 +43,21 @@ public class NewsAdapter extends RecyclerView.Adapter {
 
         if (holder instanceof NewsViewHolder) {
             NewsViewHolder newsViewHolder = (NewsViewHolder) holder;
-            NewsBean.ResultBean.DataBean dataBean = resultBeenList.get(position);
+            ContentlistBean contentlistBean = resultBeenList.get(position);
             newsViewHolder.item_cardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                 }
             });
-            GlideUtil.loadImg(context, dataBean.getThumbnail_pic_s(), newsViewHolder.news_item_img);
-            newsViewHolder.news_item_title.setText(dataBean.getTitle());
-            newsViewHolder.news_item_author.setText(dataBean.getAuthor_name());
-            newsViewHolder.news_item_date.setText(dataBean.getDate());
+            if (!contentlistBean.getImageurls().isEmpty()){
+                newsViewHolder.news_item_img.setVisibility(View.VISIBLE);
+                GlideUtil.loadImg(context, contentlistBean.getImageurls().get(0).getUrl(), newsViewHolder.news_item_img);
+            }
+            else newsViewHolder.news_item_img.setVisibility(View.GONE);
+            newsViewHolder.news_item_title.setText(contentlistBean.getTitle());
+            newsViewHolder.news_item_author.setText(contentlistBean.getChannelName());
+            newsViewHolder.news_item_date.setText(contentlistBean.getPubDate());
         }
 
     }

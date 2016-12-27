@@ -15,19 +15,24 @@ import retrofit2.Response;
  * Alex
  */
 
-public class NewsModel extends MvpModel{
+public class NewsModel extends MvpModel {
 
     /**
      * 根据type来获取新闻列表
+     *
      * @param type
      * @param callback
      */
-    public void getNewsOfType(String type , final MvpCallback callback){
-        Call<NewsBean> newsBeanCall = RetrofitUtil.RetrofitUtil(Constant.NEWS_URL).create(HttpInterface.NewsInterface.class).getNews(type);
+    public void getNewsOfType(String type, int page, final MvpCallback callback) {
+        Call<NewsBean> newsBeanCall = RetrofitUtil.RetrofitUtil(Constant.NEWS_URL).create(HttpInterface.NewsInterface.class).getNews(type, page);
         newsBeanCall.enqueue(new Callback<NewsBean>() {
             @Override
             public void onResponse(Call<NewsBean> call, Response<NewsBean> response) {
-                callback.result(response.body().getResult().getData());
+                if (response != null&&response.body().getShowapi_res_code() == 0) {
+                    callback.result(response.body().getShowapi_res_body().getPagebean().getContentlist());
+                }else {
+                    callback.result(response.body().getShowapi_res_error());
+                }
             }
 
             @Override

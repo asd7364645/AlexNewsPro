@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group >
-
+    <group android:id="@+id/menu_navigation_one_group">
         <item
-            android:title="新闻"
+            android:id="@+id/menu_navigation_news"
+            android:checkable="true"
+            android:checked="true"
             android:icon="@drawable/ic_news_logo"
-            android:id="@+id/menu_navigation_news" />
-        <item android:title="美图"
+            android:title="@string/news_str"/>
+        <item
+            android:id="@+id/menu_navigation_imgs"
+            android:checkable="true"
             android:icon="@drawable/ic_image_icon"
-            android:id="@+id/menu_navigation_imgs" />
+            android:title="@string/meitu_str"/>
     </group>
 </menu>

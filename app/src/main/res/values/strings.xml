@@ -2,4 +2,6 @@
     <string name="app_name">AlexNewsPro</string>
     <string name="open">OPEN</string>
     <string name="close">CLOSE</string>
+    <string name="news_str">新闻</string>
+    <string name="meitu_str">美图</string>
 </resources>
