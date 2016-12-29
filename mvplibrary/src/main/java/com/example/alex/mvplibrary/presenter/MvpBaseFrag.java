@@ -66,6 +66,7 @@ public abstract class MvpBaseFrag<V extends MvpBaseFragView> extends Fragment im
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
+        System.out.println("MvpBaseFrag->onViewStateRestored");
         if (mvpView == null) {
             //初始化mvpView
             try {

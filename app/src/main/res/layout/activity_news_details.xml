@@ -33,11 +33,9 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 
-    <TextView
-        android:text="content"
-        android:id="@+id/news_details_content"
-        style="@style/SmallTextStyle"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/news_details_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

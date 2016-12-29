@@ -103,7 +103,7 @@ public class Constant {
      * 新闻默认参数
      */
     public static final String NEWS_DEF_PARAM = "109-35?showapi_appid="+NEWS_APPID+"&showapi_sign=" +
-            NEWS_APPKEY+"&needContent=1";
+            NEWS_APPKEY+"";
     /**
      * 国内焦点
      */

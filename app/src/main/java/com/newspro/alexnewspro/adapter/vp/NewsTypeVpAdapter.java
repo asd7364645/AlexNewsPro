@@ -19,6 +19,7 @@ import java.util.Set;
  */
 
 public class NewsTypeVpAdapter extends FragmentStatePagerAdapter {
+
     private List<String> titles;
     private List<String> types;
     public NewsTypeVpAdapter(FragmentManager fm) {

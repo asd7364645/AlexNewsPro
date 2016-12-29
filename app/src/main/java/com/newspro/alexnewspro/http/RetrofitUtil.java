@@ -1,13 +1,14 @@
 package com.newspro.alexnewspro.http;
 
+import com.newspro.alexnewspro.http.converter.JsonConverterFactory;
+
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitUtil {
 
     public static Retrofit RetrofitUtil(String baseUrl) {
        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(JsonConverterFactory.create())
                 .baseUrl(baseUrl)
                 .build();
         return retrofit;

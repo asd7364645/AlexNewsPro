@@ -56,7 +56,7 @@ public class NewsAdapter extends RecyclerView.Adapter {
             });
             if (!contentlistBean.getImageurls().isEmpty()){
                 newsViewHolder.news_item_img.setVisibility(View.VISIBLE);
-                GlideUtil.loadImg(context, contentlistBean.getImageurls().get(0).getUrl(), newsViewHolder.news_item_img);
+                GlideUtil.loadImg(context, contentlistBean.getImageurls().get(0), newsViewHolder.news_item_img);
             }
             else newsViewHolder.news_item_img.setVisibility(View.GONE);
             newsViewHolder.news_item_title.setText(contentlistBean.getTitle());

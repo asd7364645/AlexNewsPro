@@ -1,7 +1,8 @@
 package com.newspro.alexnewspro.http;
 
 import com.newspro.alexnewspro.constant.Constant;
-import com.newspro.alexnewspro.model.bean.NewsBean;
+
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -21,6 +22,6 @@ public interface HttpInterface {
          * @return
          */
         @GET(Constant.NEWS_DEF_PARAM)
-        Call<NewsBean> getNews(@Query("channelId") String channelId,@Query("page") int page);
+        Call<JSONObject> getNews(@Query("channelId") String channelId, @Query("page") int page);
     }
 }

@@ -3,6 +3,7 @@ package com.newspro.alexnewspro.view;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -29,12 +30,14 @@ public class MainView extends MvpBaseView<MainActivity> {
     private NavigationView main_navigation_view;
     private FgNewsType fgNewsType;
 
+    private FragmentManager fragmentManager;
+
     /**
      * 设置选中后显示fragment
      * @param tab
      */
     public void selectFg(int tab){
-        FragmentTransaction fragmentTransaction = getContext().getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         hideAllFg(fragmentTransaction);
         switch (tab){
             case 0:
@@ -84,9 +87,18 @@ public class MainView extends MvpBaseView<MainActivity> {
     }
 
     @Override
+    public void saveInstanceState(Bundle outState) {
+        super.saveInstanceState(outState);
+        fragmentManager.putFragment(outState,"fgNewsType",fgNewsType);
+    }
+
+    @Override
     protected void setData(Bundle savedInstanceState) {
         super.setData(savedInstanceState);
-
+        fragmentManager = presenter.getSupportFragmentManager();
+        if (savedInstanceState!=null){
+            fgNewsType = (FgNewsType) fragmentManager.getFragment(savedInstanceState,"fgNewsType");
+        }
     }
 
     @Override
