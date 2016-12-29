@@ -1,5 +1,6 @@
 package com.example.alex.mvplibrary.view;
 
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -13,7 +14,7 @@ import com.example.alex.mvplibrary.presenter.MvpPresenter;
  * Alex
  */
 
-public interface MvpView {
+public interface MvpView<P extends MvpPresenter> {
 
     /**
      * 由于View中需要Presenter来通知model处理事件，
@@ -21,7 +22,7 @@ public interface MvpView {
      *
      * @param presenter
      */
-    void bindPresenter(MvpPresenter presenter);
+    void bindPresenter(P presenter);
 
     /**
      * View层中需要做UI处理，所以要设置布局
@@ -35,9 +36,10 @@ public interface MvpView {
      *
      * @param layoutInflater
      * @param viewGroup
+     * @param savedInstanceState
      * @return
      */
-    View createView(LayoutInflater layoutInflater, ViewGroup viewGroup);
+    View createView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle savedInstanceState);
 
     /**
      * 查找控件
@@ -79,6 +81,12 @@ public interface MvpView {
      * 用于测量View大小并做处理
      */
     void initViewSize();
+
+    /**
+     * 在这里保存状态
+     * @param outState
+     */
+    void saveInstanceState(Bundle outState);
 
 
 }

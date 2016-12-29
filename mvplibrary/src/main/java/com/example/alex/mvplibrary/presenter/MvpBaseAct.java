@@ -27,7 +27,7 @@ public abstract class MvpBaseAct<V extends MvpView> extends AppCompatActivity im
             //初始化mvpView
             mvpView = getViewClass().newInstance();
             mvpView.bindPresenter(this);
-            setContentView(mvpView.createView(getLayoutInflater(), null));
+            setContentView(mvpView.createView(getLayoutInflater(), null,savedInstanceState));
             setToolBar(mvpView.getToolBar());
             mvpView.settingActionBar(getSupportActionBar());
             created(savedInstanceState);
@@ -54,6 +54,14 @@ public abstract class MvpBaseAct<V extends MvpView> extends AppCompatActivity im
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mvpView!=null){
+            mvpView.saveInstanceState(outState);
+        }
+    }
+
+    @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         if (mvpView == null) {
@@ -61,7 +69,7 @@ public abstract class MvpBaseAct<V extends MvpView> extends AppCompatActivity im
             try {
                 mvpView = getViewClass().newInstance();
                 mvpView.bindPresenter(this);
-                mvpView.createView(getLayoutInflater(),null);
+                mvpView.createView(getLayoutInflater(),null, savedInstanceState);
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {

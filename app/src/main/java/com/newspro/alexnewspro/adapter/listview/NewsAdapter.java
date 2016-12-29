@@ -1,6 +1,7 @@
 package com.newspro.alexnewspro.adapter.listview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.newspro.alexnewspro.Presenter.NewsDetailsAct;
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.model.bean.NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean;
 import com.newspro.alexnewspro.utils.GlideUtil;
@@ -43,11 +45,13 @@ public class NewsAdapter extends RecyclerView.Adapter {
 
         if (holder instanceof NewsViewHolder) {
             NewsViewHolder newsViewHolder = (NewsViewHolder) holder;
-            ContentlistBean contentlistBean = resultBeenList.get(position);
+            final ContentlistBean contentlistBean = resultBeenList.get(position);
             newsViewHolder.item_cardview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent intent = new Intent(context, NewsDetailsAct.class);
+                    intent.putExtra("newsBean",contentlistBean);
+                    context.startActivity(intent);
                 }
             });
             if (!contentlistBean.getImageurls().isEmpty()){

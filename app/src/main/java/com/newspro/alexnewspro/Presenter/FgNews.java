@@ -3,7 +3,7 @@ package com.newspro.alexnewspro.Presenter;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 
-import com.example.alex.mvplibrary.model.MvpModel;
+import com.example.alex.mvplibrary.model.MvpModelCallBack;
 import com.example.alex.mvplibrary.presenter.MvpBaseFrag;
 import com.newspro.alexnewspro.constant.Constant;
 import com.newspro.alexnewspro.model.NewsModel;
@@ -32,27 +32,24 @@ public class FgNews extends MvpBaseFrag<FgNewsView> implements SwipeRefreshLayou
     }
 
     @Override
-    public void created(Bundle saveInstance) {
-        super.created(saveInstance);
-        //初始化完毕自动调用一次获取头条列表
-        mvpView.setRefresh(true);
-        refreshNewsList();
-    }
-
-    @Override
     public void onRefresh() {
         refreshNewsList();
     }
 
-    private void refreshNewsList() {
-        newsModel.getNewsOfType(type, 0, new MvpModel.MvpCallback() {
+    public void refreshNewsList() {
+        newsModel.getNewsOfType(type, 0, new MvpModelCallBack<List>() {
             @Override
-            public void result(Object data) {
-                if (data instanceof List) {
+            public void result(List data) {
+                if (mvpView != null)
                     mvpView.refreshOver((List<PagebeanBean.ContentlistBean>) data);
-                } else {
-                    ToastUtils.showShort(getActivity(), "类型：" + Constant.NEWS_TITLES_MAP.get(type)+",原因："+ data);
+            }
+        }, new MvpModelCallBack<String>() {
+            @Override
+            public void result(String data) {
+                if (mvpView != null) {
+                    ToastUtils.showShort(getActivity(), "类型：" + Constant.NEWS_TITLES_MAP.get(type) + ",原因：" + data);
                     mvpView.setRefresh(false);
+                    mvpView.showError();
                 }
             }
         });

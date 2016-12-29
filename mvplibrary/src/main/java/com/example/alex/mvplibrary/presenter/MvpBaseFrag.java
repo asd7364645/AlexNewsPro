@@ -28,7 +28,7 @@ public abstract class MvpBaseFrag<V extends MvpBaseFragView> extends Fragment im
             //初始化mvpView
             mvpView = getViewClass().newInstance();
             mvpView.bindPresenter(this);
-            rootView = mvpView.createView(inflater, container);
+            rootView = mvpView.createView(inflater, container, savedInstanceState);
             created(savedInstanceState);
         } catch (java.lang.InstantiationException e) {
             e.printStackTrace();
@@ -75,6 +75,14 @@ public abstract class MvpBaseFrag<V extends MvpBaseFragView> extends Fragment im
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mvpView!=null){
+            mvpView.saveInstanceState(outState);
         }
     }
 

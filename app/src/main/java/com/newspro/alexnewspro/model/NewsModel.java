@@ -1,10 +1,13 @@
 package com.newspro.alexnewspro.model;
 
-import com.example.alex.mvplibrary.model.MvpModel;
+import com.example.alex.mvplibrary.model.MvpModelCallBack;
 import com.newspro.alexnewspro.constant.Constant;
 import com.newspro.alexnewspro.http.HttpInterface;
 import com.newspro.alexnewspro.http.RetrofitUtil;
 import com.newspro.alexnewspro.model.bean.NewsBean;
+import com.newspro.alexnewspro.model.bean.NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,31 +18,43 @@ import retrofit2.Response;
  * Alex
  */
 
-public class NewsModel extends MvpModel {
+public class NewsModel {
 
     /**
      * 根据type来获取新闻列表
      *
      * @param type
-     * @param callback
+     *
      */
-    public void getNewsOfType(String type, int page, final MvpCallback callback) {
+    public void getNewsOfType(String type, int page, final MvpModelCallBack<List> success, final MvpModelCallBack<String> failure) {
         Call<NewsBean> newsBeanCall = RetrofitUtil.RetrofitUtil(Constant.NEWS_URL).create(HttpInterface.NewsInterface.class).getNews(type, page);
         newsBeanCall.enqueue(new Callback<NewsBean>() {
             @Override
             public void onResponse(Call<NewsBean> call, Response<NewsBean> response) {
                 if (response != null&&response.body().getShowapi_res_code() == 0) {
-                    callback.result(response.body().getShowapi_res_body().getPagebean().getContentlist());
+                    success.result(response.body().getShowapi_res_body().getPagebean().getContentlist());
                 }else {
-                    callback.result(response.body().getShowapi_res_error());
+                    failure.result(response.body().getShowapi_res_error());
                 }
             }
 
             @Override
             public void onFailure(Call<NewsBean> call, Throwable t) {
-                callback.result("错误");
+                failure.result("错误");
             }
         });
+    }
+
+    /**
+     * 将新闻详情中的空格转化为\n
+     * @param contentlistBean
+     */
+    public void changeNewsContentSpaceToEnter(ContentlistBean contentlistBean, MvpModelCallBack<ContentlistBean> endContent){
+        String content = contentlistBean.getContent();
+        content.contains("　　");
+        content = content.replace("　","\n\t\t ");
+        contentlistBean.setContent(content);
+        endContent.result(contentlistBean);
     }
 
 }

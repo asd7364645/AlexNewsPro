@@ -1,6 +1,7 @@
 package com.newspro.alexnewspro.view;
 
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import com.example.alex.mvplibrary.presenter.MvpPresenter;
 import com.example.alex.mvplibrary.view.MvpBaseView;
 import com.newspro.alexnewspro.Presenter.FgNewsType;
+import com.newspro.alexnewspro.Presenter.MainActivity;
 import com.newspro.alexnewspro.R;
 
 /**
@@ -18,7 +20,7 @@ import com.newspro.alexnewspro.R;
  * Alex
  */
 
-public class MainView extends MvpBaseView {
+public class MainView extends MvpBaseView<MainActivity> {
 
     //ToolBar
     private Toolbar base_toolbar;
@@ -82,8 +84,8 @@ public class MainView extends MvpBaseView {
     }
 
     @Override
-    protected void setData() {
-        super.setData();
+    protected void setData(Bundle savedInstanceState) {
+        super.setData(savedInstanceState);
 
     }
 

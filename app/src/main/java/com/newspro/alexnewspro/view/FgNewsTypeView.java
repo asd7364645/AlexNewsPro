@@ -1,9 +1,11 @@
 package com.newspro.alexnewspro.view;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 
 import com.example.alex.mvplibrary.view.MvpBaseFragView;
+import com.newspro.alexnewspro.Presenter.FgNewsType;
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.adapter.vp.NewsTypeVpAdapter;
 
@@ -12,7 +14,7 @@ import com.newspro.alexnewspro.adapter.vp.NewsTypeVpAdapter;
  * Alex
  */
 
-public class FgNewsTypeView extends MvpBaseFragView {
+public class FgNewsTypeView extends MvpBaseFragView<FgNewsType> {
 
     private TabLayout news_type_tablayout;
     private ViewPager news_type_viewpager;
@@ -31,9 +33,9 @@ public class FgNewsTypeView extends MvpBaseFragView {
     }
 
     @Override
-    protected void setData() {
-        super.setData();
-        newsTypeVpAdapter = new NewsTypeVpAdapter(getContext().getSupportFragmentManager());
+    protected void setData(Bundle savedInstanceState) {
+        super.setData(savedInstanceState);
+        newsTypeVpAdapter = new NewsTypeVpAdapter(presenter.getChildFragmentManager());
         news_type_viewpager.setAdapter(newsTypeVpAdapter);
         news_type_tablayout.setupWithViewPager(news_type_viewpager);
     }
