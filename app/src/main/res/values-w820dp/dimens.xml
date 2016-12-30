@@ -7,4 +7,5 @@
     <dimen name="large_text_size">16sp</dimen>
     <dimen name="middle_text_size">12sp</dimen>
     <dimen name="small_text_size">10sp</dimen>
+    <dimen name="action_btn_dimen">16dp</dimen>
 </resources>

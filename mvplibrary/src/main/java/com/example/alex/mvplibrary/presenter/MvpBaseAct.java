@@ -1,7 +1,6 @@
 package com.example.alex.mvplibrary.presenter;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,9 +26,10 @@ public abstract class MvpBaseAct<V extends MvpView> extends AppCompatActivity im
             //初始化mvpView
             mvpView = getViewClass().newInstance();
             mvpView.bindPresenter(this);
-            setContentView(mvpView.createView(getLayoutInflater(), null,savedInstanceState));
+            setContentView(mvpView.createView(getLayoutInflater(), null, savedInstanceState));
             setToolBar(mvpView.getToolBar());
-            mvpView.settingActionBar(getSupportActionBar());
+            if (getSupportActionBar() != null)
+                mvpView.settingActionBar(getSupportActionBar());
             created(savedInstanceState);
         } catch (InstantiationException e) {
             e.printStackTrace();
@@ -47,16 +47,24 @@ public abstract class MvpBaseAct<V extends MvpView> extends AppCompatActivity im
     public void created(Bundle saveInstance) {
     }
 
-    @Override
-    public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onPostCreate(savedInstanceState, persistentState);
-        mvpView.initViewSize();
-    }
+//    @Override
+//    public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+//        super.onPostCreate(savedInstanceState, persistentState);
+//        mvpView.initViewSize();
+//    }
+
+//    @Override
+//    public void onWindowFocusChanged(boolean hasFocus) {
+//        super.onWindowFocusChanged(hasFocus);
+//        if (hasFocus){
+//            mvpView.initViewSize();
+//        }
+//    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (mvpView!=null){
+        if (mvpView != null) {
             mvpView.saveInstanceState(outState);
         }
     }
@@ -69,7 +77,7 @@ public abstract class MvpBaseAct<V extends MvpView> extends AppCompatActivity im
             try {
                 mvpView = getViewClass().newInstance();
                 mvpView.bindPresenter(this);
-                mvpView.createView(getLayoutInflater(),null, savedInstanceState);
+                mvpView.createView(getLayoutInflater(), null, savedInstanceState);
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {

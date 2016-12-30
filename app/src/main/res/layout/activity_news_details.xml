@@ -1,41 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_news_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.newspro.alexnewspro.Presenter.NewsDetailsAct">
 
-    <TextView
-        android:text="title"
-        android:id="@+id/news_details_title"
-        android:layout_gravity="center_horizontal"
-        style="@style/LargeTextStyle"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/news_details_appbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/news_details_coll_layout"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:contentScrim="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+            >
+
+            <ImageView
+                android:id="@+id/news_details_appbar_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax"/>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/news_details_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?android:actionBarSize"
+                app:layout_collapseMode="pin">
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <com.newspro.alexnewspro.customviews.MyScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/news_details_title_tv"
+                style="@style/TitleTvStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:text="新闻详情标题"/>
+
+            <TextView
+                android:id="@+id/news_details_date"
+                style="@style/MiddleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/activity_horizontal_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:text="时间地点"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                android:id="@+id/news_details_desc_tv"
+                style="@style/LargeTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:text="新闻简述"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/news_details_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/activity_horizontal_margin"/>
+        </LinearLayout>
+
+    </com.newspro.alexnewspro.customviews.MyScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/news_details_floating_btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/action_btn_dimen"
+        android:src="@drawable/ic_star_border_24dp"
+        app:layout_anchor="@id/news_details_appbar_layout"
+        app:layout_anchorGravity="bottom|right"/>
 
-    <View
-        android:background="#000000"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
-
-    <TextView
-        android:text="简述"
-        android:id="@+id/news_details_desc"
-        style="@style/MiddleTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <View
-        android:background="#000000"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/news_details_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

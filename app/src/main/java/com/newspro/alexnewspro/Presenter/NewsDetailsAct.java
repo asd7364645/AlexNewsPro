@@ -16,6 +16,7 @@ public class NewsDetailsAct extends MvpBaseAct<NewsDetailsView> {
         super.created(saveInstance);
         intent = getIntent();
         ContentlistBean contentlistBean = intent.getParcelableExtra("newsBean");
-        mvpView.showContentsAll(contentlistBean.getAllList());
+        mvpView.showAll(contentlistBean);
+
     }
 }

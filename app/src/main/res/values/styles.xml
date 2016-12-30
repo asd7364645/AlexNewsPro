@@ -29,4 +29,9 @@
         <item name="android:textSize">@dimen/small_text_size</item>
     </style>
 
+    <style name="TitleTvStyle">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
 </resources>

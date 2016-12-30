@@ -122,7 +122,6 @@ public class NewsModel {
             for (int j = 0; j < imgUrlsArray.length(); j++) {
                 JSONObject imgJsonObj = imgUrlsArray.optJSONObject(j);
                 imageurls.add(imgJsonObj.optString("url"));
-                System.out.println("Imageurls:" + imageurls.get(j));
             }
             NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean contentlistBean = new NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean(pubDate, havePic, title, channelName, desc, source, channelId, link, allListStr, imageurls);
             contentlistBeans.add(contentlistBean);

@@ -47,11 +47,11 @@ public abstract class MvpBaseFrag<V extends MvpBaseFragView> extends Fragment im
         }
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mvpView.initViewSize();
-    }
+//    @Override
+//    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//        mvpView.initViewSize();
+//    }
 
     @Override
     public void create(Bundle saveInstance) {

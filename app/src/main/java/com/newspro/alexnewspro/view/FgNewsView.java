@@ -68,7 +68,7 @@ public class FgNewsView extends MvpBaseFragView<FgNews> {
         } else {
             dataBeenList = new ArrayList<>();
         }
-        newsAdapter = new NewsAdapter(this.getContext(), dataBeenList);
+        newsAdapter = new NewsAdapter(presenter.getActivity(), dataBeenList);
         fg_news_recycler.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
         fg_news_recycler.setAdapter(newsAdapter);
     }
@@ -85,7 +85,7 @@ public class FgNewsView extends MvpBaseFragView<FgNews> {
         newsAdapter.notifyDataSetChanged();
         setRefresh(false);
         if (dataBeenList.isEmpty()) {
-            showError();
+            fg_news_error_img.setVisibility(View.VISIBLE);
         } else {
             fg_news_error_img.setVisibility(View.GONE);
         }

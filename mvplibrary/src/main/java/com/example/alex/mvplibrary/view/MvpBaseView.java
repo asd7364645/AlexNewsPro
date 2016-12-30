@@ -36,8 +36,14 @@ public abstract class MvpBaseView<P extends MvpPresenter> implements MvpView<P> 
 
     @Override
     public View createView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle savedInstanceState) {
-
         rootView = layoutInflater.inflate(setLayoutId(),viewGroup,false);
+        rootView.post(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("1 = " + 1);
+                initViewSize();
+            }
+        });
         findMvpViews();
         bindEvent(presenter);
         setData(savedInstanceState);
