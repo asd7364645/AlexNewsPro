@@ -6,7 +6,6 @@
     android:layout_height="match_parent">
     <android.support.v7.widget.Toolbar
         android:id="@+id/base_toolbar"
-        app:title="新闻"
         app:titleTextColor="@android:color/white"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"

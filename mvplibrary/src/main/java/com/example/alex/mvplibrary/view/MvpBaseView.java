@@ -40,12 +40,11 @@ public abstract class MvpBaseView<P extends MvpPresenter> implements MvpView<P> 
         rootView.post(new Runnable() {
             @Override
             public void run() {
-                System.out.println("1 = " + 1);
                 initViewSize();
             }
         });
         findMvpViews();
-        bindEvent(presenter);
+        bindEvent();
         setData(savedInstanceState);
         setView();
         return rootView;
@@ -84,7 +83,7 @@ public abstract class MvpBaseView<P extends MvpPresenter> implements MvpView<P> 
     }
 
     @Override
-    public void bindEvent(MvpPresenter presenter) {
+    public void bindEvent() {
 
     }
 

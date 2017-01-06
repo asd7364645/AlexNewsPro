@@ -13,7 +13,6 @@ import com.newspro.alexnewspro.R;
  * Created by Alex on 2016/12/26.
  * Alex
  */
-
 public class GlideUtil {
 
     public static void loadImg(Context context, String url, final ImageView imageView) {

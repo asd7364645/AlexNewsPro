@@ -6,7 +6,7 @@
     android:id="@+id/activity_news_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.newspro.alexnewspro.Presenter.NewsDetailsAct">
+    tools:context="com.newspro.alexnewspro.presenter.news.NewsDetailsAct">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/news_details_appbar_layout"
@@ -88,6 +88,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="@dimen/activity_horizontal_margin"/>
+
+            <!--<TextView-->
+                <!--android:text="——————相关新闻——————"-->
+                <!--android:gravity="center"-->
+                <!--style="@style/LargeTextStyle"-->
+                <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
+                <!--android:layout_marginBottom="@dimen/activity_horizontal_margin"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"/>-->
+
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:id="@+id/news_details_relevant_recycler"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"/>-->
+
         </LinearLayout>
 
     </com.newspro.alexnewspro.customviews.MyScrollView>

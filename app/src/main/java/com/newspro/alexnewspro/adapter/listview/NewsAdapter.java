@@ -2,6 +2,7 @@ package com.newspro.alexnewspro.adapter.listview;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.newspro.alexnewspro.Presenter.NewsDetailsAct;
+import com.newspro.alexnewspro.presenter.news.NewsDetailsAct;
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.model.bean.NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean;
 import com.newspro.alexnewspro.utils.GlideUtil;
@@ -20,10 +21,16 @@ import java.util.List;
 /**
  * Created by Alex on 2016/12/26.
  * Alex
+ * 新闻列表的适配器
+ *
  */
 
 public class NewsAdapter extends RecyclerView.Adapter {
 
+    public interface IsEndListener{
+        void isEnd();
+    }
+    private IsEndListener isEndListener;
     private List<ContentlistBean> resultBeenList;
     private LayoutInflater layoutInflater;
     private Context context;
@@ -44,7 +51,16 @@ public class NewsAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         if (holder instanceof NewsViewHolder) {
+
+            if (isEndListener!=null&&position == getItemCount()-1){
+                isEndListener.isEnd();
+            }
+
             NewsViewHolder newsViewHolder = (NewsViewHolder) holder;
+            //由于5.0以下不兼容ripple，所以判断版本来设置
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                newsViewHolder.item_cardview.setForeground(context.getDrawable(R.drawable.ripple_cardview));
+            }
             final ContentlistBean contentlistBean = resultBeenList.get(position);
             newsViewHolder.item_cardview.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -89,4 +105,11 @@ public class NewsAdapter extends RecyclerView.Adapter {
         }
     }
 
+    public IsEndListener getIsEndListener() {
+        return isEndListener;
+    }
+
+    public void setIsEndListener(IsEndListener isEndListener) {
+        this.isEndListener = isEndListener;
+    }
 }

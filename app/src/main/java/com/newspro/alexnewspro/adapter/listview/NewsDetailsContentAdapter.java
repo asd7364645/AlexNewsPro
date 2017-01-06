@@ -12,6 +12,7 @@ import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.utils.GlideUtil;
 import com.newspro.alexnewspro.utils.common_util.ZhengZeUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,14 +25,31 @@ public class NewsDetailsContentAdapter extends RecyclerView.Adapter {
     public static final int IS_IMG = 1;
     public static final int NO_IMG = 0;
 
+    public interface NewsDetailsContentsItemClickListener{
+        void click(int posi);
+    }
+
+    private NewsDetailsContentsItemClickListener newsDetailsContentsItemClickListener;
+
+    public NewsDetailsContentsItemClickListener getNewsDetailsContentsItemClickListener() {
+        return newsDetailsContentsItemClickListener;
+    }
+
+    public void setNewsDetailsContentsItemClickListener(NewsDetailsContentsItemClickListener newsDetailsContentsItemClickListener) {
+        this.newsDetailsContentsItemClickListener = newsDetailsContentsItemClickListener;
+    }
+
     private List<String> contents;
     private LayoutInflater layoutInflater;
     private Context context;
+    private ArrayList<String> imgs;
 
     public NewsDetailsContentAdapter(List<String> contents, Context context) {
         this.contents = contents;
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
+        //把图片提出来
+        imgs = new ArrayList<>();
     }
 
     @Override
@@ -63,15 +81,25 @@ public class NewsDetailsContentAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         if (holder instanceof NewsDetailsImgHolder){
             GlideUtil.loadImg(context,contents.get(position),((NewsDetailsImgHolder) holder).news_details_item_img);
+            ((NewsDetailsImgHolder) holder).news_details_item_img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (newsDetailsContentsItemClickListener!=null){
+                        newsDetailsContentsItemClickListener.click(position);
+                    }
+                }
+            });
         }else if (holder instanceof NewsDetailsTvHolder){
             ((NewsDetailsTvHolder) holder).news_details_item_tv.setText(contents.get(position));
         }
 
     }
+
+
 
     @Override
     public int getItemCount() {

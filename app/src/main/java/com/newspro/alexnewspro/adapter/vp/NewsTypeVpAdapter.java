@@ -1,17 +1,13 @@
 package com.newspro.alexnewspro.adapter.vp;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.newspro.alexnewspro.Presenter.FgNews;
+import com.newspro.alexnewspro.presenter.news.FgNews;
 import com.newspro.alexnewspro.constant.Constant;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by Alex on 2016/12/27.
@@ -20,26 +16,19 @@ import java.util.Set;
 
 public class NewsTypeVpAdapter extends FragmentStatePagerAdapter {
 
-    private List<String> titles;
-    private List<String> types;
-    public NewsTypeVpAdapter(FragmentManager fm) {
+    private ArrayList<FgNews> newsFrag;
+    private ArrayList<String> titles;
+
+    public NewsTypeVpAdapter(FragmentManager fm,ArrayList<FgNews> newsFrag,ArrayList<String> titles) {
         super(fm);
-        titles = new ArrayList<>();
-        types = new ArrayList<>();
-        Set<Map.Entry<String, String>> entrySet = Constant.NEWS_TITLES_MAP.entrySet();
-        for (Map.Entry<String, String> stringStringEntry : entrySet) {
-            titles.add(stringStringEntry.getValue());
-            types.add(stringStringEntry.getKey());
-        }
+        this.newsFrag = newsFrag;
+        this.titles = titles;
     }
 
     @Override
     public Fragment getItem(int position) {
-        FgNews fgNews = new FgNews();
-        Bundle bundle = new Bundle();
-        bundle.putString(Constant.NEWS_TYPE_STR,types.get(position));
-        fgNews.setArguments(bundle);
-        return fgNews;
+
+        return newsFrag.get(position);
     }
 
     @Override
@@ -51,4 +40,6 @@ public class NewsTypeVpAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         return titles.get(position);
     }
+
+
 }

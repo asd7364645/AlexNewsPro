@@ -55,7 +55,7 @@ public interface MvpView<P extends MvpPresenter> {
     /**
      * 设置各种事件，例如点击事件，长按事件等等
      */
-    void bindEvent(MvpPresenter presenter);
+    void bindEvent();
 
     int getOptionsMenu();
 

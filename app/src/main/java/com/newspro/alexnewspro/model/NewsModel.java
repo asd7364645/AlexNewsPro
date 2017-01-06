@@ -6,6 +6,7 @@ import com.example.alex.mvplibrary.model.MvpModelCallBack;
 import com.newspro.alexnewspro.constant.Constant;
 import com.newspro.alexnewspro.http.HttpInterface;
 import com.newspro.alexnewspro.http.RetrofitUtil;
+import com.newspro.alexnewspro.http.converter.JsonConverterFactory;
 import com.newspro.alexnewspro.model.bean.NewsBean;
 
 import org.json.JSONArray;
@@ -27,13 +28,15 @@ public class NewsModel {
 
     private static final String TAG = "NewsModel";
 
+    private Call<JSONObject> newsBeanCall;
+
     /**
      * 根据type来获取新闻列表
      *
      * @param type
      */
     public void getNewsOfType(String type, int page, final MvpModelCallBack<List> success, final MvpModelCallBack<String> failure) {
-        Call<JSONObject> newsBeanCall = RetrofitUtil.RetrofitUtil(Constant.NEWS_URL).create(HttpInterface.NewsInterface.class).getNews(type, page);
+        newsBeanCall = RetrofitUtil.RetrofitUtil(Constant.NEWS_URL, JsonConverterFactory.create()).create(HttpInterface.NewsInterface.class).getNews(type, page);
         newsBeanCall.enqueue(new Callback<JSONObject>() {
             @Override
             public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
@@ -44,19 +47,24 @@ public class NewsModel {
 
             @Override
             public void onFailure(Call<JSONObject> call, Throwable t) {
-                failure.result("错误");
+                failure.result("获取失败，请检查网络");
             }
         });
     }
 
+    public Call<JSONObject> getNewsBeanCall() {
+        return newsBeanCall;
+    }
+
     /**
      * 转化JSON为NewsBean
+     *
      * @param result
      * @param callback
      */
     private void changeJsonToNewsBean(JSONObject result, final MvpModelCallBack<List> callback) {
 
-        new AsyncTask<JSONObject,Void,NewsBean>(){
+        new AsyncTask<JSONObject, Void, NewsBean>() {
 
             @Override
             protected NewsBean doInBackground(JSONObject... params) {
@@ -68,7 +76,7 @@ public class NewsModel {
             @Override
             protected void onPostExecute(NewsBean newsBean) {
                 super.onPostExecute(newsBean);
-                if (newsBean!=null){
+                if (newsBean != null) {
                     callback.result(newsBean.getShowapi_res_body().getPagebean().getContentlist());
                 }
             }
@@ -78,6 +86,7 @@ public class NewsModel {
 
     /**
      * 新闻的JSON比较特殊，所以手动转化为新闻对象
+     *
      * @param params
      * @return
      */
@@ -127,8 +136,8 @@ public class NewsModel {
             contentlistBeans.add(contentlistBean);
         }
         NewsBean.ShowapiResBodyBean.PagebeanBean pagebeanBean = new NewsBean.ShowapiResBodyBean.PagebeanBean(allPages, currentPage, allNum, maxResult, contentlistBeans);
-        NewsBean.ShowapiResBodyBean showapiResBodyBean = new NewsBean.ShowapiResBodyBean(ret_code,pagebeanBean);
-        NewsBean newsBean = new NewsBean(showapi_res_code,showapi_res_error,showapiResBodyBean);
+        NewsBean.ShowapiResBodyBean showapiResBodyBean = new NewsBean.ShowapiResBodyBean(ret_code, pagebeanBean);
+        NewsBean newsBean = new NewsBean(showapi_res_code, showapi_res_error, showapiResBodyBean);
         return newsBean;
     }
 
