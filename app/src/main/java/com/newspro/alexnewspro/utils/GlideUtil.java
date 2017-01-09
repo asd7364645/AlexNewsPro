@@ -31,7 +31,7 @@ public class GlideUtil {
 
                     @Override
                     public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                        imageView.setScaleType(ImageView.ScaleType.CENTER);
+                        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                         return false;
                     }
                 })
@@ -41,6 +41,13 @@ public class GlideUtil {
     public static void loadImgNoSpecialEffects(Context context,String url,ImageView imageView){
         Glide.with(context)
                 .load(url).into(imageView);
+    }
+
+    public static void loadImgToSetPlaceHolder(Context context,String url,ImageView imageView,int place){
+        Glide.with(context)
+                .load(url)
+                .placeholder(place)
+                .into(imageView);
     }
 
 }

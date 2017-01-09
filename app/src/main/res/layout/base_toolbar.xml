@@ -4,11 +4,12 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+        <!--app:titleTextColor="@android:color/white"-->
     <android.support.v7.widget.Toolbar
         android:id="@+id/base_toolbar"
-        app:titleTextColor="@android:color/white"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
+        app:theme="@style/ToolbarStyle"
         android:layout_height="?android:actionBarSize">
     </android.support.v7.widget.Toolbar>
 </merge>

@@ -11,11 +11,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 
 import com.example.alex.mvplibrary.view.MvpBaseView;
-import com.newspro.alexnewspro.constant.Constant;
-import com.newspro.alexnewspro.presenter.bimgs.FgBImgsType;
-import com.newspro.alexnewspro.presenter.news.FgNewsType;
-import com.newspro.alexnewspro.presenter.MainActivity;
 import com.newspro.alexnewspro.R;
+import com.newspro.alexnewspro.constant.Constant;
+import com.newspro.alexnewspro.presenter.MainActivity;
+import com.newspro.alexnewspro.presenter.bimgs.FgBImg;
+import com.newspro.alexnewspro.presenter.news.FgNewsType;
 
 /**
  * Created by Alex on 2016/12/23.
@@ -30,7 +30,8 @@ public class MainView extends MvpBaseView<MainActivity> {
     private DrawerLayout main_drawer_layout;
     private NavigationView main_navigation_view;
     private FgNewsType fgNewsType;
-    private FgBImgsType fgBImgsType;
+    private FgBImg fgBImg;
+    private int selectItem;
 
     private FragmentManager fragmentManager;
 
@@ -39,7 +40,8 @@ public class MainView extends MvpBaseView<MainActivity> {
      *
      * @param tab
      */
-    public void selectFg(int tab,String title) {
+    public void selectFg(int tab) {
+        selectItem = tab;
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         hideAllFg(fragmentTransaction);
         switch (tab) {
@@ -50,17 +52,21 @@ public class MainView extends MvpBaseView<MainActivity> {
                 } else {
                     fragmentTransaction.show(fgNewsType);
                 }
+                main_navigation_view.setCheckedItem(R.id.menu_navigation_news);
+                base_toolbar.setTitle(Constant.TITLE_NEWS);
                 break;
             case 1:
-                if (fgBImgsType == null) {
-                    fgBImgsType = new FgBImgsType();
-                    fragmentTransaction.add(R.id.main_center_replace, fgBImgsType);
+                if (fgBImg == null) {
+                    fgBImg = new FgBImg();
+                    fragmentTransaction.add(R.id.main_center_replace, fgBImg);
                 } else {
-                    fragmentTransaction.show(fgBImgsType);
+                    fragmentTransaction.show(fgBImg);
                 }
+                main_navigation_view.setCheckedItem(R.id.menu_navigation_imgs);
+                base_toolbar.setTitle(Constant.TITLE_BIMGS);
                 break;
         }
-        base_toolbar.setTitle(title);
+
         fragmentTransaction.commitAllowingStateLoss();
 
     }
@@ -73,8 +79,8 @@ public class MainView extends MvpBaseView<MainActivity> {
     private void hideAllFg(FragmentTransaction fragmentTransaction) {
         if (fgNewsType != null)
             fragmentTransaction.hide(fgNewsType);
-        if (fgBImgsType != null)
-            fragmentTransaction.hide(fgBImgsType);
+        if (fgBImg != null)
+            fragmentTransaction.hide(fgBImg);
     }
 
     @Override
@@ -103,10 +109,11 @@ public class MainView extends MvpBaseView<MainActivity> {
     @Override
     public void saveInstanceState(Bundle outState) {
         super.saveInstanceState(outState);
+        outState.putInt("selectItem",selectItem);
         if (fgNewsType != null)
             fragmentManager.putFragment(outState, "fgNewsType", fgNewsType);
-        if (fgBImgsType != null)
-            fragmentManager.putFragment(outState, "fgImgsType", fgBImgsType);
+        if (fgBImg != null)
+            fragmentManager.putFragment(outState, "fgImg", fgBImg);
     }
 
     @Override
@@ -114,17 +121,18 @@ public class MainView extends MvpBaseView<MainActivity> {
         super.setData(savedInstanceState);
         fragmentManager = presenter.getSupportFragmentManager();
         if (savedInstanceState != null) {
+            selectItem = savedInstanceState.getInt("selectItem");
             if (savedInstanceState.containsKey("fgNewsType"))
                 fgNewsType = (FgNewsType) fragmentManager.getFragment(savedInstanceState, "fgNewsType");
-            if (savedInstanceState.containsKey("fgImgsType"))
-                fgBImgsType = (FgBImgsType) fragmentManager.getFragment(savedInstanceState, "fgImgsType");
+            if (savedInstanceState.containsKey("fgImg"))
+                fgBImg = (FgBImg) fragmentManager.getFragment(savedInstanceState, "fgImg");
         }
     }
 
     @Override
     public void bindEvent() {
         super.bindEvent();
-        main_navigation_view.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) presenter);
+        main_navigation_view.setNavigationItemSelectedListener(presenter);
     }
 
     @Override
@@ -134,7 +142,7 @@ public class MainView extends MvpBaseView<MainActivity> {
         //设置默认选中颜色
         Resources resources = getContext().getResources();
         main_navigation_view.setItemTextColor(resources.getColorStateList(R.color.main_navigation_menu_selector));
-        selectFg(0, Constant.TITLE_NEWS);
+        selectFg(selectItem);
     }
 
     public void closeDrawer() {

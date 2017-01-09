@@ -1,7 +1,5 @@
 package com.newspro.alexnewspro.constant;
 
-import android.util.SparseArray;
-
 import java.util.HashMap;
 
 /**
@@ -137,48 +135,12 @@ public class Constant {
 
     //--------------------美图-------------------------
 
-    /**百度API key**/
-    public static final String BAIDU_APPKEY = "4b464d1f8a5ffb55dc85c7d785856760";
-
     /**美图url地址**/
-    public static final String BIMG_URL = "http://apis.baidu.com/tngou/gallery/";
-
-    /**图片返回的不是完整网址，所以需要在前面加上这个**/
-    public static final String BIMG_IMG_START_URL = "http://tnfs.tngou.net/image";
+    public static final String GANK_IO_URL = "http://gank.io/api/data/";
 
     /**图库列表**/
-    public static final String BIMG_LIST = "list";
-    /**图库详情**/
-    public static final String BIMG_SHOW = "show";
+    public static final String BIMG_LIST = "福利";
 
-
-    /**性感美女**/
-    public static final int BIMG_TYPE_XINGGANMEINV = 1;
-    /**韩日美女**/
-    public static final int BIMG_TYPE_RIHANMEINV = 2;
-    /**丝袜美腿**/
-    public static final int BIMG_TYPE_SIWAMEITUI = 3;
-    /**美女照片**/
-    public static final int BIMG_TYPE_MEINVZHAOPIAN = 4;
-    /**美女写真**/
-    public static final int BIMG_TYPE_MEINVXIEZHEN = 5;
-    /**清纯美女**/
-    public static final int BIMG_TYPE_QINGCHUNMEINV = 6;
-    /**性感车模**/
-    public static final int BIMG_TYPE_XINGGANCHEMO = 7;
-
-    public static final SparseArray<String> BIMG_TITLE_SPARSEARRAY;
-
-    static {
-        BIMG_TITLE_SPARSEARRAY = new SparseArray<>();
-        BIMG_TITLE_SPARSEARRAY.put(BIMG_TYPE_XINGGANMEINV,"性感美女");
-        BIMG_TITLE_SPARSEARRAY.put(BIMG_TYPE_RIHANMEINV,"韩日美女");
-        BIMG_TITLE_SPARSEARRAY.put(BIMG_TYPE_SIWAMEITUI,"丝袜美腿");
-        BIMG_TITLE_SPARSEARRAY.put(BIMG_TYPE_MEINVZHAOPIAN,"美女照片");
-        BIMG_TITLE_SPARSEARRAY.put(BIMG_TYPE_MEINVXIEZHEN,"美女写真");
-        BIMG_TITLE_SPARSEARRAY.put(BIMG_TYPE_QINGCHUNMEINV,"清纯美女");
-        BIMG_TITLE_SPARSEARRAY.put(BIMG_TYPE_XINGGANCHEMO,"性感车模");
-    }
-
+    public static final String BIMG_URL = GANK_IO_URL+BIMG_LIST+"/20/";
 
 }

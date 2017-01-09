@@ -2,8 +2,8 @@ package com.newspro.alexnewspro.view.bimg;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -26,7 +26,7 @@ public class FgBimgView extends MvpBaseFragView<FgBImg> {
     private SwipeRefreshLayout fg_bimg_refresh_layout;
     private RecyclerView fg_bimg_recycler;
     private ImageView fg_bimg_error_img;
-    private List<BImgListBean.TngouBean> bImgListBeen;
+    private List<BImgListBean.ResultsBean> bImgListBeen;
     private BImgsAdapter bImgsAdapter;
 
     @Override
@@ -52,12 +52,13 @@ public class FgBimgView extends MvpBaseFragView<FgBImg> {
         super.setData(savedInstanceState);
         bImgListBeen = new ArrayList<>();
         bImgsAdapter = new BImgsAdapter(this.getContext(),bImgListBeen);
+        bImgsAdapter.setClickListener(presenter);
     }
 
     @Override
     protected void setView() {
         super.setView();
-        fg_bimg_recycler.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        fg_bimg_recycler.setLayoutManager(new GridLayoutManager(this.getContext(),2));
         fg_bimg_recycler.setAdapter(bImgsAdapter);
         //初始化完毕自动调用一次获取美图列表
         if (bImgListBeen.isEmpty()){
@@ -75,7 +76,7 @@ public class FgBimgView extends MvpBaseFragView<FgBImg> {
      * @param bImgBeans
      * @param isRefresh
      */
-    public void showSuccess(List<BImgListBean.TngouBean> bImgBeans, boolean isRefresh) {
+    public void showSuccess(List<BImgListBean.ResultsBean> bImgBeans, boolean isRefresh) {
         if (isRefresh)
             bImgListBeen.clear();
         bImgListBeen.addAll(bImgBeans);
@@ -106,5 +107,13 @@ public class FgBimgView extends MvpBaseFragView<FgBImg> {
         } else {
             fg_bimg_error_img.setVisibility(View.GONE);
         }
+    }
+
+    public List<String> getbImgListBeen() {
+        List<String> imgs = new ArrayList<>();
+        for (BImgListBean.ResultsBean resultsBean : bImgListBeen) {
+            imgs.add(resultsBean.getUrl());
+        }
+        return imgs;
     }
 }

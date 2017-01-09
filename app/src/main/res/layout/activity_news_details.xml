@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             app:contentScrim="@color/colorPrimary"
+            app:theme="@style/ToolbarStyle"
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
             >
 
@@ -32,6 +33,7 @@
                 android:id="@+id/news_details_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:actionBarSize"
+                app:theme="@style/ToolbarStyle"
                 app:layout_collapseMode="pin">
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -90,18 +92,18 @@
                 android:padding="@dimen/activity_horizontal_margin"/>
 
             <!--<TextView-->
-                <!--android:text="——————相关新闻——————"-->
-                <!--android:gravity="center"-->
-                <!--style="@style/LargeTextStyle"-->
-                <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
-                <!--android:layout_marginBottom="@dimen/activity_horizontal_margin"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"/>-->
+            <!--android:text="——————相关新闻——————"-->
+            <!--android:gravity="center"-->
+            <!--style="@style/LargeTextStyle"-->
+            <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
+            <!--android:layout_marginBottom="@dimen/activity_horizontal_margin"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"/>-->
 
             <!--<android.support.v7.widget.RecyclerView-->
-                <!--android:id="@+id/news_details_relevant_recycler"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"/>-->
+            <!--android:id="@+id/news_details_relevant_recycler"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"/>-->
 
         </LinearLayout>
 

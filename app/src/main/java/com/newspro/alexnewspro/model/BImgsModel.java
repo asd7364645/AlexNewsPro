@@ -20,9 +20,9 @@ public class BImgsModel {
 
     private Call<BImgListBean> imgListCall;
 
-    public void getImgsList(int id,int page, final MvpModelCallBack<BImgListBean> successCallback, final MvpModelCallBack<String> failedCallback){
+    public void getImgsList(int page, final MvpModelCallBack<BImgListBean> successCallback, final MvpModelCallBack<String> failedCallback){
         imgListCall = RetrofitUtil.RetrofitUtil(Constant.BIMG_URL, GsonConverterFactory.create())
-                .create(HttpInterface.BImgsInterface.class).getBImgList(id,page);
+                .create(HttpInterface.BImgsInterface.class).getBImgList(page);
         imgListCall.enqueue(new Callback<BImgListBean>() {
             @Override
             public void onResponse(Call<BImgListBean> call, Response<BImgListBean> response) {

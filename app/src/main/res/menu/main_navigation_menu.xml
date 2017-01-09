@@ -6,7 +6,6 @@
         <item
             android:id="@+id/menu_navigation_news"
             android:checkable="true"
-            android:checked="true"
             android:icon="@drawable/ic_news_logo"
             android:title="@string/news_str"/>
         <item

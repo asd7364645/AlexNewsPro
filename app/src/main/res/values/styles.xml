@@ -10,6 +10,7 @@
 
     <style name="TransparentStatusTheme" parent="AppTheme"></style>
 
+    <style name="ToolbarStyle" parent="Theme.AppCompat.NoActionBar"/>
 
     <style name="NavigationSelectorStyle" parent="Theme.AppCompat.Light"/>
 

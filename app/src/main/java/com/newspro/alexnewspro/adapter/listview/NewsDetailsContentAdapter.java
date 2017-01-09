@@ -12,7 +12,6 @@ import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.utils.GlideUtil;
 import com.newspro.alexnewspro.utils.common_util.ZhengZeUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,14 +41,11 @@ public class NewsDetailsContentAdapter extends RecyclerView.Adapter {
     private List<String> contents;
     private LayoutInflater layoutInflater;
     private Context context;
-    private ArrayList<String> imgs;
 
     public NewsDetailsContentAdapter(List<String> contents, Context context) {
         this.contents = contents;
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
-        //把图片提出来
-        imgs = new ArrayList<>();
     }
 
     @Override

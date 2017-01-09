@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -35,9 +35,8 @@ public interface HttpInterface {
      * 美图列表接口
      */
     interface BImgsInterface {
-        @GET(Constant.BIMG_LIST)
-        @Headers("apikey:" + Constant.BAIDU_APPKEY)
-        Call<BImgListBean> getBImgList(@Query("id") int id,@Query("page") int page);
+        @GET("{page}" )
+        Call<BImgListBean> getBImgList(@Path("page") int page);
     }
 
 }
