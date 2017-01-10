@@ -5,9 +5,13 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.FutureTarget;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.newspro.alexnewspro.R;
+
+import java.io.File;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Alex on 2016/12/26.
@@ -48,6 +52,23 @@ public class GlideUtil {
                 .load(url)
                 .placeholder(place)
                 .into(imageView);
+    }
+
+    /**
+     * Glide 获得图片缓存路径
+     */
+    public static String getImagePath(Context context,String imgUrl) {
+        String path = null;
+        FutureTarget<File> future = Glide.with(context)
+                .load(imgUrl)
+                .downloadOnly(500, 500);
+        try {
+            File cacheFile = future.get();
+            path = cacheFile.getAbsolutePath();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return path;
     }
 
 }

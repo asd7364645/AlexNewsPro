@@ -1,7 +1,9 @@
 package com.newspro.alexnewspro.view;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.alex.mvplibrary.view.MvpBaseView;
 import com.newspro.alexnewspro.R;
@@ -22,6 +24,7 @@ public class BigImgView extends MvpBaseView<BigImgAct> {
 
     private BounceBackViewPager big_img_viewpager;
     private NewsBigImgAdapter bigImgAdapter;
+    private Button big_img_save_btn;
     private ArrayList<ZoomImgView> zoomImgViews;
 
     @Override
@@ -36,8 +39,16 @@ public class BigImgView extends MvpBaseView<BigImgAct> {
     }
 
     @Override
+    public void bindEvent() {
+        super.bindEvent();
+        big_img_save_btn.setOnClickListener(presenter);
+        big_img_viewpager.setOnPageChangeListener(presenter);
+    }
+
+    @Override
     public void findMvpViews() {
         big_img_viewpager = findViewById(R.id.big_img_viewpager);
+        big_img_save_btn = findViewById(R.id.big_img_save_btn);
     }
 
     public void show(ArrayList<String> imgs,int posi){
@@ -51,6 +62,10 @@ public class BigImgView extends MvpBaseView<BigImgAct> {
         bigImgAdapter = new NewsBigImgAdapter(zoomImgViews,presenter);
         big_img_viewpager.setAdapter(bigImgAdapter);
         big_img_viewpager.setCurrentItem(posi);
+    }
+
+    public void gongSave(){
+        big_img_save_btn.setVisibility(View.GONE);
     }
 
 }

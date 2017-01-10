@@ -4,4 +4,5 @@
     <string name="close">CLOSE</string>
     <string name="news_str">新闻</string>
     <string name="meitu_str">美图</string>
+    <string name="save_text">保存</string>
 </resources>

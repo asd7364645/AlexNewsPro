@@ -1,13 +1,13 @@
 package com.newspro.alexnewspro.view.news;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.example.alex.mvplibrary.view.MvpBaseFragView;
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.adapter.listview.NewsAdapter;
 import com.newspro.alexnewspro.model.bean.NewsBean.ShowapiResBodyBean;
@@ -23,8 +23,7 @@ import java.util.List;
 public class FgNewsView extends MvpBaseFragView<FgNews> {
 
     private ImageView fg_news_error_img;
-    private SwipeRefreshLayout fg_news_refresh;
-    private RecyclerView fg_news_recycler;
+    private XRecyclerView fg_news_recycler;
 
     private NewsAdapter newsAdapter;
     private ArrayList<ShowapiResBodyBean.PagebeanBean.ContentlistBean> dataBeenList;
@@ -36,7 +35,6 @@ public class FgNewsView extends MvpBaseFragView<FgNews> {
 
     @Override
     public void findMvpViews() {
-        fg_news_refresh = findViewById(R.id.fg_news_refresh);
         fg_news_recycler = findViewById(R.id.fg_news_recycler);
         fg_news_error_img = findViewById(R.id.fg_news_error_img);
     }
@@ -44,15 +42,16 @@ public class FgNewsView extends MvpBaseFragView<FgNews> {
     @Override
     public void bindEvent() {
         super.bindEvent();
-        fg_news_refresh.setOnRefreshListener(presenter);
+        fg_news_recycler.setLoadingListener(presenter);
     }
 
     public void refresh() {
-        setRefreshLayoutRefresh(true);
+//        setRefreshOver(true);
+        fg_news_recycler.setRefreshing(true);
         presenter.refreshNewsList(true);
     }
 
-    public void scrollToTop(){
+    public void scrollToTop() {
         fg_news_recycler.scrollToPosition(0);
     }
 
@@ -65,13 +64,14 @@ public class FgNewsView extends MvpBaseFragView<FgNews> {
             dataBeenList = new ArrayList<>();
         }
         newsAdapter = new NewsAdapter(presenter.getActivity(), dataBeenList);
-        newsAdapter.setIsEndListener(presenter);
     }
 
     @Override
     protected void setView() {
         super.setView();
         fg_news_recycler.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
+        fg_news_recycler.setRefreshProgressStyle(ProgressStyle.BallGridPulse);
+        fg_news_recycler.setLoadingMoreProgressStyle(ProgressStyle.BallGridPulse);
         fg_news_recycler.setAdapter(newsAdapter);
         //判断如果是空的或者是第一次加载则调用加载
         if (dataBeenList.isEmpty()) {
@@ -94,7 +94,7 @@ public class FgNewsView extends MvpBaseFragView<FgNews> {
             dataBeenList.clear();
         dataBeenList.addAll(dataBeens);
         newsAdapter.notifyDataSetChanged();
-        setRefreshLayoutRefresh(false);
+        setRefreshOver(isRefresh);
         if (dataBeenList.isEmpty()) {
             fg_news_error_img.setVisibility(View.VISIBLE);
         } else {
@@ -102,13 +102,15 @@ public class FgNewsView extends MvpBaseFragView<FgNews> {
         }
     }
 
-    public void setRefreshLayoutRefresh(final boolean refresh) {
-        fg_news_refresh.post(new Runnable() {
-            @Override
-            public void run() {
-                fg_news_refresh.setRefreshing(refresh);
-            }
-        });
+    public void setRefreshOver(boolean isRefresh) {
+        if (isRefresh)
+            fg_news_recycler.refreshComplete();
+        else
+            fg_news_recycler.loadMoreComplete();
+    }
+
+    public void setNoMore(){
+        fg_news_recycler.setNoMore(true);
     }
 
     public void showError() {

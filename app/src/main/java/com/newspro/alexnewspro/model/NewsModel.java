@@ -35,7 +35,7 @@ public class NewsModel {
      *
      * @param type
      */
-    public void getNewsOfType(String type, int page, final MvpModelCallBack<List> success, final MvpModelCallBack<String> failure) {
+    public void getNewsOfType(String type, int page, final MvpModelCallBack<NewsBean.ShowapiResBodyBean.PagebeanBean> success, final MvpModelCallBack<String> failure) {
         newsBeanCall = RetrofitUtil.RetrofitUtil(Constant.NEWS_URL, JsonConverterFactory.create()).create(HttpInterface.NewsInterface.class).getNews(type, page);
         newsBeanCall.enqueue(new Callback<JSONObject>() {
             @Override
@@ -62,7 +62,7 @@ public class NewsModel {
      * @param result
      * @param callback
      */
-    private void changeJsonToNewsBean(JSONObject result, final MvpModelCallBack<List> callback) {
+    private void changeJsonToNewsBean(JSONObject result, final MvpModelCallBack<NewsBean.ShowapiResBodyBean.PagebeanBean> callback) {
 
         new AsyncTask<JSONObject, Void, NewsBean>() {
 
@@ -77,7 +77,7 @@ public class NewsModel {
             protected void onPostExecute(NewsBean newsBean) {
                 super.onPostExecute(newsBean);
                 if (newsBean != null) {
-                    callback.result(newsBean.getShowapi_res_body().getPagebean().getContentlist());
+                    callback.result(newsBean.getShowapi_res_body().getPagebean());
                 }
             }
         }.execute(result);

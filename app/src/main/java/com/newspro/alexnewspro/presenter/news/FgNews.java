@@ -1,16 +1,16 @@
 package com.newspro.alexnewspro.presenter.news;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.example.alex.mvplibrary.model.MvpModelCallBack;
 import com.example.alex.mvplibrary.presenter.MvpBaseFrag;
-import com.newspro.alexnewspro.adapter.listview.NewsAdapter;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.newspro.alexnewspro.constant.Constant;
 import com.newspro.alexnewspro.event.NewsActionBtnEvent;
 import com.newspro.alexnewspro.event.NewsLoadingEvent;
 import com.newspro.alexnewspro.event.NewsRefreshEvent;
 import com.newspro.alexnewspro.model.NewsModel;
+import com.newspro.alexnewspro.model.bean.NewsBean;
 import com.newspro.alexnewspro.model.bean.NewsBean.ShowapiResBodyBean.PagebeanBean;
 import com.newspro.alexnewspro.utils.common_util.ToastUtils;
 import com.newspro.alexnewspro.view.news.FgNewsView;
@@ -25,12 +25,13 @@ import java.util.List;
  * Created by Alex on 2016/12/25.
  */
 
-public class FgNews extends MvpBaseFrag<FgNewsView> implements SwipeRefreshLayout.OnRefreshListener, NewsAdapter.IsEndListener {
+public class FgNews extends MvpBaseFrag<FgNewsView> implements XRecyclerView.LoadingListener {
 
     private NewsModel newsModel;
     private String type;
     private int page = 1;
     private boolean isLoading = false;
+    private int maxPage = -1;
 
     @Override
     public void create(Bundle saveInstance) {
@@ -46,6 +47,18 @@ public class FgNews extends MvpBaseFrag<FgNewsView> implements SwipeRefreshLayou
         refreshNewsList(true);
     }
 
+    @Override
+    public void onLoadMore() {
+
+        if (isNoMore()) {
+            mvpView.setNoMore();
+            return;
+        }
+
+        if (!isLoading)
+            refreshNewsList(false);
+    }
+
     /**
      * 刷新列表
      *
@@ -54,30 +67,40 @@ public class FgNews extends MvpBaseFrag<FgNewsView> implements SwipeRefreshLayou
     public void refreshNewsList(final boolean isRefresh) {
         isLoading = true;
         EventBus.getDefault().post(new NewsLoadingEvent(true));
-        if (isRefresh)
+        if (isRefresh) {
             page = 1;
-        else page = ++page;
-        newsModel.getNewsOfType(type, page, new MvpModelCallBack<List>() {
+        } else {
+            page = ++page;
+        }
+        newsModel.getNewsOfType(type, page, new MvpModelCallBack<NewsBean.ShowapiResBodyBean.PagebeanBean>() {
             @Override
-            public void result(List data) {
+            public void result(NewsBean.ShowapiResBodyBean.PagebeanBean data) {
+                maxPage = data.getAllPages();
+                List<PagebeanBean.ContentlistBean> list = data.getContentlist();
                 if (mvpView != null)
-                    mvpView.refreshOver((List<PagebeanBean.ContentlistBean>) data, isRefresh);
+                    mvpView.refreshOver(list, isRefresh);
                 isLoading = false;
                 sendActionRefreshOverEvent();
-                ToastUtils.showShort(getContext(),Constant.NEWS_TITLES_MAP.get(type)+" 加载成功");
+                ToastUtils.showShort(getContext(), Constant.NEWS_TITLES_MAP.get(type) + " 加载成功");
             }
         }, new MvpModelCallBack<String>() {
             @Override
             public void result(String data) {
+                if (page > 1)
+                    page--;
                 isLoading = false;
                 if (mvpView != null) {
                     ToastUtils.showShort(getActivity(), "类型：" + Constant.NEWS_TITLES_MAP.get(type) + ",原因：" + data);
-                    mvpView.setRefreshLayoutRefresh(false);
+                    mvpView.setRefreshOver(isRefresh);
                     mvpView.showError();
                     sendActionRefreshOverEvent();
                 }
             }
         });
+    }
+
+    private boolean isNoMore() {
+        return maxPage != -1 && page == maxPage;
     }
 
     /**
@@ -87,11 +110,6 @@ public class FgNews extends MvpBaseFrag<FgNewsView> implements SwipeRefreshLayou
         EventBus.getDefault().post(new NewsActionBtnEvent(true));
     }
 
-    @Override
-    public void isEnd() {
-        if (!isLoading)
-            refreshNewsList(false);
-    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -122,7 +140,4 @@ public class FgNews extends MvpBaseFrag<FgNewsView> implements SwipeRefreshLayou
         }
     }
 
-    public String getType() {
-        return type;
-    }
 }

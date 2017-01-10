@@ -1,13 +1,13 @@
 package com.newspro.alexnewspro.view.bimg;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.example.alex.mvplibrary.view.MvpBaseFragView;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.adapter.listview.BImgsAdapter;
 import com.newspro.alexnewspro.model.bean.BImgListBean;
@@ -23,9 +23,9 @@ import java.util.List;
 
 public class FgBimgView extends MvpBaseFragView<FgBImg> {
 
-    private SwipeRefreshLayout fg_bimg_refresh_layout;
-    private RecyclerView fg_bimg_recycler;
+    private XRecyclerView fg_bimg_recycler;
     private ImageView fg_bimg_error_img;
+    private FloatingActionButton fg_bimg_act_btn;
     private List<BImgListBean.ResultsBean> bImgListBeen;
     private BImgsAdapter bImgsAdapter;
 
@@ -37,14 +37,15 @@ public class FgBimgView extends MvpBaseFragView<FgBImg> {
     @Override
     public void findMvpViews() {
         fg_bimg_error_img = findViewById(R.id.fg_bimg_error_img);
-        fg_bimg_refresh_layout = findViewById(R.id.fg_bimg_refresh_layout);
         fg_bimg_recycler = findViewById(R.id.fg_bimg_recycler);
+        fg_bimg_act_btn = findViewById(R.id.fg_bimg_act_btn);
     }
 
     @Override
     public void bindEvent() {
         super.bindEvent();
-        fg_bimg_refresh_layout.setOnRefreshListener(presenter);
+        fg_bimg_recycler.setLoadingListener(presenter);
+        fg_bimg_act_btn.setOnClickListener(presenter);
     }
 
     @Override
@@ -68,7 +69,7 @@ public class FgBimgView extends MvpBaseFragView<FgBImg> {
 
     public void refresh(){
         presenter.refreshBImgs(true);
-        setRefreshLayoutRefresh(true);
+        fg_bimg_recycler.setRefreshing(true);
     }
 
     /**
@@ -81,21 +82,23 @@ public class FgBimgView extends MvpBaseFragView<FgBImg> {
             bImgListBeen.clear();
         bImgListBeen.addAll(bImgBeans);
         bImgsAdapter.notifyDataSetChanged();
-        setRefreshLayoutRefresh(false);
+        setRefreshLayoutRefresh(isRefresh);
         showError();
     }
 
     /**
      * 设置是否加载refresh动画
-     * @param refresh
+     * @param isRefresh
      */
-    public void setRefreshLayoutRefresh(final boolean refresh) {
-        fg_bimg_refresh_layout.post(new Runnable() {
-            @Override
-            public void run() {
-                fg_bimg_refresh_layout.setRefreshing(refresh);
-            }
-        });
+    public void setRefreshLayoutRefresh(boolean isRefresh) {
+        if (isRefresh)
+            fg_bimg_recycler.refreshComplete();
+        else
+            fg_bimg_recycler.loadMoreComplete();
+    }
+
+    public void setNoLoadMore(){
+        fg_bimg_recycler.setNoMore(true);
     }
 
     /**
@@ -107,6 +110,10 @@ public class FgBimgView extends MvpBaseFragView<FgBImg> {
         } else {
             fg_bimg_error_img.setVisibility(View.GONE);
         }
+    }
+
+    public void showTop(){
+        fg_bimg_recycler.scrollToPosition(0);
     }
 
     public List<String> getbImgListBeen() {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -15,16 +16,22 @@
         android:src="@mipmap/img_load_error"
         android:visibility="gone"/>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/fg_bimg_refresh_layout"
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/fg_bimg_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/fg_bimg_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fg_bimg_act_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/action_btn_dimen"
+        android:src="@drawable/ic_go_top_24dp"
+        app:backgroundTint="@android:color/white"/>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>
