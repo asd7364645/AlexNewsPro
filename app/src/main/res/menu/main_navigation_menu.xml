@@ -13,5 +13,10 @@
             android:checkable="true"
             android:icon="@drawable/ic_image_icon"
             android:title="@string/meitu_str"/>
+        <item
+            android:id="@+id/menu_navigation_movies"
+            android:checkable="true"
+            android:icon="@drawable/ic_movie_black_24dp"
+            android:title="@string/yingxun_str"/>
     </group>
 </menu>

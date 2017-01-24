@@ -4,8 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.newspro.alexnewspro.presenter.bimgs.FgBImg;
-
 import java.util.List;
 
 /**
@@ -13,12 +11,12 @@ import java.util.List;
  * Alex
  */
 
-public class BImgsTypeVpAdapter extends FragmentStatePagerAdapter {
+public class MovieVpAdapter extends FragmentStatePagerAdapter {
 
-    private List<FgBImg> fgBImgs;
+    private List<Fragment> fgBImgs;
     private List<String> titles;
 
-    public BImgsTypeVpAdapter(FragmentManager fm, List<FgBImg> fgBImgs, List<String> titles) {
+    public MovieVpAdapter(FragmentManager fm, List<Fragment> fgBImgs, List<String> titles) {
         super(fm);
         this.fgBImgs = fgBImgs;
         this.titles = titles;

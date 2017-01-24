@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/AlexNewsPro.iml" filepath="$PROJECT_DIR$/AlexNewsPro.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvplibrary/mvplibrary.iml" filepath="$PROJECT_DIR$/mvplibrary/mvplibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xbaseadapter/xbaseadapter.iml" filepath="$PROJECT_DIR$/xbaseadapter/xbaseadapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/xrecyclerview/xrecyclerview.iml" filepath="$PROJECT_DIR$/xrecyclerview/xrecyclerview.iml" />
     </modules>
   </component>

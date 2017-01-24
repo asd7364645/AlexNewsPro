@@ -7,7 +7,7 @@ public class RetrofitUtil {
 
     private static Retrofit retrofit;
 
-    public static Retrofit RetrofitUtil(String baseUrl, Converter.Factory factory) {
+    public static Retrofit retrofitUtil(String baseUrl, Converter.Factory factory) {
        retrofit = new Retrofit.Builder()
                 .addConverterFactory(factory)
                 .baseUrl(baseUrl)

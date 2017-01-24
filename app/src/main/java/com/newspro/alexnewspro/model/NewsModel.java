@@ -4,9 +4,9 @@ import android.os.AsyncTask;
 
 import com.example.alex.mvplibrary.model.MvpModelCallBack;
 import com.newspro.alexnewspro.constant.Constant;
-import com.newspro.alexnewspro.http.HttpInterface;
 import com.newspro.alexnewspro.http.RetrofitUtil;
 import com.newspro.alexnewspro.http.converter.JsonConverterFactory;
+import com.newspro.alexnewspro.http.httpinterface.NewsInterface;
 import com.newspro.alexnewspro.model.bean.NewsBean;
 
 import org.json.JSONArray;
@@ -36,7 +36,7 @@ public class NewsModel {
      * @param type
      */
     public void getNewsOfType(String type, int page, final MvpModelCallBack<NewsBean.ShowapiResBodyBean.PagebeanBean> success, final MvpModelCallBack<String> failure) {
-        newsBeanCall = RetrofitUtil.RetrofitUtil(Constant.NEWS_URL, JsonConverterFactory.create()).create(HttpInterface.NewsInterface.class).getNews(type, page);
+        newsBeanCall = RetrofitUtil.retrofitUtil(Constant.NEWS_URL, JsonConverterFactory.create()).create(NewsInterface.class).getNews(type, page);
         newsBeanCall.enqueue(new Callback<JSONObject>() {
             @Override
             public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
@@ -118,6 +118,8 @@ public class NewsModel {
 
             JSONArray allListArray = content.optJSONArray("allList");
             List<String> allListStr = new ArrayList<>();
+            if (null == allListArray)
+                return null;
             for (int j = 0; j < allListArray.length(); j++) {
                 if (allListArray.opt(j) instanceof JSONObject) {
                     JSONObject imgJSONObj = allListArray.optJSONObject(j);
@@ -128,6 +130,8 @@ public class NewsModel {
             }
             JSONArray imgUrlsArray = content.optJSONArray("imageurls");
             List<String> imageurls = new ArrayList<>();
+            if (null == imgUrlsArray)
+                return null;
             for (int j = 0; j < imgUrlsArray.length(); j++) {
                 JSONObject imgJsonObj = imgUrlsArray.optJSONObject(j);
                 imageurls.add(imgJsonObj.optString("url"));

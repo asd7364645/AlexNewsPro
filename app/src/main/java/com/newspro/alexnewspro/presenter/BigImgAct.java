@@ -11,9 +11,9 @@ import android.view.View;
 
 import com.example.alex.mvplibrary.presenter.MvpBaseAct;
 import com.newspro.alexnewspro.R;
-import com.newspro.alexnewspro.utils.GlideUtil;
 import com.newspro.alexnewspro.utils.common_util.FileUtils;
 import com.newspro.alexnewspro.utils.common_util.ToastUtils;
+import com.newspro.alexnewspro.utils.image_loader_util.glide.GlideLoader;
 import com.newspro.alexnewspro.view.BigImgView;
 
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class BigImgAct extends MvpBaseAct<BigImgView> implements View.OnClickLis
         Intent intent = getIntent();
         imgs = intent.getStringArrayListExtra("imgs");
         int posi = intent.getIntExtra("selectPosi", 0);
-        boolean isBImg = intent.getBooleanExtra("isBImg",false);
+        boolean isBImg = intent.getBooleanExtra("isBImg", false);
         if (!isBImg)
             mvpView.gongSave();
         page = posi;
@@ -49,7 +49,7 @@ public class BigImgAct extends MvpBaseAct<BigImgView> implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.big_img_save_btn:
-                ToastUtils.showShort(this,"准备保存");
+                ToastUtils.showShort(this, "准备保存");
                 saveBitmap();
                 break;
         }
@@ -65,16 +65,20 @@ public class BigImgAct extends MvpBaseAct<BigImgView> implements View.OnClickLis
             protected Bitmap doInBackground(Void... params) {
                 Bitmap resultBitmap;
                 String url = imgs.get(page);
-                resultBitmap = BitmapFactory.decodeFile(GlideUtil.getImagePath(BigImgAct.this, url));
+                resultBitmap = BitmapFactory.decodeFile(GlideLoader.getInstance().getImagePath(BigImgAct.this, url));
                 return resultBitmap;
             }
 
             @Override
             protected void onPostExecute(Bitmap bitmap) {
                 super.onPostExecute(bitmap);
+                if (bitmap == null) {
+                    ToastUtils.showShort(BigImgAct.this, "下载失败");
+                    return;
+                }
                 if (bitmap != null) {
                     Date date = new Date(System.currentTimeMillis());
-                    @SuppressLint("SimpleDateFormat") String bitName = new SimpleDateFormat("yyyyMMddHHmmssSSSS").format(date)+".jpg";
+                    @SuppressLint("SimpleDateFormat") String bitName = new SimpleDateFormat("yyyyMMddHHmmssSSSS").format(date) + ".jpg";
                     try {
                         FileUtils.saveBitmap(BigImgAct.this, bitName, bitmap);
                         ToastUtils.showShort(BigImgAct.this, "保存成功");
@@ -82,7 +86,6 @@ public class BigImgAct extends MvpBaseAct<BigImgView> implements View.OnClickLis
                         e.printStackTrace();
                     }
                     bitmap.recycle();
-                    bitmap = null;
                 }
             }
         }.execute();

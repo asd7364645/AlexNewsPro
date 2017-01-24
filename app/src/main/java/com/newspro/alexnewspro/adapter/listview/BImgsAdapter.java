@@ -8,9 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.model.bean.BImgListBean;
-import com.newspro.alexnewspro.utils.GlideUtil;
+import com.newspro.alexnewspro.utils.image_loader_util.glide.GlideLoader;
 
 import java.util.List;
 
@@ -45,7 +48,7 @@ public class BImgsAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        BImgsViewHolder bImgsViewHolder = (BImgsViewHolder) holder;
+        final BImgsViewHolder bImgsViewHolder = (BImgsViewHolder) holder;
         BImgListBean.ResultsBean resultsBean = results.get(position);
 
         bImgsViewHolder.item_bimg_cardview.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +59,21 @@ public class BImgsAdapter extends RecyclerView.Adapter {
             }
         });
 
-        GlideUtil.loadImgToSetPlaceHolder(context,resultsBean.getUrl(),bImgsViewHolder.item_bimg_img,R.drawable.ic_place_holder_150dp);
+        bImgsViewHolder.item_bimg_img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        GlideLoader.getInstance()
+                .display(bImgsViewHolder.item_bimg_img, resultsBean.getUrl(), R.drawable.ic_place_holder_150dp, R.mipmap.img_load_error, new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        bImgsViewHolder.item_bimg_img.setScaleType(ImageView.ScaleType.FIT_XY);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        bImgsViewHolder.item_bimg_img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        return false;
+                    }
+                });
     }
 
     @Override

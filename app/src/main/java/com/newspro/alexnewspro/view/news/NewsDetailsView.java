@@ -16,7 +16,7 @@ import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.adapter.listview.NewsDetailsContentAdapter;
 import com.newspro.alexnewspro.model.bean.NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean;
 import com.newspro.alexnewspro.presenter.news.NewsDetailsAct;
-import com.newspro.alexnewspro.utils.GlideUtil;
+import com.newspro.alexnewspro.utils.image_loader_util.glide.GlideLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -167,7 +167,7 @@ public class NewsDetailsView extends MvpBaseView<NewsDetailsAct> {
      * @param url
      */
     private void showNewsBigImg(String url) {
-        GlideUtil.loadImgNoSpecialEffects(presenter, url, news_details_appbar_img);
+        GlideLoader.getInstance().display(news_details_appbar_img,url);
     }
 
 }

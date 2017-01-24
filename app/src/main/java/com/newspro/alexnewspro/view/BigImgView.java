@@ -5,13 +5,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.alex.mvplibrary.view.MvpBaseView;
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.adapter.vp.NewsBigImgAdapter;
 import com.newspro.alexnewspro.customviews.BounceBackViewPager;
 import com.newspro.alexnewspro.customviews.ZoomImgView;
 import com.newspro.alexnewspro.presenter.BigImgAct;
-import com.newspro.alexnewspro.utils.GlideUtil;
+import com.newspro.alexnewspro.utils.common_util.ToastUtils;
+import com.newspro.alexnewspro.utils.image_loader_util.glide.GlideLoader;
 
 import java.util.ArrayList;
 
@@ -56,7 +60,18 @@ public class BigImgView extends MvpBaseView<BigImgAct> {
             ZoomImgView zoomImgView = new ZoomImgView(this.getContext());
             zoomImgView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             zoomImgView.setPager(big_img_viewpager);
-            GlideUtil.loadImgNoSpecialEffects(this.getContext(),string,zoomImgView);
+            GlideLoader.getInstance().display(zoomImgView, string, new RequestListener<String, GlideDrawable>() {
+                @Override
+                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                    ToastUtils.showShort(presenter,"加载失败！");
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                    return false;
+                }
+            });
             zoomImgViews.add(zoomImgView);
         }
         bigImgAdapter = new NewsBigImgAdapter(zoomImgViews,presenter);

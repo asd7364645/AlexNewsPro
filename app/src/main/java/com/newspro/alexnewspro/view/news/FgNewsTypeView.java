@@ -33,7 +33,7 @@ public class FgNewsTypeView extends MvpBaseFragView<FgNewsType> {
 
     @Override
     public void findMvpViews() {
-        news_type_tablayout = findViewById(R.id.type_tablayout);
+        news_type_tablayout = findViewById(R.id.base_tablayout);
         news_type_viewpager = findViewById(R.id.news_type_viewpager);
         fg_news_type_refresh_act_btn = findViewById(R.id.fg_news_type_refresh_act_btn);
     }

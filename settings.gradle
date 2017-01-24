@@ -1,1 +1,1 @@
-include ':app', ':mvplibrary', ':xrecyclerview'
+include ':app', ':mvplibrary', ':xrecyclerview', ':xbaseadapter'

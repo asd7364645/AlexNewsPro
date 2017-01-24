@@ -23,6 +23,10 @@ public class MainActivity extends MvpBaseAct<MainView>
                 mvpView.closeDrawer();
                 mvpView.selectFg(1);
                 break;
+            case R.id.menu_navigation_movies:
+                mvpView.closeDrawer();
+                mvpView.selectFg(2);
+                break;
         }
         return true;
     }

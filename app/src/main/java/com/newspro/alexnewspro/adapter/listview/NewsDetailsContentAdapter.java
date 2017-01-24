@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.newspro.alexnewspro.R;
-import com.newspro.alexnewspro.utils.GlideUtil;
+import com.newspro.alexnewspro.utils.image_loader_util.glide.GlideLoader;
 import com.newspro.alexnewspro.utils.common_util.ZhengZeUtil;
 
 import java.util.List;
@@ -80,7 +80,7 @@ public class NewsDetailsContentAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         if (holder instanceof NewsDetailsImgHolder){
-            GlideUtil.loadImg(context,contents.get(position),((NewsDetailsImgHolder) holder).news_details_item_img);
+            GlideLoader.getInstance().display(((NewsDetailsImgHolder) holder).news_details_item_img,contents.get(position));
             ((NewsDetailsImgHolder) holder).news_details_item_img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

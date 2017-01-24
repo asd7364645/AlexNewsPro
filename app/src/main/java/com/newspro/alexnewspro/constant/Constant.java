@@ -11,6 +11,7 @@ public class Constant {
 
     public static final String TITLE_NEWS = "新闻";
     public static final String TITLE_BIMGS = "美图";
+    public static final String TITLE_MOVIES = "影讯";
 
     /**
      * "channelId": "5572a108b3cdc86cf39001ce",
@@ -105,23 +106,37 @@ public class Constant {
     /**
      * 新闻默认参数
      */
-    public static final String NEWS_DEF_PARAM = "109-35?showapi_appid="+NEWS_APPID+"&showapi_sign=" +
-            NEWS_APPKEY+"";
-    /**国内焦点*/
+    public static final String NEWS_DEF_PARAM = "109-35?showapi_appid=" + NEWS_APPID + "&showapi_sign=" +
+            NEWS_APPKEY + "";
+    /**
+     * 国内焦点
+     */
     public static final String NEWS_GUONEIJIAODIAN = "5572a108b3cdc86cf39001cd";
-    /**军事焦点*/
+    /**
+     * 军事焦点
+     */
     public static final String NEWS_JUNSHIJIAODIAN = "5572a108b3cdc86cf39001cf";
-    /**互联网焦点*/
+    /**
+     * 互联网焦点
+     */
     public static final String NEWS_HULIANWANGJIAODIAN = "5572a108b3cdc86cf39001d1";
-    /**游戏焦点*/
+    /**
+     * 游戏焦点
+     */
     public static final String NEWS_YOUXIJIAODIAN = "5572a108b3cdc86cf39001d6";
-    /**科技焦点*/
+    /**
+     * 科技焦点
+     */
     public static final String NEWS_KEJIJIAODIAN = "5572a108b3cdc86cf39001d9";
-    /**电影最新*/
+    /**
+     * 电影最新
+     */
     public static final String NEWS_DIANYINGZUIXIN = "5572a10ab3cdc86cf39001ec";
 
     public static final HashMap<String, String> NEWS_TITLES_MAP;
     public static final String NEWS_TYPE_STR = "type";
+    public static final String[] MOVIES_TYPE
+            = new String[]{"正在上映"};
 
     static {
         NEWS_TITLES_MAP = new HashMap<>();
@@ -131,16 +146,27 @@ public class Constant {
         NEWS_TITLES_MAP.put(NEWS_YOUXIJIAODIAN, "游戏焦点");
         NEWS_TITLES_MAP.put(NEWS_KEJIJIAODIAN, "科技焦点");
         NEWS_TITLES_MAP.put(NEWS_DIANYINGZUIXIN, "电影最新");
+
     }
+
 
     //--------------------美图-------------------------
 
-    /**美图url地址**/
+    /**
+     * 美图url地址
+     **/
     public static final String GANK_IO_URL = "http://gank.io/api/data/";
 
-    /**图库列表**/
+    /**
+     * 图库列表
+     **/
     public static final String BIMG_LIST = "福利";
 
-    public static final String BIMG_URL = GANK_IO_URL+BIMG_LIST+"/20/";
+    public static final String BIMG_URL = GANK_IO_URL + BIMG_LIST + "/20/";
+
+
+    //--------------------豆瓣电影-------------------------
+
+    public static final String MOVIE_API_URL = "https://api.douban.com/v2/movie/";
 
 }

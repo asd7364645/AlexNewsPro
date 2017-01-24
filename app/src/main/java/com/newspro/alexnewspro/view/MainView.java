@@ -15,6 +15,7 @@ import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.constant.Constant;
 import com.newspro.alexnewspro.presenter.MainActivity;
 import com.newspro.alexnewspro.presenter.bimgs.FgBImg;
+import com.newspro.alexnewspro.presenter.movie.FgMovie;
 import com.newspro.alexnewspro.presenter.news.FgNewsType;
 
 /**
@@ -29,8 +30,11 @@ public class MainView extends MvpBaseView<MainActivity> {
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private DrawerLayout main_drawer_layout;
     private NavigationView main_navigation_view;
+
     private FgNewsType fgNewsType;
     private FgBImg fgBImg;
+    private FgMovie fgMovie;
+
     private int selectItem;
 
     private FragmentManager fragmentManager;
@@ -65,6 +69,16 @@ public class MainView extends MvpBaseView<MainActivity> {
                 main_navigation_view.setCheckedItem(R.id.menu_navigation_imgs);
                 base_toolbar.setTitle(Constant.TITLE_BIMGS);
                 break;
+            case 2:
+                if (fgMovie == null) {
+                    fgMovie = new FgMovie();
+                    fragmentTransaction.add(R.id.main_center_replace, fgMovie);
+                } else {
+                    fragmentTransaction.show(fgMovie);
+                }
+                main_navigation_view.setCheckedItem(R.id.menu_navigation_movies);
+                base_toolbar.setTitle(Constant.TITLE_MOVIES);
+                break;
         }
 
         fragmentTransaction.commitAllowingStateLoss();
@@ -81,6 +95,8 @@ public class MainView extends MvpBaseView<MainActivity> {
             fragmentTransaction.hide(fgNewsType);
         if (fgBImg != null)
             fragmentTransaction.hide(fgBImg);
+        if (fgMovie != null)
+            fragmentTransaction.hide(fgMovie);
     }
 
     @Override
@@ -114,6 +130,8 @@ public class MainView extends MvpBaseView<MainActivity> {
             fragmentManager.putFragment(outState, "fgNewsType", fgNewsType);
         if (fgBImg != null)
             fragmentManager.putFragment(outState, "fgImg", fgBImg);
+        if (fgMovie != null)
+            fragmentManager.putFragment(outState, "fgMovie", fgMovie);
     }
 
     @Override
@@ -126,6 +144,8 @@ public class MainView extends MvpBaseView<MainActivity> {
                 fgNewsType = (FgNewsType) fragmentManager.getFragment(savedInstanceState, "fgNewsType");
             if (savedInstanceState.containsKey("fgImg"))
                 fgBImg = (FgBImg) fragmentManager.getFragment(savedInstanceState, "fgImg");
+            if (savedInstanceState.containsKey("fgMovie"))
+                fgMovie = (FgMovie) fragmentManager.getFragment(savedInstanceState, "fgMovie");
         }
     }
 

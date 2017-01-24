@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.newspro.alexnewspro.presenter.news.NewsDetailsAct;
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.model.bean.NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean;
-import com.newspro.alexnewspro.utils.GlideUtil;
+import com.newspro.alexnewspro.utils.image_loader_util.glide.GlideLoader;
 
 import java.util.List;
 
@@ -72,7 +72,7 @@ public class NewsAdapter extends RecyclerView.Adapter {
             });
             if (!contentlistBean.getImageurls().isEmpty()){
                 newsViewHolder.news_item_img.setVisibility(View.VISIBLE);
-                GlideUtil.loadImg(context, contentlistBean.getImageurls().get(0), newsViewHolder.news_item_img);
+                GlideLoader.getInstance().display(newsViewHolder.news_item_img,contentlistBean.getImageurls().get(0),R.drawable.img_place_holder_color,R.mipmap.img_load_error);
             }
             else newsViewHolder.news_item_img.setVisibility(View.GONE);
             newsViewHolder.news_item_title.setText(contentlistBean.getTitle());
@@ -105,11 +105,4 @@ public class NewsAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public IsEndListener getIsEndListener() {
-        return isEndListener;
-    }
-
-    public void setIsEndListener(IsEndListener isEndListener) {
-        this.isEndListener = isEndListener;
-    }
 }
