@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.example.alex.mvplibrary.model.MvpModel;
 import com.example.alex.mvplibrary.presenter.MvpBaseFrag;
 import com.newspro.alexnewspro.constant.Constant;
 import com.newspro.alexnewspro.event.NewsActionBtnEvent;
@@ -25,7 +26,7 @@ import java.util.Set;
  * Alex
  */
 
-public class FgNewsType extends MvpBaseFrag<FgNewsTypeView> implements View.OnClickListener,ViewPager.OnPageChangeListener {
+public class FgNewsType extends MvpBaseFrag<FgNewsTypeView,MvpModel> implements View.OnClickListener,ViewPager.OnPageChangeListener {
 
     boolean isRefreshOver = true;
 

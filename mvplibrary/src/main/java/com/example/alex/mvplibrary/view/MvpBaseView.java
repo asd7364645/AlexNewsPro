@@ -44,8 +44,8 @@ public abstract class MvpBaseView<P extends MvpPresenter> implements MvpView<P> 
             }
         });
         findMvpViews();
-        bindEvent();
         setData(savedInstanceState);
+        bindEvent();
         setView();
         return rootView;
     }

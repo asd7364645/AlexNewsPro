@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:selectableItemBackground"
+    android:padding="4dp"
+    >
+
+    <ImageView
+        android:id="@+id/item_comming_soon_img"
+        android:layout_width="70dp"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_place_holder_150dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_toEndOf="@id/item_comming_soon_img"
+        android:layout_toRightOf="@id/item_comming_soon_img"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/item_comming_soon_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:text="电影名"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_18sp"/>
+
+        <TextView
+            android:id="@+id/item_comming_soon_genres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:text="电影类型"
+            android:textSize="@dimen/text_14sp"/>
+
+        <TextView
+            android:id="@+id/item_comming_soon_directors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:text="导演"
+            android:textSize="@dimen/text_14sp"/>
+
+        <TextView
+            android:id="@+id/item_comming_soon_casts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:text="演员"
+            android:textSize="@dimen/text_14sp"/>
+    </LinearLayout>
+
+</RelativeLayout>

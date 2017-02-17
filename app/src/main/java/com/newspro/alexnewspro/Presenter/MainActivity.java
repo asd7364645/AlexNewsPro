@@ -4,11 +4,12 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.view.MenuItem;
 
+import com.example.alex.mvplibrary.model.MvpModel;
 import com.example.alex.mvplibrary.presenter.MvpBaseAct;
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.view.MainView;
 
-public class MainActivity extends MvpBaseAct<MainView>
+public class MainActivity extends MvpBaseAct<MainView,MvpModel>
         implements NavigationView.OnNavigationItemSelectedListener{
 
 

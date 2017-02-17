@@ -5,7 +5,7 @@
               android:layout_height="match_parent">
 
     <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/fg_in_theaters_rv"
+        android:id="@+id/fg_top250_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

@@ -121,6 +121,9 @@ public class RvItemViewDelegateManager<T> {
             RvItemViewDelegate<T> rvItemViewDelegate = delegates.valueAt(i);
             //如果是则返回
             if (rvItemViewDelegate.isForViewType(item, posi)) {
+
+                rvItemViewDelegate.findViews(holder);
+
                 rvItemViewDelegate.convert(holder, item, posi);
                 return;
             }
@@ -134,6 +137,9 @@ public class RvItemViewDelegateManager<T> {
             RvItemViewDelegate<T> rvItemViewDelegate = delegates.valueAt(i);
             //如果是则返回
             if (rvItemViewDelegate.isForViewType(item, posi)) {
+
+                rvItemViewDelegate.findViews(holder);
+
                 rvItemViewDelegate.convertByPosi(holder, item, posi);
                 return;
             }

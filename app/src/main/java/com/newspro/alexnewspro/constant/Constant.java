@@ -136,7 +136,7 @@ public class Constant {
     public static final HashMap<String, String> NEWS_TITLES_MAP;
     public static final String NEWS_TYPE_STR = "type";
     public static final String[] MOVIES_TYPE
-            = new String[]{"正在上映"};
+            = new String[]{"正在上映","TOP 250","即将上映"};
 
     static {
         NEWS_TITLES_MAP = new HashMap<>();

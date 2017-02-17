@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.example.alex.mvplibrary.model.MvpModel;
 import com.example.alex.mvplibrary.presenter.MvpBaseAct;
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.utils.common_util.FileUtils;
@@ -21,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class BigImgAct extends MvpBaseAct<BigImgView> implements View.OnClickListener, ViewPager.OnPageChangeListener {
+public class BigImgAct extends MvpBaseAct<BigImgView,MvpModel> implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
     private int page;
     private ArrayList<String> imgs;

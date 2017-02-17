@@ -2,6 +2,7 @@ package com.newspro.alexnewspro.model;
 
 import android.os.AsyncTask;
 
+import com.example.alex.mvplibrary.model.MvpModelInterface;
 import com.example.alex.mvplibrary.model.MvpModelCallBack;
 import com.newspro.alexnewspro.constant.Constant;
 import com.newspro.alexnewspro.http.RetrofitUtil;
@@ -24,7 +25,7 @@ import retrofit2.Response;
  * Alex
  */
 
-public class NewsModel {
+public class NewsModel implements MvpModelInterface {
 
     private static final String TAG = "NewsModel";
 

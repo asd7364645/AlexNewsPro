@@ -1,6 +1,5 @@
 package com.newspro.xbaseadapter.recycler_baseadapter.delegate;
 
-import com.newspro.xbaseadapter.ordinarylistview.XLvViewHolder;
 import com.newspro.xbaseadapter.recycler_baseadapter.XRvViewHolder;
 
 /**
@@ -42,5 +41,7 @@ public interface RvItemViewDelegate<T> {
      * @param position
      */
     void convertByPosi(XRvViewHolder holder, T item, int position);
+
+    void findViews(XRvViewHolder holder);
 
 }

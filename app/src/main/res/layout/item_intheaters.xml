@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
+    android:foreground="?android:selectableItemBackground"
     app:cardBackgroundColor="@android:color/white"
     app:cardCornerRadius="@dimen/cardview_default_radius"
     app:cardElevation="@dimen/cardview_default_elevation">
@@ -14,21 +15,20 @@
         android:id="@+id/item_intheaters_img"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@color/cardview_dark_background"
         android:scaleType="centerCrop"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:background="@color/touming_black_btn_aa"
         android:gravity="center"
-        android:orientation="horizontal">
+        >
 
         <TextView
             android:id="@+id/item_intheaters_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/touming_black_btn_aa"
             android:padding="3dp"
             android:text="Name"
             android:textColor="@android:color/white"/>
@@ -41,6 +41,7 @@
             android:isIndicator="true"
             android:max="10"
             android:numStars="5"
+            android:layout_marginTop="12dp"
             android:progressDrawable="@drawable/ranting_bar_bg"
             android:rating="1.5"/>
     </RelativeLayout>

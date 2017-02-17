@@ -1,6 +1,6 @@
 package com.newspro.alexnewspro.http.httpinterface;
 
-import com.newspro.alexnewspro.model.bean.doubanmovie.InTheatersMoviesBean;
+import com.newspro.alexnewspro.model.bean.doubanmovie.MoviesListBean;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -14,6 +14,12 @@ import retrofit2.http.Query;
 public interface DouBanMovieInterface {
 
     @GET("in_theaters")
-    Call<InTheatersMoviesBean> getInTheaters(@Query("city") String city);
+    Call<MoviesListBean> getInTheaters(@Query("city") String city);
+
+    @GET("top250?count=10")
+    Call<MoviesListBean> getTop250Movies(@Query("start") int start);
+
+    @GET("coming_soon?count=10")
+    Call<MoviesListBean> getCommingSoon(@Query("start") int start);
 
 }

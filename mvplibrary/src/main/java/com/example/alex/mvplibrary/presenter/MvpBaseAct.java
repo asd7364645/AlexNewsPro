@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
 import com.example.alex.mvplibrary.helper.GenericHelper;
+import com.example.alex.mvplibrary.model.MvpModelInterface;
 import com.example.alex.mvplibrary.view.MvpView;
 
 /**
@@ -14,15 +15,18 @@ import com.example.alex.mvplibrary.view.MvpView;
  * Alex
  */
 
-public abstract class MvpBaseAct<V extends MvpView> extends AppCompatActivity implements MvpPresenter<V> {
+public abstract class MvpBaseAct<V extends MvpView, M extends MvpModelInterface> extends AppCompatActivity implements MvpPresenter<V, M> {
 
     protected V mvpView;
+    protected M mvpModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         create(savedInstanceState);
         try {
+            //初始化model
+            mvpModel = getModelClass().newInstance();
             //初始化mvpView
             mvpView = getViewClass().newInstance();
             mvpView.bindPresenter(this);
@@ -30,7 +34,8 @@ public abstract class MvpBaseAct<V extends MvpView> extends AppCompatActivity im
             setToolBar(mvpView.getToolBar());
             if (getSupportActionBar() != null)
                 mvpView.settingActionBar(getSupportActionBar());
-            created(savedInstanceState);
+            if (mvpView != null)
+                created(savedInstanceState);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -103,7 +108,12 @@ public abstract class MvpBaseAct<V extends MvpView> extends AppCompatActivity im
 
     @Override
     public Class<V> getViewClass() {
-        return GenericHelper.GenericToClass(getClass());
+        return GenericHelper.GenericToClass(getClass(), 0);
+    }
+
+    @Override
+    public Class<M> getModelClass() {
+        return GenericHelper.GenericToClass(getClass(), 1);
     }
 
     public void setToolBar(Toolbar toolBar) {

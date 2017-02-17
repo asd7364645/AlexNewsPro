@@ -15,7 +15,7 @@ import java.util.List;
  * Alex
  */
 
-public class XRvMultiItemTypeAdapter<T> extends RecyclerView.Adapter<XRvViewHolder> {
+public abstract class XRvMultiItemTypeAdapter<T> extends RecyclerView.Adapter<XRvViewHolder> {
 
     private Context context;
     private List<T> mDatas;
@@ -72,7 +72,6 @@ public class XRvMultiItemTypeAdapter<T> extends RecyclerView.Adapter<XRvViewHold
 
     @Override
     public void onBindViewHolder(XRvViewHolder holder, int position, List<Object> payloads) {
-        super.onBindViewHolder(holder, position, payloads);
         if (payloads == null || payloads.isEmpty()) {
             convert(holder, mDatas.get(position));
         } else {

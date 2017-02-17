@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.alex.mvplibrary.helper.GenericHelper;
+import com.example.alex.mvplibrary.model.MvpModelInterface;
 import com.example.alex.mvplibrary.view.MvpBaseFragView;
 
 /**
@@ -17,19 +18,23 @@ import com.example.alex.mvplibrary.view.MvpBaseFragView;
  * Alex
  */
 
-public abstract class MvpBaseFrag<V extends MvpBaseFragView> extends Fragment implements MvpPresenter<V> {
+public abstract class MvpBaseFrag<V extends MvpBaseFragView, M extends MvpModelInterface> extends Fragment implements MvpPresenter<V, M> {
     protected V mvpView;
+    protected M mvpModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         create(savedInstanceState);
         View rootView = null;
         try {
+            //初始化mvpModel
+            mvpModel = getModelClass().newInstance();
             //初始化mvpView
             mvpView = getViewClass().newInstance();
             mvpView.bindPresenter(this);
             rootView = mvpView.createView(inflater, container, savedInstanceState);
-            created(savedInstanceState);
+            if (mvpView != null)
+                created(savedInstanceState);
         } catch (java.lang.InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -60,7 +65,6 @@ public abstract class MvpBaseFrag<V extends MvpBaseFragView> extends Fragment im
 
     @Override
     public void created(Bundle saveInstance) {
-
     }
 
     @Override
@@ -81,7 +85,7 @@ public abstract class MvpBaseFrag<V extends MvpBaseFragView> extends Fragment im
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (mvpView!=null){
+        if (mvpView != null) {
             mvpView.saveInstanceState(outState);
         }
     }
@@ -103,7 +107,12 @@ public abstract class MvpBaseFrag<V extends MvpBaseFragView> extends Fragment im
 
     @Override
     public Class<V> getViewClass() {
-        return GenericHelper.GenericToClass(getClass());
+        return GenericHelper.GenericToClass(getClass(), 0);
+    }
+
+    @Override
+    public Class<M> getModelClass() {
+        return GenericHelper.GenericToClass(getClass(), 1);
     }
 
 }

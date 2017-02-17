@@ -25,9 +25,9 @@ import java.util.List;
  * Created by Alex on 2016/12/25.
  */
 
-public class FgNews extends MvpBaseFrag<FgNewsView> implements XRecyclerView.LoadingListener {
+public class FgNews extends MvpBaseFrag<FgNewsView,NewsModel> implements XRecyclerView.LoadingListener {
 
-    private NewsModel newsModel;
+//    private NewsModel newsModel;
     private String type;
     private int page = 1;
     private boolean isLoading = false;
@@ -36,7 +36,7 @@ public class FgNews extends MvpBaseFrag<FgNewsView> implements XRecyclerView.Loa
     @Override
     public void create(Bundle saveInstance) {
         super.create(saveInstance);
-        newsModel = new NewsModel();
+//        mvpModel = new NewsModel();
         Bundle arguments = getArguments();
         type = arguments.getString(Constant.NEWS_TYPE_STR);
         EventBus.getDefault().register(this);
@@ -72,7 +72,7 @@ public class FgNews extends MvpBaseFrag<FgNewsView> implements XRecyclerView.Loa
         } else {
             page = ++page;
         }
-        newsModel.getNewsOfType(type, page, new MvpModelCallBack<NewsBean.ShowapiResBodyBean.PagebeanBean>() {
+        mvpModel.getNewsOfType(type, page, new MvpModelCallBack<NewsBean.ShowapiResBodyBean.PagebeanBean>() {
             @Override
             public void result(NewsBean.ShowapiResBodyBean.PagebeanBean data) {
                 maxPage = data.getAllPages();
@@ -135,8 +135,8 @@ public class FgNews extends MvpBaseFrag<FgNewsView> implements XRecyclerView.Loa
         super.onDestroy();
         EventBus.getDefault().unregister(this);
         //在销毁时如果网络访问没结束则取消网络访问
-        if (newsModel.getNewsBeanCall() != null && !newsModel.getNewsBeanCall().isCanceled()) {
-            newsModel.getNewsBeanCall().cancel();
+        if (mvpModel.getNewsBeanCall() != null && !mvpModel.getNewsBeanCall().isCanceled()) {
+            mvpModel.getNewsBeanCall().cancel();
         }
     }
 

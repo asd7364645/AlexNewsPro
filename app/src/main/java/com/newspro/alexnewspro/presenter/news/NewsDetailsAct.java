@@ -3,6 +3,7 @@ package com.newspro.alexnewspro.presenter.news;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.alex.mvplibrary.model.MvpModel;
 import com.example.alex.mvplibrary.presenter.MvpBaseAct;
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.adapter.listview.NewsDetailsContentAdapter;
@@ -13,7 +14,7 @@ import com.newspro.alexnewspro.view.news.NewsDetailsView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewsDetailsAct extends MvpBaseAct<NewsDetailsView> implements NewsDetailsContentAdapter.NewsDetailsContentsItemClickListener{
+public class NewsDetailsAct extends MvpBaseAct<NewsDetailsView,MvpModel> implements NewsDetailsContentAdapter.NewsDetailsContentsItemClickListener{
 
     private Intent intent;
     private List<String> imgs;

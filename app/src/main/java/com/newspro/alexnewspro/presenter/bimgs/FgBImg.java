@@ -22,9 +22,9 @@ import java.util.ArrayList;
  * Alex
  */
 
-public class FgBImg extends MvpBaseFrag<FgBimgView> implements XRecyclerView.LoadingListener, BImgsAdapter.BImgsAdapterClickListener, View.OnClickListener {
+public class FgBImg extends MvpBaseFrag<FgBimgView,BImgsModel> implements XRecyclerView.LoadingListener, BImgsAdapter.BImgsAdapterClickListener, View.OnClickListener {
 
-    private BImgsModel bImgsModel;
+//    private BImgsModel bImgsModel;
     private int page = 1;
     private BImgListBean bImgListBean;
     private boolean isLoading = false;
@@ -32,7 +32,7 @@ public class FgBImg extends MvpBaseFrag<FgBimgView> implements XRecyclerView.Loa
     @Override
     public void create(Bundle saveInstance) {
         super.create(saveInstance);
-        bImgsModel = new BImgsModel();
+//        mvpModel = new BImgsModel();
     }
 
 
@@ -42,7 +42,7 @@ public class FgBImg extends MvpBaseFrag<FgBimgView> implements XRecyclerView.Loa
             page = 1;
         else
             page = ++page;
-        bImgsModel.getImgsList(page, new MvpModelCallBack<BImgListBean>() {
+        mvpModel.getImgsList(page, new MvpModelCallBack<BImgListBean>() {
             @Override
             public void result(BImgListBean data) {
                 bImgListBean = data;
@@ -91,8 +91,8 @@ public class FgBImg extends MvpBaseFrag<FgBimgView> implements XRecyclerView.Loa
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (bImgsModel.getImgListCall() != null && !bImgsModel.getImgListCall().isCanceled()) {
-            bImgsModel.getImgListCall().cancel();
+        if (mvpModel.getImgListCall() != null && !mvpModel.getImgListCall().isCanceled()) {
+            mvpModel.getImgListCall().cancel();
         }
     }
 

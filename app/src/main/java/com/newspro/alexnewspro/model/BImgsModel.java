@@ -1,5 +1,6 @@
 package com.newspro.alexnewspro.model;
 
+import com.example.alex.mvplibrary.model.MvpModelInterface;
 import com.example.alex.mvplibrary.model.MvpModelCallBack;
 import com.newspro.alexnewspro.constant.Constant;
 import com.newspro.alexnewspro.http.RetrofitUtil;
@@ -16,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Alex
  */
 
-public class BImgsModel {
+public class BImgsModel implements MvpModelInterface {
 
     private Call<BImgListBean> imgListCall;
 

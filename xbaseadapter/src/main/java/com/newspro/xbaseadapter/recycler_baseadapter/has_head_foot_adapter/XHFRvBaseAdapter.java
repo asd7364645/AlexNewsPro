@@ -36,13 +36,22 @@ public abstract class XHFRvBaseAdapter<T> extends XHFRvMultiItemTypeAdapter<T> {
                 XHFRvBaseAdapter.this.convertByPosi(holder,item,position);
             }
 
+            @Override
+            public void findViews(XRvViewHolder holder) {
+                findMyViews(holder);
+            }
+
         });
     }
+
+    protected abstract void findMyViews(XRvViewHolder holder);
 
     protected void convertByPosi(XRvViewHolder holder, T item, int position){
 
     }
 
-    protected abstract void convert(XRvViewHolder viewHolder, T item, int position);
+    protected void convert(XRvViewHolder viewHolder, T item, int position){
+
+    }
 
 }

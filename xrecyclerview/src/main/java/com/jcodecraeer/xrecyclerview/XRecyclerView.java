@@ -351,6 +351,11 @@ public class XRecyclerView extends RecyclerView {
 
         @Override
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position, List<Object> payloads) {
             if (isHeader(position) || isRefreshHeader(position)) {
                 return;
             }
@@ -359,7 +364,7 @@ public class XRecyclerView extends RecyclerView {
             if (adapter != null) {
                 adapterCount = adapter.getItemCount();
                 if (adjPosition < adapterCount) {
-                    adapter.onBindViewHolder(holder, adjPosition);
+                    adapter.onBindViewHolder(holder, adjPosition,payloads);
                     return;
                 }
             }
