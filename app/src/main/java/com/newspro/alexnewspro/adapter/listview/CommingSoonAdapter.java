@@ -42,9 +42,9 @@ public class CommingSoonAdapter extends XRefreshRvBaseAdapter<SubjectsBean> {
     protected void convert(XRvViewHolder viewHolder, SubjectsBean item, int position) {
         GlideLoader.getInstance().display(item_comming_soon_img, item.getImages().getLarge());
         item_comming_soon_name.setText(item.getTitle());
-        String genres = "演员表：" + item.getGenres().get(0).toString();
+        String genres = "类型：" + (item.getGenres().isEmpty()?"无": item.getGenres().get(0));
         item_comming_soon_genres.setText(genres);
-        String directors = "导演：" + item.getDirectors().get(0).getName();
+        String directors = "导演：" + (item.getDirectors().isEmpty()?"无":item.getDirectors().get(0).getName());
         item_comming_soon_directors.setText(directors);
         String casts = "演员：";
         for (int i = 0; i < item.getCasts().size(); i++) {
