@@ -38,11 +38,8 @@ public class NewsDetailsView extends MvpBaseView<NewsDetailsAct> {
     private TextView news_details_title_tv, news_details_date,
             news_details_desc_tv;
     private List<String> contents;
-//    //相关列表
-//    private List<ContentlistBean> contentlistBeanList;
     //适配器
     private NewsDetailsContentAdapter newsDetailsContentAdapter;
-//    private NewsDetailsRelevantAdapter newsDetailsRelevantAdapter;
 
     @Override
     public int setLayoutId() {
@@ -59,7 +56,6 @@ public class NewsDetailsView extends MvpBaseView<NewsDetailsAct> {
         news_details_title_tv = findViewById(R.id.news_details_title_tv);
         news_details_desc_tv = findViewById(R.id.news_details_desc_tv);
         news_details_date = findViewById(R.id.news_details_date);
-//        news_details_relevant_recycler = findViewById(R.id.news_details_relevant_recycler);
     }
 
     @Override
@@ -70,6 +66,13 @@ public class NewsDetailsView extends MvpBaseView<NewsDetailsAct> {
     @Override
     protected void setData(Bundle savedInstanceState) {
         super.setData(savedInstanceState);
+
+
+    }
+
+    @Override
+    protected void setView() {
+        super.setView();
         //设置recyclerview与NestedScrollView嵌套的解决方案,详情查看笔记中
         LinearLayoutManager contentLayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
         contentLayoutManager.setSmoothScrollbarEnabled(true);
@@ -83,21 +86,6 @@ public class NewsDetailsView extends MvpBaseView<NewsDetailsAct> {
         news_details_recycler.setHasFixedSize(true);
         news_details_recycler.setNestedScrollingEnabled(false);
         news_details_recycler.setAdapter(newsDetailsContentAdapter);
-
-        //设置相关内容recyclerview
-//        contentlistBeanList = new ArrayList<>();
-//        newsDetailsRelevantAdapter = new NewsDetailsRelevantAdapter(this.getContext(), contentlistBeanList);
-//        LinearLayoutManager relevantLayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
-//        contentLayoutManager.setSmoothScrollbarEnabled(true);
-//        contentLayoutManager.setAutoMeasureEnabled(true);
-//        news_details_relevant_recycler.setLayoutManager(relevantLayoutManager);
-//        news_details_relevant_recycler.setNestedScrollingEnabled(false);
-//        news_details_relevant_recycler.setAdapter(newsDetailsContentAdapter);
-    }
-
-    @Override
-    protected void setView() {
-        super.setView();
     }
 
     @Override

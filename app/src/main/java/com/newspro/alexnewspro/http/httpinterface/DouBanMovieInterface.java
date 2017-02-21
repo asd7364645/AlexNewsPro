@@ -1,9 +1,11 @@
 package com.newspro.alexnewspro.http.httpinterface;
 
+import com.newspro.alexnewspro.model.bean.doubanmovie.DetailsSubjectBean;
 import com.newspro.alexnewspro.model.bean.doubanmovie.MoviesListBean;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -21,5 +23,8 @@ public interface DouBanMovieInterface {
 
     @GET("coming_soon?count=10")
     Call<MoviesListBean> getCommingSoon(@Query("start") int start);
+
+    @GET("subject/{id}")
+    Call<DetailsSubjectBean> getDetailsSubject(@Path("id") String id);
 
 }

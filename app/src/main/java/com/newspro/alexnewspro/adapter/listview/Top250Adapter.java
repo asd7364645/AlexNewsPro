@@ -1,6 +1,7 @@
 package com.newspro.alexnewspro.adapter.listview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.AppCompatRatingBar;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.model.bean.doubanmovie.SubjectsBean;
+import com.newspro.alexnewspro.presenter.movie.MovieDetailsAct;
 import com.newspro.alexnewspro.utils.image_loader_util.glide.GlideLoader;
 import com.newspro.xbaseadapter.recycler_baseadapter.XRvViewHolder;
 import com.newspro.xbaseadapter.recycler_baseadapter.refresh_adapters.XRefreshRvBaseAdapter;
@@ -50,10 +52,14 @@ public class Top250Adapter extends XRefreshRvBaseAdapter<SubjectsBean> {
     }
 
     @Override
-    protected void convert(XRvViewHolder viewHolder, SubjectsBean item, int position) {
+    protected void convert(XRvViewHolder viewHolder, final SubjectsBean item, int position) {
         item_top250_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String movieId = item.getId();
+                Intent intent = new Intent(getContext(), MovieDetailsAct.class);
+                intent.putExtra("movieId",movieId);
+                getContext().startActivity(intent);
             }
         });
         String number = position + "";

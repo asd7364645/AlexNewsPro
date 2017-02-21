@@ -1,7 +1,5 @@
 package com.newspro.alexnewspro.presenter.movie;
 
-import android.os.Bundle;
-
 import com.example.alex.mvplibrary.model.MvpModelCallBack;
 import com.example.alex.mvplibrary.presenter.MvpBaseFrag;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -19,19 +17,6 @@ import java.util.List;
  */
 
 public class FgInTheaters extends MvpBaseFrag<FgInTheatersView, MovieModel> implements XRecyclerView.LoadingListener {
-
-//    private MovieModel movieModel;
-
-    @Override
-    public void create(Bundle saveInstance) {
-        super.create(saveInstance);
-//        mvpModel = new MovieModel();
-    }
-
-    @Override
-    public void created(Bundle saveInstance) {
-        super.created(saveInstance);
-    }
 
     public void getInTheatersFromModel() {
         mvpModel.getInTheaters("深圳", new MvpModelCallBack<MoviesListBean>() {
@@ -69,8 +54,6 @@ public class FgInTheaters extends MvpBaseFrag<FgInTheatersView, MovieModel> impl
     public void onDestroy() {
         super.onDestroy();
         //在销毁时如果网络访问没结束则取消网络访问
-        if (mvpModel.getInTheaters() != null && !mvpModel.getInTheaters().isCanceled()) {
-            mvpModel.getInTheaters().cancel();
-        }
+        mvpModel.destroyCall(mvpModel.getInTheaters());
     }
 }

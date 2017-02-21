@@ -5,6 +5,7 @@ import com.example.alex.mvplibrary.model.MvpModelCallBack;
 import com.newspro.alexnewspro.constant.Constant;
 import com.newspro.alexnewspro.http.RetrofitUtil;
 import com.newspro.alexnewspro.http.httpinterface.DouBanMovieInterface;
+import com.newspro.alexnewspro.model.bean.doubanmovie.DetailsSubjectBean;
 import com.newspro.alexnewspro.model.bean.doubanmovie.MoviesListBean;
 
 import retrofit2.Call;
@@ -22,6 +23,8 @@ public class MovieModel implements MvpModelInterface {
     private Call<MoviesListBean> inTheaters;
     private Call<MoviesListBean> top250;
     private Call<MoviesListBean> commingSoon;
+
+    private Call<DetailsSubjectBean> detailsSubject;
 
     /**
      * 通过城市查询正在上映的电影
@@ -49,6 +52,7 @@ public class MovieModel implements MvpModelInterface {
 
     /**
      * 查询TOP250电影信息
+     *
      * @param start
      * @param success
      * @param error
@@ -70,8 +74,8 @@ public class MovieModel implements MvpModelInterface {
         });
     }
 
-    public void getCommingSoon(int start , final MvpModelCallBack<MoviesListBean> success, final MvpModelCallBack<String> error){
-        commingSoon = RetrofitUtil.retrofitUtil(Constant.MOVIE_API_URL,GsonConverterFactory.create())
+    public void getCommingSoon(int start, final MvpModelCallBack<MoviesListBean> success, final MvpModelCallBack<String> error) {
+        commingSoon = RetrofitUtil.retrofitUtil(Constant.MOVIE_API_URL, GsonConverterFactory.create())
                 .create(DouBanMovieInterface.class).getCommingSoon(start);
         commingSoon.enqueue(new Callback<MoviesListBean>() {
             @Override
@@ -85,6 +89,29 @@ public class MovieModel implements MvpModelInterface {
                 error.result(t.getMessage());
             }
         });
+    }
+
+    public void getDetailsSubject(String movieId, final MvpModelCallBack<DetailsSubjectBean> success, final MvpModelCallBack<String> error){
+        detailsSubject = RetrofitUtil.retrofitUtil(Constant.MOVIE_API_URL,GsonConverterFactory.create())
+                .create(DouBanMovieInterface.class).getDetailsSubject(movieId);
+        detailsSubject.enqueue(new Callback<DetailsSubjectBean>() {
+            @Override
+            public void onResponse(Call<DetailsSubjectBean> call, Response<DetailsSubjectBean> response) {
+                DetailsSubjectBean detailsSubjectBean = response.body();
+                success.result(detailsSubjectBean);
+            }
+
+            @Override
+            public void onFailure(Call<DetailsSubjectBean> call, Throwable t) {
+                error.result(t.getMessage());
+            }
+        });
+    }
+
+    public void destroyCall(Call call) {
+        if (call != null && !call.isCanceled()) {
+            call.cancel();
+        }
     }
 
     public Call<MoviesListBean> getInTheaters() {

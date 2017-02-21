@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="100dp"
+              android:layout_height="100dp"
+              android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        android:gravity="center"
+        android:text="导\n演"
+        android:textSize="@dimen/text_18sp"
+        android:textStyle="bold"/>
+
+    <ImageView
+        android:id="@+id/item_details_casts_directors_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@color/cardview_dark_background"/>
+
+</LinearLayout>

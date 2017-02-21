@@ -1,6 +1,7 @@
 package com.newspro.alexnewspro.adapter.listview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.CardView;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.model.bean.doubanmovie.SubjectsBean;
+import com.newspro.alexnewspro.presenter.movie.MovieDetailsAct;
 import com.newspro.alexnewspro.utils.image_loader_util.glide.GlideLoader;
 import com.newspro.xbaseadapter.recycler_baseadapter.XRvViewHolder;
 import com.newspro.xbaseadapter.recycler_baseadapter.refresh_adapters.XRefreshRvBaseAdapter;
@@ -43,7 +45,7 @@ public class InTheatersAdapter extends XRefreshRvBaseAdapter<SubjectsBean> {
     }
 
     @Override
-    protected void convert(XRvViewHolder viewHolder, SubjectsBean item, int position) {
+    protected void convert(XRvViewHolder viewHolder, final SubjectsBean item, int position) {
         Log.d(TAG, "convert: " + item.getTitle() + "  :  " + item.getAlt());
         //由于5.0以下不兼容ripple，所以判断版本来设置
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
@@ -53,7 +55,10 @@ public class InTheatersAdapter extends XRefreshRvBaseAdapter<SubjectsBean> {
         item_intheaters_cardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String movieId = item.getId();
+                Intent intent = new Intent(getContext(), MovieDetailsAct.class);
+                intent.putExtra("movieId",movieId);
+                getContext().startActivity(intent);
             }
         });
 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="6dp">
+
+
+    <TextView
+        android:id="@+id/item_details_casts_casts_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="12sp"
+        android:layout_marginTop="2dp"
+        android:text="@string/app_name"/>
+
+    <com.newspro.alexnewspro.customviews.CircleImageView
+        android:id="@+id/item_details_casts_casts_img"
+        android:layout_width="99dp"
+        android:layout_height="90dp"
+        android:layout_centerInParent="true"
+        android:layout_above="@id/item_details_casts_casts_name"
+        android:paddingEnd="3dp"
+        android:paddingStart="3dp"
+        android:src="@color/cardview_dark_background"/>
+
+
+</RelativeLayout>

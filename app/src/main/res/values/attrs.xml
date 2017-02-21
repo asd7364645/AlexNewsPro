@@ -16,5 +16,13 @@
         <!-- 回滚动画持续时间，默认为400ms. -->
         <attr name="overscroll_animation_duration" format="integer"/>
     </declare-styleable>
+    <!--展开收缩TextView-->
+    <declare-styleable name="ExpandableTextView">
+        <attr name="maxCollapsedLines" format="integer"/>
+        <attr name="animDuration" format="integer"/>
+        <attr name="animAlphaStart" format="float"/>
+        <attr name="expandDrawable" format="reference"/>
+        <attr name="collapseDrawable" format="reference"/>
+    </declare-styleable>
 
 </resources>

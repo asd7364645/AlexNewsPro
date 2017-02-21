@@ -1,7 +1,5 @@
 package com.newspro.alexnewspro.presenter.movie;
 
-import android.os.Bundle;
-
 import com.example.alex.mvplibrary.model.MvpModelCallBack;
 import com.example.alex.mvplibrary.presenter.MvpBaseFrag;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -22,11 +20,6 @@ public class FgTop250 extends MvpBaseFrag<FgTop250View, MovieModel> implements X
 
     int total = 0;
     int start = DEF_START;
-
-    @Override
-    public void created(Bundle saveInstance) {
-        super.created(saveInstance);
-    }
 
     public void getTop250ForModel(final boolean isRefresh) {
         mvpModel.getTop250(start, new MvpModelCallBack<MoviesListBean>() {
@@ -74,8 +67,6 @@ public class FgTop250 extends MvpBaseFrag<FgTop250View, MovieModel> implements X
     public void onDestroy() {
         super.onDestroy();
         //在销毁时如果网络访问没结束则取消网络访问
-        if (mvpModel.getTop250()!=null&&!mvpModel.getTop250().isCanceled()){
-            mvpModel.getTop250().cancel();
-        }
+        mvpModel.destroyCall(mvpModel.getTop250());
     }
 }

@@ -95,10 +95,4 @@ public class FgTop250View extends MvpBaseFragView<FgTop250> {
     public void topNoMore() {
         fg_top250_rv.setNoMore(true);
     }
-
-    @Override
-    public void ondestroy() {
-        super.ondestroy();
-
-    }
 }

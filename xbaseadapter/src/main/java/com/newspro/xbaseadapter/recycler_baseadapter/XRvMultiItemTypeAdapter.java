@@ -15,7 +15,7 @@ import java.util.List;
  * Alex
  */
 
-public abstract class XRvMultiItemTypeAdapter<T> extends RecyclerView.Adapter<XRvViewHolder> {
+public class XRvMultiItemTypeAdapter<T> extends RecyclerView.Adapter<XRvViewHolder> {
 
     private Context context;
     private List<T> mDatas;

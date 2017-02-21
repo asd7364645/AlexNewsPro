@@ -1,11 +1,15 @@
 package com.newspro.alexnewspro.adapter.listview;
 
 import android.content.Context;
+import android.content.Intent;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.model.bean.doubanmovie.SubjectsBean;
+import com.newspro.alexnewspro.presenter.movie.MovieDetailsAct;
 import com.newspro.alexnewspro.utils.image_loader_util.glide.GlideLoader;
 import com.newspro.xbaseadapter.recycler_baseadapter.XRvViewHolder;
 import com.newspro.xbaseadapter.recycler_baseadapter.refresh_adapters.XRefreshRvBaseAdapter;
@@ -19,6 +23,7 @@ import java.util.List;
 
 public class CommingSoonAdapter extends XRefreshRvBaseAdapter<SubjectsBean> {
 
+    private RelativeLayout item_comming_soon_rv;
     private ImageView item_comming_soon_img;
     private TextView item_comming_soon_name,
             item_comming_soon_genres,
@@ -32,6 +37,7 @@ public class CommingSoonAdapter extends XRefreshRvBaseAdapter<SubjectsBean> {
     @Override
     protected void findMyViews(XRvViewHolder holder) {
         item_comming_soon_img = holder.getItemView(R.id.item_comming_soon_img);
+        item_comming_soon_rv = holder.getItemView(R.id.item_comming_soon_rv);
         item_comming_soon_name = holder.getItemView(R.id.item_comming_soon_name);
         item_comming_soon_genres = holder.getItemView(R.id.item_comming_soon_genres);
         item_comming_soon_directors = holder.getItemView(R.id.item_comming_soon_directors);
@@ -39,7 +45,16 @@ public class CommingSoonAdapter extends XRefreshRvBaseAdapter<SubjectsBean> {
     }
 
     @Override
-    protected void convert(XRvViewHolder viewHolder, SubjectsBean item, int position) {
+    protected void convert(XRvViewHolder viewHolder, final SubjectsBean item, int position) {
+        item_comming_soon_rv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String movieId = item.getId();
+                Intent intent = new Intent(getContext(), MovieDetailsAct.class);
+                intent.putExtra("movieId",movieId);
+                getContext().startActivity(intent);
+            }
+        });
         GlideLoader.getInstance().display(item_comming_soon_img, item.getImages().getLarge());
         item_comming_soon_name.setText(item.getTitle());
         String genres = "类型：" + (item.getGenres().isEmpty()?"无": item.getGenres().get(0));
