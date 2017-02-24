@@ -1,8 +1,7 @@
 package com.newspro.alexnewspro.view.news;
 
-import android.os.Bundle;
+import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,7 +33,7 @@ public class NewsDetailsView extends MvpBaseView<NewsDetailsAct> {
 //            , news_details_relevant_recycler
             ;
     private CollapsingToolbarLayout news_details_coll_layout;
-    private FloatingActionButton news_details_floating_btn;
+    //    private FloatingActionButton news_details_floating_btn;
     private TextView news_details_title_tv, news_details_date,
             news_details_desc_tv;
     private List<String> contents;
@@ -51,7 +50,7 @@ public class NewsDetailsView extends MvpBaseView<NewsDetailsAct> {
         news_details_toolbar = findViewById(R.id.news_details_toolbar);
         news_details_appbar_img = findViewById(R.id.news_details_appbar_img);
         news_details_recycler = findViewById(R.id.news_details_recycler);
-        news_details_floating_btn = findViewById(R.id.news_details_floating_btn);
+//        news_details_floating_btn = findViewById(news_details_floating_btn);
         news_details_coll_layout = findViewById(R.id.news_details_coll_layout);
         news_details_title_tv = findViewById(R.id.news_details_title_tv);
         news_details_desc_tv = findViewById(R.id.news_details_desc_tv);
@@ -60,15 +59,30 @@ public class NewsDetailsView extends MvpBaseView<NewsDetailsAct> {
 
     @Override
     public Toolbar getToolBar() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+            news_details_toolbar.getLayoutParams().height = getAppBarHeight();
+            news_details_toolbar.setPadding(news_details_toolbar.getPaddingLeft(), getStatusBarHeight(), news_details_toolbar.getPaddingRight(), news_details_toolbar.getPaddingBottom());
+        }
+
         return news_details_toolbar;
     }
 
-    @Override
-    protected void setData(Bundle savedInstanceState) {
-        super.setData(savedInstanceState);
-
-
+    private int getAppBarHeight() {
+        return dip2px(100) + getStatusBarHeight();
     }
+
+    private int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = presenter.getResources().getIdentifier("status_bar_height", "dimen", "android");
+
+        if (resourceId > 0) {
+            result = presenter.getResources().getDimensionPixelSize(resourceId);
+        }
+
+        return result;
+    }
+
 
     @Override
     protected void setView() {
@@ -157,5 +171,11 @@ public class NewsDetailsView extends MvpBaseView<NewsDetailsAct> {
     private void showNewsBigImg(String url) {
         GlideLoader.getInstance().display(news_details_appbar_img,url);
     }
+
+    private int dip2px(float dipValue) {
+        final float scale = presenter.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+    }
+
 
 }

@@ -114,6 +114,7 @@ public class MainView extends MvpBaseView<MainActivity> {
     @Override
     public void settingActionBar(ActionBar actionBar) {
         super.settingActionBar(actionBar);
+
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }

@@ -11,30 +11,37 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/news_details_appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="250dp">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/news_details_coll_layout"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="match_parent"
+            app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
             app:contentScrim="@color/colorPrimary"
-            app:theme="@style/ToolbarStyle"
+            app:expandedTitleMarginStart="@dimen/activity_horizontal_margin"
+            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+            app:statusBarScrim="@color/colorPrimaryDark"
+            app:theme="@style/ToolbarStyle"
             >
 
             <ImageView
                 android:id="@+id/news_details_appbar_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
+                android:src="@drawable/img"
                 app:layout_collapseMode="parallax"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/news_details_toolbar"
                 android:layout_width="match_parent"
+                android:fitsSystemWindows="true"
                 android:layout_height="?android:actionBarSize"
-                app:theme="@style/ToolbarStyle"
-                app:layout_collapseMode="pin">
+                app:layout_collapseMode="pin"
+                app:theme="@style/ToolbarStyle">
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
@@ -90,20 +97,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="@dimen/activity_horizontal_margin"/>
-
-            <!--<TextView-->
-            <!--android:text="——————相关新闻——————"-->
-            <!--android:gravity="center"-->
-            <!--style="@style/LargeTextStyle"-->
-            <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
-            <!--android:layout_marginBottom="@dimen/activity_horizontal_margin"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"/>-->
-
-            <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/news_details_relevant_recycler"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"/>-->
 
         </LinearLayout>
 
