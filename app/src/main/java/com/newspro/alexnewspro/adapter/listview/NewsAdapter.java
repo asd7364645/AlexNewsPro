@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.newspro.alexnewspro.presenter.news.NewsDetailsAct;
 import com.newspro.alexnewspro.R;
-import com.newspro.alexnewspro.model.bean.NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean;
+import com.newspro.alexnewspro.bean.NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean;
 import com.newspro.alexnewspro.utils.image_loader_util.glide.GlideLoader;
 
 import java.util.List;

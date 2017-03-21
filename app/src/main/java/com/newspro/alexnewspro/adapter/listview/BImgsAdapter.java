@@ -12,7 +12,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.newspro.alexnewspro.R;
-import com.newspro.alexnewspro.model.bean.BImgListBean;
+import com.newspro.alexnewspro.bean.BImgListBean;
 import com.newspro.alexnewspro.utils.image_loader_util.glide.GlideLoader;
 
 import java.util.List;

@@ -9,6 +9,8 @@ import java.util.HashMap;
 
 public class Constant {
 
+    public static final String BMOB_APPKEY = "06c05a3180042aed6b29bb1409e66581";
+
     public static final String TITLE_NEWS = "新闻";
     public static final String TITLE_BIMGS = "美图";
     public static final String TITLE_MOVIES = "影讯";
@@ -168,5 +170,16 @@ public class Constant {
     //--------------------豆瓣电影-------------------------
 
     public static final String MOVIE_API_URL = "https://api.douban.com/v2/movie/";
+
+
+    //--------------------  其他  ------------------------
+    public static final int GO_REGISTER_CODE = 1;
+
+    /**
+     * 网络Bmob数据库或者内部数据库用到的表名
+     */
+    public static class SQLTable{
+        public static String COLLECT_TABLE_NAME = "UserCollectTable";
+    }
 
 }

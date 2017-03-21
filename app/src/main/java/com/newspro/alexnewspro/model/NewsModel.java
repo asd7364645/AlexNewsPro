@@ -1,14 +1,17 @@
 package com.newspro.alexnewspro.model;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
-import com.example.alex.mvplibrary.model.MvpModelInterface;
 import com.example.alex.mvplibrary.model.MvpModelCallBack;
+import com.example.alex.mvplibrary.model.MvpModelInterface;
+import com.newspro.alexnewspro.bean.NewsBean;
+import com.newspro.alexnewspro.bean.bmob.UserCollectTable;
 import com.newspro.alexnewspro.constant.Constant;
 import com.newspro.alexnewspro.http.RetrofitUtil;
 import com.newspro.alexnewspro.http.converter.JsonConverterFactory;
 import com.newspro.alexnewspro.http.httpinterface.NewsInterface;
-import com.newspro.alexnewspro.model.bean.NewsBean;
+import com.newspro.alexnewspro.utils.BmobUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,6 +19,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -144,6 +151,75 @@ public class NewsModel implements MvpModelInterface {
         NewsBean.ShowapiResBodyBean showapiResBodyBean = new NewsBean.ShowapiResBodyBean(ret_code, pagebeanBean);
         NewsBean newsBean = new NewsBean(showapi_res_code, showapi_res_error, showapiResBodyBean);
         return newsBean;
+    }
+
+    /**
+     * 添加收藏
+     *
+     * @param userId
+     * @param url
+     * @param title
+     * @param success
+     * @param error
+     */
+    public void addCollect(String userId, String url, String title, final MvpModelCallBack<String> success, final MvpModelCallBack<Integer> error) {
+        UserCollectTable userCollectTable = new UserCollectTable(userId, url, title);
+        BmobUtils.CollectUtils.addCollect(userCollectTable, new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                if (e == null) {
+                    success.result(s);
+                } else {
+                    error.result(e.getErrorCode());
+                }
+            }
+        });
+    }
+
+    /**
+     * 判断该用户是否收藏了这个url的新闻
+     *
+     * @param url
+     * @param userId
+     * @param success
+     */
+    public void getIsCollectWithUser(String url, String userId, final MvpModelCallBack<String> success, final MvpModelCallBack<Void> error) {
+        BmobUtils.CollectUtils.getCollectWithUser(url, userId, new FindListener<UserCollectTable>() {
+            @Override
+            public void done(List<UserCollectTable> list, BmobException e) {
+                if (e == null) {
+                    if (list.isEmpty())
+                        error.result(null);
+                    else
+                        success.result(list.get(0).getObjectId());
+                } else {
+                    Log.d(TAG, "done: " + e.getMessage() + "  ::  " + e.getErrorCode());
+                }
+            }
+        });
+    }
+
+
+    /**
+     * 删除对应ID的新闻
+     *
+     * @param objId
+     * @param success
+     * @param error
+     */
+    public void deleteCollect(String objId, final MvpModelCallBack<Void> success, final MvpModelCallBack<Integer> error) {
+
+        BmobUtils.CollectUtils.deleteCollectWithUrl(objId, new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if (e == null) {
+                    success.result(null);
+                } else {
+                    error.result(e.getErrorCode());
+                }
+            }
+        });
+
     }
 
 

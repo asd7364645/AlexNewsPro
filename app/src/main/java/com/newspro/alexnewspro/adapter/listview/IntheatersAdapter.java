@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.newspro.alexnewspro.R;
-import com.newspro.alexnewspro.model.bean.doubanmovie.SubjectsBean;
+import com.newspro.alexnewspro.bean.doubanmovie.SubjectsBean;
 import com.newspro.alexnewspro.presenter.movie.MovieDetailsAct;
 import com.newspro.alexnewspro.utils.image_loader_util.glide.GlideLoader;
 import com.newspro.xbaseadapter.recycler_baseadapter.XRvViewHolder;

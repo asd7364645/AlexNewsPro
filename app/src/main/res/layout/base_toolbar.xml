@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.AppBarLayout
+<android.support.v7.widget.Toolbar
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:elevation="0dp"
-    android:orientation="vertical">
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/base_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?android:actionBarSize"
-        android:background="@color/colorPrimary"
-        app:theme="@style/ToolbarStyle">
-    </android.support.v7.widget.Toolbar>
-</android.support.design.widget.AppBarLayout>
+    android:id="@+id/base_toolbar"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+</android.support.v7.widget.Toolbar>

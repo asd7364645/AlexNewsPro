@@ -4,7 +4,7 @@ import com.example.alex.mvplibrary.model.MvpModelCallBack;
 import com.example.alex.mvplibrary.presenter.MvpBaseFrag;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.newspro.alexnewspro.model.MovieModel;
-import com.newspro.alexnewspro.model.bean.doubanmovie.MoviesListBean;
+import com.newspro.alexnewspro.bean.doubanmovie.MoviesListBean;
 import com.newspro.alexnewspro.utils.common_util.ToastUtils;
 import com.newspro.alexnewspro.view.movie.FgTop250View;
 

@@ -1,4 +1,4 @@
-package com.newspro.alexnewspro.model.bean.doubanmovie;
+package com.newspro.alexnewspro.bean.doubanmovie;
 
 import android.os.Parcel;
 import android.os.Parcelable;

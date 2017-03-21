@@ -1,4 +1,4 @@
-package com.newspro.alexnewspro.model.bean.doubanmovie;
+package com.newspro.alexnewspro.bean.doubanmovie;
 
 /**
  * Created by Alex on 2017/2/20.

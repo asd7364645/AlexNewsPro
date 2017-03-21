@@ -11,13 +11,14 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/movie_details_appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="200dp">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/movie_details_collbar"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="match_parent"
             app:theme="@style/ToolbarStyle"
+            app:statusBarScrim="@color/colorPrimaryDark"
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
             app:contentScrim="@color/colorPrimary">
 

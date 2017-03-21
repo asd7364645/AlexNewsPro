@@ -5,7 +5,7 @@ import com.example.alex.mvplibrary.model.MvpModelCallBack;
 import com.newspro.alexnewspro.constant.Constant;
 import com.newspro.alexnewspro.http.RetrofitUtil;
 import com.newspro.alexnewspro.http.httpinterface.BImgsInterface;
-import com.newspro.alexnewspro.model.bean.BImgListBean;
+import com.newspro.alexnewspro.bean.BImgListBean;
 
 import retrofit2.Call;
 import retrofit2.Callback;

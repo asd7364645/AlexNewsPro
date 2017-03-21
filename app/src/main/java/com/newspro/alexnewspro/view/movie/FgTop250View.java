@@ -8,7 +8,7 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.adapter.listview.Top250Adapter;
-import com.newspro.alexnewspro.model.bean.doubanmovie.SubjectsBean;
+import com.newspro.alexnewspro.bean.doubanmovie.SubjectsBean;
 import com.newspro.alexnewspro.presenter.movie.FgTop250;
 
 import java.util.ArrayList;

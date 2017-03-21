@@ -1,7 +1,9 @@
 package com.newspro.alexnewspro.view.news;
 
-import android.os.Build;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,9 +15,10 @@ import android.widget.TextView;
 import com.example.alex.mvplibrary.view.MvpBaseView;
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.adapter.listview.NewsDetailsContentAdapter;
-import com.newspro.alexnewspro.model.bean.NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean;
+import com.newspro.alexnewspro.bean.NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean;
 import com.newspro.alexnewspro.presenter.news.NewsDetailsAct;
 import com.newspro.alexnewspro.utils.image_loader_util.glide.GlideLoader;
+import com.statusbar_alexleo.alexstatusbarutilslib.AlexStatusBarUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +30,13 @@ import java.util.List;
 
 public class NewsDetailsView extends MvpBaseView<NewsDetailsAct> {
 
+    private CoordinatorLayout activity_news_details;
     private Toolbar news_details_toolbar;
+    private AppBarLayout news_details_appbar_layout;
     private ImageView news_details_appbar_img;
-    private RecyclerView news_details_recycler
-//            , news_details_relevant_recycler
-            ;
+    private RecyclerView news_details_recycler;
     private CollapsingToolbarLayout news_details_coll_layout;
-    //    private FloatingActionButton news_details_floating_btn;
+    private FloatingActionButton news_details_floating_btn;
     private TextView news_details_title_tv, news_details_date,
             news_details_desc_tv;
     private List<String> contents;
@@ -48,9 +51,11 @@ public class NewsDetailsView extends MvpBaseView<NewsDetailsAct> {
     @Override
     public void findMvpViews() {
         news_details_toolbar = findViewById(R.id.news_details_toolbar);
+        news_details_appbar_layout = findViewById(R.id.news_details_appbar_layout);
+        activity_news_details = findViewById(R.id.activity_news_details);
         news_details_appbar_img = findViewById(R.id.news_details_appbar_img);
         news_details_recycler = findViewById(R.id.news_details_recycler);
-//        news_details_floating_btn = findViewById(news_details_floating_btn);
+        news_details_floating_btn = findViewById(R.id.news_details_floating_btn);
         news_details_coll_layout = findViewById(R.id.news_details_coll_layout);
         news_details_title_tv = findViewById(R.id.news_details_title_tv);
         news_details_desc_tv = findViewById(R.id.news_details_desc_tv);
@@ -58,31 +63,16 @@ public class NewsDetailsView extends MvpBaseView<NewsDetailsAct> {
     }
 
     @Override
-    public Toolbar getToolBar() {
+    public void bindEvent() {
+        super.bindEvent();
+        news_details_floating_btn.setOnClickListener(presenter);
+    }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
-            news_details_toolbar.getLayoutParams().height = getAppBarHeight();
-            news_details_toolbar.setPadding(news_details_toolbar.getPaddingLeft(), getStatusBarHeight(), news_details_toolbar.getPaddingRight(), news_details_toolbar.getPaddingBottom());
-        }
+    @Override
+    public Toolbar getToolBar() {
 
         return news_details_toolbar;
     }
-
-    private int getAppBarHeight() {
-        return dip2px(100) + getStatusBarHeight();
-    }
-
-    private int getStatusBarHeight() {
-        int result = 0;
-        int resourceId = presenter.getResources().getIdentifier("status_bar_height", "dimen", "android");
-
-        if (resourceId > 0) {
-            result = presenter.getResources().getDimensionPixelSize(resourceId);
-        }
-
-        return result;
-    }
-
 
     @Override
     protected void setView() {
@@ -94,7 +84,7 @@ public class NewsDetailsView extends MvpBaseView<NewsDetailsAct> {
         //设置内容RecyclerView
         contents = new ArrayList<>();
         newsDetailsContentAdapter = new NewsDetailsContentAdapter(contents, this.getContext());
-        newsDetailsContentAdapter.setNewsDetailsContentsItemClickListener(presenter);
+        newsDetailsContentAdapter.setNewsDetailsImgItemClickListener(presenter);
         news_details_recycler.setLayoutManager(contentLayoutManager);
         //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
         news_details_recycler.setHasFixedSize(true);
@@ -105,6 +95,7 @@ public class NewsDetailsView extends MvpBaseView<NewsDetailsAct> {
     @Override
     public void settingActionBar(ActionBar actionBar) {
         super.settingActionBar(actionBar);
+        AlexStatusBarUtils.setCollapsingToolbar(presenter, activity_news_details, news_details_appbar_layout, news_details_appbar_img, news_details_toolbar);
         actionBar.setDisplayHomeAsUpEnabled(true);
         news_details_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +112,17 @@ public class NewsDetailsView extends MvpBaseView<NewsDetailsAct> {
         showSourceAndDate(contentlistBean.getSource(), contentlistBean.getPubDate());
         showDesc(contentlistBean.getDesc());
         showContentsAll(contentlistBean.getAllList());
+    }
+
+    public void setCollect(boolean isCollect) {
+        if (isCollect)
+            news_details_floating_btn.setImageResource(R.drawable.ic_star_24dp);
+        else
+            news_details_floating_btn.setImageResource(R.drawable.ic_star_border_24dp);
+    }
+
+    public void setCollectBtnEnable(boolean enable){
+        news_details_floating_btn.setEnabled(enable);
     }
 
     /**
@@ -169,13 +171,7 @@ public class NewsDetailsView extends MvpBaseView<NewsDetailsAct> {
      * @param url
      */
     private void showNewsBigImg(String url) {
-        GlideLoader.getInstance().display(news_details_appbar_img,url);
+        GlideLoader.getInstance().display(news_details_appbar_img, url, R.drawable.img, 0);
     }
-
-    private int dip2px(float dipValue) {
-        final float scale = presenter.getResources().getDisplayMetrics().density;
-        return (int) (dipValue * scale + 0.5f);
-    }
-
 
 }

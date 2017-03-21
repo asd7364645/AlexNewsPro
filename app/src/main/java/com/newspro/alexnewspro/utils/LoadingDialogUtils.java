@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,7 +21,9 @@ import com.newspro.alexnewspro.R;
  */
 
 public class LoadingDialogUtils {
-    public static Dialog createLoadingDialog(Context context, String msg) {
+    private static Dialog loadingDialog;
+
+    private static Dialog createLoadingDialog(Context context, String msg) {
 
         LayoutInflater inflater = LayoutInflater.from(context);
         View v = inflater.inflate(R.layout.loading_dialog, null);// 得到加载view
@@ -30,18 +33,35 @@ public class LoadingDialogUtils {
         TextView tipTextView = (TextView) v.findViewById(R.id.pro_msg);// 提示文字
         // 加载动画
         Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(context, R.anim.loading_animation);
+        hyperspaceJumpAnimation.setInterpolator(new LinearInterpolator());
         // 使用ImageView显示动画
         spaceshipImage.startAnimation(hyperspaceJumpAnimation);
         tipTextView.setText(msg);// 设置加载信息
 
-        Dialog loadingDialog = new Dialog(context, R.style.loading_dialog);// 创建自定义样式dialog
+        loadingDialog = new Dialog(context, R.style.loading_dialog);// 创建自定义样式dialog
         Window window = loadingDialog.getWindow();
         window.setGravity(Gravity.CENTER);
 //		window.setWindowAnimations(R.style.myProgressStyle);
-        loadingDialog.setCancelable(false);// 不可以用“返回键”取消
+        loadingDialog.setCanceledOnTouchOutside(false);// 可以用“返回键”取消,但点击外部不会取消
         loadingDialog.setContentView(layout, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));// 设置布局
         return loadingDialog;
 
     }
+
+    public static void showLoadingDialog(Context context, String message) {
+        createLoadingDialog(context, message).show();
+    }
+
+    public static boolean isShowing(){
+        return loadingDialog != null && loadingDialog.isShowing();
+    }
+
+    public static void dismissDialog() {
+        if (loadingDialog != null) {
+            loadingDialog.dismiss();
+            loadingDialog = null;
+        }
+    }
+
 }

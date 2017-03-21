@@ -1,4 +1,4 @@
-package com.newspro.alexnewspro.model.bean;
+package com.newspro.alexnewspro.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;

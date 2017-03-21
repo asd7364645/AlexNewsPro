@@ -1,6 +1,6 @@
 package com.newspro.alexnewspro.http.httpinterface;
 
-import com.newspro.alexnewspro.model.bean.BImgListBean;
+import com.newspro.alexnewspro.bean.BImgListBean;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

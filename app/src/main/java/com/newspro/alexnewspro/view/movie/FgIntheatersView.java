@@ -8,7 +8,7 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.adapter.listview.InTheatersAdapter;
-import com.newspro.alexnewspro.model.bean.doubanmovie.SubjectsBean;
+import com.newspro.alexnewspro.bean.doubanmovie.SubjectsBean;
 import com.newspro.alexnewspro.presenter.movie.FgInTheaters;
 
 import java.util.ArrayList;

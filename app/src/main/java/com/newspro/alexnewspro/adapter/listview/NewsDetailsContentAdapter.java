@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.newspro.alexnewspro.R;
+import com.newspro.alexnewspro.utils.common_util.StringUtils;
 import com.newspro.alexnewspro.utils.image_loader_util.glide.GlideLoader;
-import com.newspro.alexnewspro.utils.common_util.ZhengZeUtil;
 
 import java.util.List;
 
@@ -24,18 +24,21 @@ public class NewsDetailsContentAdapter extends RecyclerView.Adapter {
     public static final int IS_IMG = 1;
     public static final int NO_IMG = 0;
 
-    public interface NewsDetailsContentsItemClickListener{
+    /**
+     * 点击图片查看大图的点击事件
+     */
+    public interface NewsDetailsImgItemClickListener {
         void click(int posi);
     }
 
-    private NewsDetailsContentsItemClickListener newsDetailsContentsItemClickListener;
+    private NewsDetailsImgItemClickListener newsDetailsImgItemClickListener;
 
-    public NewsDetailsContentsItemClickListener getNewsDetailsContentsItemClickListener() {
-        return newsDetailsContentsItemClickListener;
+    public NewsDetailsImgItemClickListener getNewsDetailsImgItemClickListener() {
+        return newsDetailsImgItemClickListener;
     }
 
-    public void setNewsDetailsContentsItemClickListener(NewsDetailsContentsItemClickListener newsDetailsContentsItemClickListener) {
-        this.newsDetailsContentsItemClickListener = newsDetailsContentsItemClickListener;
+    public void setNewsDetailsImgItemClickListener(NewsDetailsImgItemClickListener newsDetailsImgItemClickListener) {
+        this.newsDetailsImgItemClickListener = newsDetailsImgItemClickListener;
     }
 
     private List<String> contents;
@@ -45,12 +48,12 @@ public class NewsDetailsContentAdapter extends RecyclerView.Adapter {
     public NewsDetailsContentAdapter(List<String> contents, Context context) {
         this.contents = contents;
         this.context = context;
-        layoutInflater = LayoutInflater.from(context);
+        layoutInflater = LayoutInflater.from(this.context);
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (ZhengZeUtil.isImgUrl(contents.get(position)))
+        if (StringUtils.isImgUrl(contents.get(position)))
             return IS_IMG;
         else
             return NO_IMG;
@@ -84,8 +87,8 @@ public class NewsDetailsContentAdapter extends RecyclerView.Adapter {
             ((NewsDetailsImgHolder) holder).news_details_item_img.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (newsDetailsContentsItemClickListener!=null){
-                        newsDetailsContentsItemClickListener.click(position);
+                    if (newsDetailsImgItemClickListener !=null){
+                        newsDetailsImgItemClickListener.click(position);
                     }
                 }
             });
@@ -102,21 +105,21 @@ public class NewsDetailsContentAdapter extends RecyclerView.Adapter {
         return contents.size();
     }
 
-    class NewsDetailsImgHolder extends RecyclerView.ViewHolder {
+    private class NewsDetailsImgHolder extends RecyclerView.ViewHolder {
 
         private ImageView news_details_item_img;
 
-        public NewsDetailsImgHolder(View itemView) {
+        NewsDetailsImgHolder(View itemView) {
             super(itemView);
             news_details_item_img = (ImageView) itemView.findViewById(R.id.news_details_item_img);
         }
     }
 
-    class NewsDetailsTvHolder extends RecyclerView.ViewHolder {
+    private class NewsDetailsTvHolder extends RecyclerView.ViewHolder {
 
         private TextView news_details_item_tv;
 
-        public NewsDetailsTvHolder(View itemView) {
+        NewsDetailsTvHolder(View itemView) {
             super(itemView);
             news_details_item_tv = (TextView) itemView.findViewById(R.id.news_details_item_tv);
         }

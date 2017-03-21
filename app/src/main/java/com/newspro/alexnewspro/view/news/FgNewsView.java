@@ -10,7 +10,7 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.adapter.listview.NewsAdapter;
-import com.newspro.alexnewspro.model.bean.NewsBean.ShowapiResBodyBean;
+import com.newspro.alexnewspro.bean.NewsBean.ShowapiResBodyBean;
 import com.newspro.alexnewspro.presenter.news.FgNews;
 
 import java.util.ArrayList;

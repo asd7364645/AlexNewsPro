@@ -3,6 +3,7 @@ package com.newspro.alexnewspro.view.movie;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,10 +16,11 @@ import com.example.alex.mvplibrary.view.MvpBaseView;
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.adapter.listview.MovieDetailsCastsAdapter;
 import com.newspro.alexnewspro.customviews.ExpandableTextView;
-import com.newspro.alexnewspro.model.bean.doubanmovie.DetailsSubjectBean;
-import com.newspro.alexnewspro.model.bean.doubanmovie.MovieDetailsCastsBean;
+import com.newspro.alexnewspro.bean.doubanmovie.DetailsSubjectBean;
+import com.newspro.alexnewspro.bean.doubanmovie.MovieDetailsCastsBean;
 import com.newspro.alexnewspro.presenter.movie.MovieDetailsAct;
 import com.newspro.alexnewspro.utils.image_loader_util.glide.GlideLoader;
+import com.statusbar_alexleo.alexstatusbarutilslib.AlexStatusBarUtils;
 
 import java.util.ArrayList;
 
@@ -28,6 +30,7 @@ import java.util.ArrayList;
  */
 
 public class MovieDetailsView extends MvpBaseView<MovieDetailsAct> {
+    private CoordinatorLayout activity_movie_details;
     private AppBarLayout movie_details_appbar;
     private CollapsingToolbarLayout movie_details_collbar;
     private ImageView movie_details_top_img;
@@ -53,6 +56,7 @@ public class MovieDetailsView extends MvpBaseView<MovieDetailsAct> {
 
     @Override
     public void findMvpViews() {
+        activity_movie_details = findViewById(R.id.activity_movie_details);
         movie_details_appbar = findViewById(R.id.movie_details_appbar);
         movie_details_collbar = findViewById(R.id.movie_details_collbar);
         movie_details_top_img = findViewById(R.id.movie_details_top_img);
@@ -71,20 +75,21 @@ public class MovieDetailsView extends MvpBaseView<MovieDetailsAct> {
     protected void setData(Bundle savedInstanceState) {
         super.setData(savedInstanceState);
         castsBeens = new ArrayList<>();
-        castsAdapter = new MovieDetailsCastsAdapter(this.getContext(),castsBeens);
+        castsAdapter = new MovieDetailsCastsAdapter(this.getContext(), castsBeens);
     }
 
     @Override
     protected void setView() {
         super.setView();
 
-        movie_details_casts_rv.setLayoutManager(new LinearLayoutManager(this.getContext(),LinearLayoutManager.HORIZONTAL,false));
+        movie_details_casts_rv.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL, false));
         movie_details_casts_rv.setAdapter(castsAdapter);
 
     }
 
     @Override
     public Toolbar getToolBar() {
+        AlexStatusBarUtils.setCollapsingToolbar(presenter, activity_movie_details, movie_details_appbar, movie_details_top_img, movie_details_toolbar);
         return movie_details_toolbar;
     }
 
@@ -107,7 +112,7 @@ public class MovieDetailsView extends MvpBaseView<MovieDetailsAct> {
         movie_details_genres.setText("影片类型：" + details.getGenres().toString());
         movie_details_year.setText("年份：" + details.getYear());
         movie_details_rating_tv.setText(details.getRating().getAverage() + "");
-        movie_details_rating_human_count.setText(details.getRatings_count()+"");
+        movie_details_rating_human_count.setText(details.getRatings_count() + "");
         String directors = "导演：";
         for (int i = 0; i < details.getDirectors().size(); i++) {
             directors += i == details.getDirectors().size() - 1 ? details.getDirectors().get(i).getName() : details.getDirectors().get(i).getName() + ",";
@@ -115,11 +120,11 @@ public class MovieDetailsView extends MvpBaseView<MovieDetailsAct> {
         movie_details_directors.setText(directors);
         expandable_text_view.setText(details.getSummary());
         for (DetailsSubjectBean.DirectorsBean directorsBean : details.getDirectors()) {
-            MovieDetailsCastsBean castsBean = new MovieDetailsCastsBean(false,directorsBean.getAlt(),directorsBean.getAvatars(),directorsBean.getName(),directorsBean.getId());
+            MovieDetailsCastsBean castsBean = new MovieDetailsCastsBean(false, directorsBean.getAlt(), directorsBean.getAvatars(), directorsBean.getName(), directorsBean.getId());
             castsBeens.add(castsBean);
         }
         for (DetailsSubjectBean.CastsBean castsBean : details.getCasts()) {
-            MovieDetailsCastsBean casts = new MovieDetailsCastsBean(true,castsBean.getAlt(),castsBean.getAvatars(),castsBean.getName(),castsBean.getId());
+            MovieDetailsCastsBean casts = new MovieDetailsCastsBean(true, castsBean.getAlt(), castsBean.getAvatars(), castsBean.getName(), castsBean.getId());
             castsBeens.add(casts);
         }
         castsAdapter.notifyDataSetChanged();

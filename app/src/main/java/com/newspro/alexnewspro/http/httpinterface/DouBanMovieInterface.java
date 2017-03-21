@@ -1,7 +1,7 @@
 package com.newspro.alexnewspro.http.httpinterface;
 
-import com.newspro.alexnewspro.model.bean.doubanmovie.DetailsSubjectBean;
-import com.newspro.alexnewspro.model.bean.doubanmovie.MoviesListBean;
+import com.newspro.alexnewspro.bean.doubanmovie.DetailsSubjectBean;
+import com.newspro.alexnewspro.bean.doubanmovie.MoviesListBean;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

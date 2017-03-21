@@ -10,8 +10,8 @@ import com.newspro.alexnewspro.event.NewsActionBtnEvent;
 import com.newspro.alexnewspro.event.NewsLoadingEvent;
 import com.newspro.alexnewspro.event.NewsRefreshEvent;
 import com.newspro.alexnewspro.model.NewsModel;
-import com.newspro.alexnewspro.model.bean.NewsBean;
-import com.newspro.alexnewspro.model.bean.NewsBean.ShowapiResBodyBean.PagebeanBean;
+import com.newspro.alexnewspro.bean.NewsBean;
+import com.newspro.alexnewspro.bean.NewsBean.ShowapiResBodyBean.PagebeanBean;
 import com.newspro.alexnewspro.utils.common_util.ToastUtils;
 import com.newspro.alexnewspro.view.news.FgNewsView;
 

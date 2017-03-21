@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.newspro.alexnewspro.adapter.listview.delegate.MovieDetailsCastsCasts;
 import com.newspro.alexnewspro.adapter.listview.delegate.MovieDetailsCastsDirectors;
-import com.newspro.alexnewspro.model.bean.doubanmovie.MovieDetailsCastsBean;
+import com.newspro.alexnewspro.bean.doubanmovie.MovieDetailsCastsBean;
 import com.newspro.xbaseadapter.recycler_baseadapter.XRvMultiItemTypeAdapter;
 
 import java.util.List;

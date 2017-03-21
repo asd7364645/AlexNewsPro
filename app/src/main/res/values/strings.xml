@@ -8,4 +8,18 @@
     <string name="yingxun_str">影讯</string>
     <string name="str_casts">影人</string>
     <string name="str_photo">剧照</string>
+
+    <string name="login_success">登陆成功</string>
+    <string name="login">登录</string>
+    <string name="Username">账号</string>
+    <string name="Password">密码</string>
+    <string name="forgot_your_password">忘记密码?</string>
+    <string name="go">登录</string>
+    <string name="repeat_password">再次输入密码</string>
+    <string name="next">完成</string>
+    <string name="register_"><u>注册</u></string>
+    <string name="register">注册</string>
+    <string name="title_activity_login">用户登录</string>
+    <string name="title_activity_login2">Sign in</string>
+
 </resources>

@@ -8,6 +8,12 @@
         <attr name="civ_fill_color" format="color"/>
     </declare-styleable>
 
+    <!--流式布局-->
+    <declare-styleable name="FlowLayout">
+        <attr name="lineSpacing" format="dimension" />
+        <attr name="maxLine" format="integer" />
+    </declare-styleable>
+
     <!--带弹性效果ViewPager-->
     <declare-styleable name="BounceBackViewPager">
         <!--最大滚动距离，默认为150-->

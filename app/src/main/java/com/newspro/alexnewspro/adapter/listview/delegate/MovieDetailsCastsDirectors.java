@@ -3,7 +3,7 @@ package com.newspro.alexnewspro.adapter.listview.delegate;
 import android.widget.ImageView;
 
 import com.newspro.alexnewspro.R;
-import com.newspro.alexnewspro.model.bean.doubanmovie.MovieDetailsCastsBean;
+import com.newspro.alexnewspro.bean.doubanmovie.MovieDetailsCastsBean;
 import com.newspro.alexnewspro.utils.image_loader_util.glide.GlideLoader;
 import com.newspro.xbaseadapter.recycler_baseadapter.XRvViewHolder;
 import com.newspro.xbaseadapter.recycler_baseadapter.delegate.RvItemViewDelegate;

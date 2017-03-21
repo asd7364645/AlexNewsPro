@@ -10,7 +10,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.adapter.listview.BImgsAdapter;
 import com.newspro.alexnewspro.model.BImgsModel;
-import com.newspro.alexnewspro.model.bean.BImgListBean;
+import com.newspro.alexnewspro.bean.BImgListBean;
 import com.newspro.alexnewspro.presenter.BigImgAct;
 import com.newspro.alexnewspro.utils.common_util.ToastUtils;
 import com.newspro.alexnewspro.view.bimg.FgBimgView;

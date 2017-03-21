@@ -1,1 +1,1 @@
-include ':app', ':mvplibrary', ':xrecyclerview', ':xbaseadapter'
+include ':app', ':mvplibrary', ':xrecyclerview', ':xbaseadapter', ':alexstatusbarutilslib'

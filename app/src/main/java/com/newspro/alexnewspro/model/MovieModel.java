@@ -5,8 +5,8 @@ import com.example.alex.mvplibrary.model.MvpModelCallBack;
 import com.newspro.alexnewspro.constant.Constant;
 import com.newspro.alexnewspro.http.RetrofitUtil;
 import com.newspro.alexnewspro.http.httpinterface.DouBanMovieInterface;
-import com.newspro.alexnewspro.model.bean.doubanmovie.DetailsSubjectBean;
-import com.newspro.alexnewspro.model.bean.doubanmovie.MoviesListBean;
+import com.newspro.alexnewspro.bean.doubanmovie.DetailsSubjectBean;
+import com.newspro.alexnewspro.bean.doubanmovie.MoviesListBean;
 
 import retrofit2.Call;
 import retrofit2.Callback;
