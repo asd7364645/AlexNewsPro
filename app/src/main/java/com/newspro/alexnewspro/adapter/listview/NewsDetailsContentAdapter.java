@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.newspro.alexnewspro.R;
-import com.newspro.alexnewspro.utils.common_util.StringUtils;
+import com.newspro.alexnewspro.utils.common_util.ZhengZeUtil;
 import com.newspro.alexnewspro.utils.image_loader_util.glide.GlideLoader;
 
 import java.util.List;
@@ -53,7 +53,7 @@ public class NewsDetailsContentAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (StringUtils.isImgUrl(contents.get(position)))
+        if (ZhengZeUtil.isImgUrl(contents.get(position)))
             return IS_IMG;
         else
             return NO_IMG;

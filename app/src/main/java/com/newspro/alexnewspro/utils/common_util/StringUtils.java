@@ -102,21 +102,4 @@ public class StringUtils {
         return false;
     }
 
-    public static boolean isMobileNum(String mobiles){
-        if (mobiles == null||mobiles.equals("")) {
-            return false;
-        }
-        Pattern pattern = Pattern.compile(ZhengZeUtil.zzPhone);
-        Matcher matcher = pattern.matcher(mobiles);
-        return matcher.matches();
-    }
-
-    public static boolean isImgUrl(String str) {
-        Pattern urlPattern = Pattern.compile(ZhengZeUtil.zzUrl);
-        Matcher urlMatcher = urlPattern.matcher(str);
-        Pattern imgPattern = Pattern.compile(ZhengZeUtil.zzImg);
-        Matcher imgMatcher = imgPattern.matcher(str);
-        return urlMatcher.find() && imgMatcher.find();
-    }
-
 }

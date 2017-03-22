@@ -10,7 +10,7 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.newspro.alexnewspro.R;
 import com.newspro.alexnewspro.adapter.listview.NewsAdapter;
-import com.newspro.alexnewspro.bean.NewsBean.ShowapiResBodyBean;
+import com.newspro.alexnewspro.bean.NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean;
 import com.newspro.alexnewspro.presenter.news.FgNews;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class FgNewsView extends MvpBaseFragView<FgNews> {
     private XRecyclerView fg_news_recycler;
 
     private NewsAdapter newsAdapter;
-    private ArrayList<ShowapiResBodyBean.PagebeanBean.ContentlistBean> dataBeenList;
+    private ArrayList<ContentlistBean> dataBeenList;
 
     @Override
     public int setLayoutId() {
@@ -59,7 +59,7 @@ public class FgNewsView extends MvpBaseFragView<FgNews> {
     protected void setData(Bundle savedInstanceState) {
         super.setData(savedInstanceState);
         if (savedInstanceState != null) {
-            dataBeenList = savedInstanceState.getParcelableArrayList("fgNewsSaveState");
+            dataBeenList = (ArrayList<ContentlistBean>) savedInstanceState.getSerializable("fgNewsSaveState");
         } else {
             dataBeenList = new ArrayList<>();
         }
@@ -84,12 +84,13 @@ public class FgNewsView extends MvpBaseFragView<FgNews> {
     @Override
     public void saveInstanceState(Bundle outState) {
         super.saveInstanceState(outState);
-        outState.putParcelableArrayList("fgNewsSaveState", dataBeenList);
+        outState.putSerializable("fgNewsSaveState",dataBeenList);
+//        outState.putParcelableArrayList("fgNewsSaveState", dataBeenList);
     }
 
     //------------------对外开放的方法---------------------
 
-    public void refreshOver(List<ShowapiResBodyBean.PagebeanBean.ContentlistBean> dataBeens, boolean isRefresh) {
+    public void refreshOver(List<ContentlistBean> dataBeens, boolean isRefresh) {
         if (isRefresh)
             dataBeenList.clear();
         dataBeenList.addAll(dataBeens);

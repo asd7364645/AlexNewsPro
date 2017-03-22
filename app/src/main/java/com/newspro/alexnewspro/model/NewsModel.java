@@ -6,7 +6,7 @@ import android.util.Log;
 import com.example.alex.mvplibrary.model.MvpModelCallBack;
 import com.example.alex.mvplibrary.model.MvpModelInterface;
 import com.newspro.alexnewspro.bean.NewsBean;
-import com.newspro.alexnewspro.bean.bmob.UserCollectTable;
+import com.newspro.alexnewspro.bean.NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean;
 import com.newspro.alexnewspro.constant.Constant;
 import com.newspro.alexnewspro.http.RetrofitUtil;
 import com.newspro.alexnewspro.http.converter.JsonConverterFactory;
@@ -112,7 +112,7 @@ public class NewsModel implements MvpModelInterface {
         int maxResult = pagebean.optInt("maxResult");
         JSONArray contentlist = pagebean.optJSONArray("contentlist");
         if (contentlist == null) return null;
-        List<NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean> contentlistBeans = new ArrayList<>();
+        List<ContentlistBean> contentlistBeans = new ArrayList<>();
         for (int i = 0; i < contentlist.length(); i++) {
             JSONObject content = contentlist.optJSONObject(i);
             String pubDate = content.optString("pubDate");
@@ -144,7 +144,7 @@ public class NewsModel implements MvpModelInterface {
                 JSONObject imgJsonObj = imgUrlsArray.optJSONObject(j);
                 imageurls.add(imgJsonObj.optString("url"));
             }
-            NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean contentlistBean = new NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean(pubDate, havePic, title, channelName, desc, source, channelId, link, allListStr, imageurls);
+            ContentlistBean contentlistBean = new ContentlistBean(pubDate, havePic, title, channelName, desc, source, channelId, link, allListStr, imageurls);
             contentlistBeans.add(contentlistBean);
         }
         NewsBean.ShowapiResBodyBean.PagebeanBean pagebeanBean = new NewsBean.ShowapiResBodyBean.PagebeanBean(allPages, currentPage, allNum, maxResult, contentlistBeans);
@@ -157,14 +157,12 @@ public class NewsModel implements MvpModelInterface {
      * 添加收藏
      *
      * @param userId
-     * @param url
-     * @param title
      * @param success
      * @param error
      */
-    public void addCollect(String userId, String url, String title, final MvpModelCallBack<String> success, final MvpModelCallBack<Integer> error) {
-        UserCollectTable userCollectTable = new UserCollectTable(userId, url, title);
-        BmobUtils.CollectUtils.addCollect(userCollectTable, new SaveListener<String>() {
+    public void addCollect(String userId, ContentlistBean contentlistBean, final MvpModelCallBack<String> success, final MvpModelCallBack<Integer> error) {
+        contentlistBean.setUserId(userId);
+        BmobUtils.CollectUtils.addCollect(contentlistBean, new SaveListener<String>() {
             @Override
             public void done(String s, BmobException e) {
                 if (e == null) {
@@ -184,15 +182,16 @@ public class NewsModel implements MvpModelInterface {
      * @param success
      */
     public void getIsCollectWithUser(String url, String userId, final MvpModelCallBack<String> success, final MvpModelCallBack<Void> error) {
-        BmobUtils.CollectUtils.getCollectWithUser(url, userId, new FindListener<UserCollectTable>() {
+        BmobUtils.CollectUtils.getNewsCollectWithUser(url, userId, new FindListener<ContentlistBean>() {
             @Override
-            public void done(List<UserCollectTable> list, BmobException e) {
+            public void done(List<ContentlistBean> list, BmobException e) {
                 if (e == null) {
                     if (list.isEmpty())
                         error.result(null);
                     else
                         success.result(list.get(0).getObjectId());
                 } else {
+                    error.result(null);
                     Log.d(TAG, "done: " + e.getMessage() + "  ::  " + e.getErrorCode());
                 }
             }
@@ -207,9 +206,9 @@ public class NewsModel implements MvpModelInterface {
      * @param success
      * @param error
      */
-    public void deleteCollect(String objId, final MvpModelCallBack<Void> success, final MvpModelCallBack<Integer> error) {
+    public void deleteCollect(ContentlistBean contentlistBean, String objId, final MvpModelCallBack<Void> success, final MvpModelCallBack<Integer> error) {
 
-        BmobUtils.CollectUtils.deleteCollectWithUrl(objId, new UpdateListener() {
+        BmobUtils.CollectUtils.deleteCollectWithUrl(contentlistBean, objId, new UpdateListener() {
             @Override
             public void done(BmobException e) {
                 if (e == null) {

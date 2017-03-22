@@ -18,6 +18,8 @@ import com.newspro.alexnewspro.view.MainView;
 public class MainActivity extends MvpBaseAct<MainView, MvpModel>
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
+    private long oldTime;
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -32,6 +34,11 @@ public class MainActivity extends MvpBaseAct<MainView, MvpModel>
             case R.id.menu_navigation_movies:
                 mvpView.closeDrawer();
                 mvpView.selectFg(2);
+                break;
+            case R.id.menu_navigation_uinfo:
+                BmobUtils.UserUtils.logout();
+                ToastUtils.showShort(this, "退出成功");
+                mvpView.userIsLogOut();
                 break;
         }
         return true;
@@ -60,12 +67,28 @@ public class MainActivity extends MvpBaseAct<MainView, MvpModel>
             case R.id.md_header_login_tv:
                 if (BmobUtils.UserUtils.isLogin()) {
                     BmobUtils.UserUtils.logout();
-                    ToastUtils.showShort(this,"退出成功");
+                    ToastUtils.showShort(this, "退出成功");
                     mvpView.userIsLogOut();
                 } else {
                     startActivity(new Intent(this, LoginAct.class));
                 }
                 break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mvpView.isOpenDrawer()) {
+            mvpView.closeDrawer();
+        } else {
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - oldTime > 2000) {
+                ToastUtils.showShort(this, "再次点击返回键退出");
+                oldTime = currentTime;
+            } else {
+                finish();
+                System.exit(0);
+            }
         }
     }
 }

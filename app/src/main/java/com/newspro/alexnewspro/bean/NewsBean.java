@@ -1,16 +1,15 @@
 package com.newspro.alexnewspro.bean;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.util.List;
+
+import cn.bmob.v3.BmobObject;
 
 /**
  * Created by Alex on 2016/12/26.
  * Alex
  */
 
-public class NewsBean implements Parcelable {
+public class NewsBean extends BmobObject {
 
 
     private int showapi_res_code;
@@ -18,28 +17,11 @@ public class NewsBean implements Parcelable {
 
     private ShowapiResBodyBean showapi_res_body;
 
-    protected NewsBean(Parcel in) {
-        showapi_res_code = in.readInt();
-        showapi_res_error = in.readString();
-    }
-
     public NewsBean(int showapi_res_code, String showapi_res_error, ShowapiResBodyBean showapi_res_body) {
         this.showapi_res_code = showapi_res_code;
         this.showapi_res_error = showapi_res_error;
         this.showapi_res_body = showapi_res_body;
     }
-
-    public static final Creator<NewsBean> CREATOR = new Creator<NewsBean>() {
-        @Override
-        public NewsBean createFromParcel(Parcel in) {
-            return new NewsBean(in);
-        }
-
-        @Override
-        public NewsBean[] newArray(int size) {
-            return new NewsBean[size];
-        }
-    };
 
     public int getShowapi_res_code() {
         return showapi_res_code;
@@ -65,42 +47,15 @@ public class NewsBean implements Parcelable {
         this.showapi_res_body = showapi_res_body;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(showapi_res_code);
-        dest.writeString(showapi_res_error);
-    }
-
-    public static class ShowapiResBodyBean implements Parcelable{
+    public static class ShowapiResBodyBean extends BmobObject {
         private int ret_code;
 
         private PagebeanBean pagebean;
-
-        protected ShowapiResBodyBean(Parcel in) {
-            ret_code = in.readInt();
-        }
 
         public ShowapiResBodyBean(int ret_code, PagebeanBean pagebean) {
             this.ret_code = ret_code;
             this.pagebean = pagebean;
         }
-
-        public static final Creator<ShowapiResBodyBean> CREATOR = new Creator<ShowapiResBodyBean>() {
-            @Override
-            public ShowapiResBodyBean createFromParcel(Parcel in) {
-                return new ShowapiResBodyBean(in);
-            }
-
-            @Override
-            public ShowapiResBodyBean[] newArray(int size) {
-                return new ShowapiResBodyBean[size];
-            }
-        };
 
         public int getRet_code() {
             return ret_code;
@@ -118,31 +73,13 @@ public class NewsBean implements Parcelable {
             this.pagebean = pagebean;
         }
 
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(ret_code);
-        }
-
-        public static class PagebeanBean implements Parcelable{
+        public static class PagebeanBean extends BmobObject {
             private int allPages;
             private int currentPage;
             private int allNum;
             private int maxResult;
 
             private List<ContentlistBean> contentlist;
-
-            protected PagebeanBean(Parcel in) {
-                allPages = in.readInt();
-                currentPage = in.readInt();
-                allNum = in.readInt();
-                maxResult = in.readInt();
-                contentlist = in.createTypedArrayList(ContentlistBean.CREATOR);
-            }
 
             public PagebeanBean(int allPages, int currentPage, int allNum, int maxResult, List<ContentlistBean> contentlist) {
                 this.allPages = allPages;
@@ -151,18 +88,6 @@ public class NewsBean implements Parcelable {
                 this.maxResult = maxResult;
                 this.contentlist = contentlist;
             }
-
-            public static final Creator<PagebeanBean> CREATOR = new Creator<PagebeanBean>() {
-                @Override
-                public PagebeanBean createFromParcel(Parcel in) {
-                    return new PagebeanBean(in);
-                }
-
-                @Override
-                public PagebeanBean[] newArray(int size) {
-                    return new PagebeanBean[size];
-                }
-            };
 
             public int getAllPages() {
                 return allPages;
@@ -204,21 +129,10 @@ public class NewsBean implements Parcelable {
                 this.contentlist = contentlist;
             }
 
-            @Override
-            public int describeContents() {
-                return 0;
-            }
+            public static class ContentlistBean extends BmobObject{
+                //用户ID
+                private String userId;
 
-            @Override
-            public void writeToParcel(Parcel dest, int flags) {
-                dest.writeInt(allPages);
-                dest.writeInt(currentPage);
-                dest.writeInt(allNum);
-                dest.writeInt(maxResult);
-                dest.writeTypedList(contentlist);
-            }
-
-            public static class ContentlistBean implements Parcelable{
                 private String pubDate;
                 private boolean havePic;
                 private String title;
@@ -228,6 +142,15 @@ public class NewsBean implements Parcelable {
                 private String channelId;
                 private String link;
                 private List<String> allList;
+
+                public String getUserId() {
+                    return userId;
+                }
+
+                public void setUserId(String userId) {
+                    this.userId = userId;
+                }
+
                 /**
                  * height : 360
                  * width : 640
@@ -248,50 +171,6 @@ public class NewsBean implements Parcelable {
                     this.allList = allList;
                     this.imageurls = imageurls;
                 }
-
-                protected ContentlistBean(Parcel in) {
-                    pubDate = in.readString();
-                    havePic = in.readByte() != 0;
-                    title = in.readString();
-                    channelName = in.readString();
-                    desc = in.readString();
-                    source = in.readString();
-                    channelId = in.readString();
-                    link = in.readString();
-                    allList = in.createStringArrayList();
-                    imageurls = in.createStringArrayList();
-                }
-
-                @Override
-                public void writeToParcel(Parcel dest, int flags) {
-                    dest.writeString(pubDate);
-                    dest.writeByte((byte) (havePic ? 1 : 0));
-                    dest.writeString(title);
-                    dest.writeString(channelName);
-                    dest.writeString(desc);
-                    dest.writeString(source);
-                    dest.writeString(channelId);
-                    dest.writeString(link);
-                    dest.writeStringList(allList);
-                    dest.writeStringList(imageurls);
-                }
-
-                @Override
-                public int describeContents() {
-                    return 0;
-                }
-
-                public static final Creator<ContentlistBean> CREATOR = new Creator<ContentlistBean>() {
-                    @Override
-                    public ContentlistBean createFromParcel(Parcel in) {
-                        return new ContentlistBean(in);
-                    }
-
-                    @Override
-                    public ContentlistBean[] newArray(int size) {
-                        return new ContentlistBean[size];
-                    }
-                };
 
                 public String getPubDate() {
                     return pubDate;
@@ -373,47 +252,6 @@ public class NewsBean implements Parcelable {
                     this.imageurls = imageurls;
                 }
 
-//                public static class ImageurlsBean implements Parcelable{
-//                    private String url;
-//
-//                    protected ImageurlsBean(Parcel in) {
-//                        url = in.readString();
-//                    }
-//
-//                    public ImageurlsBean(String url) {
-//                        this.url = url;
-//                    }
-//
-//                    public static final Creator<ImageurlsBean> CREATOR = new Creator<ImageurlsBean>() {
-//                        @Override
-//                        public ImageurlsBean createFromParcel(Parcel in) {
-//                            return new ImageurlsBean(in);
-//                        }
-//
-//                        @Override
-//                        public ImageurlsBean[] newArray(int size) {
-//                            return new ImageurlsBean[size];
-//                        }
-//                    };
-//
-//                    public String getUrl() {
-//                        return url;
-//                    }
-//
-//                    public void setUrl(String url) {
-//                        this.url = url;
-//                    }
-//
-//                    @Override
-//                    public int describeContents() {
-//                        return 0;
-//                    }
-//
-//                    @Override
-//                    public void writeToParcel(Parcel dest, int flags) {
-//                        dest.writeString(url);
-//                    }
-//                }
             }
         }
     }

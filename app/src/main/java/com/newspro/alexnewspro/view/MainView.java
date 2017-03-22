@@ -11,6 +11,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.TextView;
 
@@ -179,6 +182,17 @@ public class MainView extends MvpBaseView<MainActivity> {
         selectFg(selectItem);
     }
 
+    private void resetNavigationMenu(){
+        main_navigation_view.getMenu().clear();
+        main_navigation_view.inflateMenu(R.menu.main_navigation_menu);
+    }
+
+    private void addUserNavigationMenu(){
+        Menu menu = main_navigation_view.getMenu();
+        SubMenu subMenu = menu.addSubMenu(R.string.user_string);
+        subMenu.add(0,R.id.menu_navigation_uinfo,0,R.string.user_info);
+    }
+
     public void closeDrawer() {
         main_drawer_layout.closeDrawers();
     }
@@ -191,14 +205,22 @@ public class MainView extends MvpBaseView<MainActivity> {
         return base_toolbar;
     }
 
+    public boolean isOpenDrawer(){
+        return main_drawer_layout.isDrawerOpen(Gravity.LEFT);
+    }
+
     public void userIsLogin(String userName){
         md_header_name_tv.setText(userName);
-        md_header_login_tv.setText("用户信息 >");
+        md_header_login_tv.setVisibility(View.GONE);
+        addUserNavigationMenu();
+        selectFg(selectItem);
     }
 
     public void userIsLogOut(){
         md_header_name_tv.setText("Alex");
-        md_header_login_tv.setText("登录 >");
+        md_header_login_tv.setVisibility(View.VISIBLE);
+        resetNavigationMenu();
+        selectFg(selectItem);
     }
 
 }

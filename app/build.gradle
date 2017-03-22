@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'key'
+            keyPassword 'game201501'
+            storeFile file('C:/Users/Alex/Desktop/　/high_game.jks')
+            storePassword 'game201501'
+        }
+    }
     compileSdkVersion 24
     buildToolsVersion '25.0.0'
     defaultConfig {
@@ -12,9 +20,27 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        release {
+        debug {
+            // 显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            versionNameSuffix "-debug"
             minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debug
+        }
+        release {
+            // 不显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            //混淆
+            minifyEnabled true
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources true
+            //签名
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 }
@@ -35,16 +61,16 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
-    compile ('com.squareup.retrofit2:retrofit:2.1.0'){
+    compile('com.squareup.retrofit2:retrofit:2.1.0') {
         exclude group: 'com.squareup.okhttp3'
     }
-    compile ('com.squareup.retrofit2:converter-gson:2.1.0'){
+    compile('com.squareup.retrofit2:converter-gson:2.1.0') {
         exclude group: 'com.google.code.gson'
         exclude group: 'com.squareup.okhttp3'
     }
     //bmob-sdk
     //bmob兼容Android6.0
-    compile'cn.bmob.android:bmob-sdk:3.5.3'
+    compile 'cn.bmob.android:bmob-sdk:3.5.3'
     compile 'cn.bmob.android:http-legacy:1.0'
     testCompile 'junit:junit:4.12'
 }

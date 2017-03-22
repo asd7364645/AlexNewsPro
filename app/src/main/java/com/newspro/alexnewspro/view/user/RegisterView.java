@@ -5,6 +5,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 
 import com.example.alex.mvplibrary.view.MvpBaseView;
 import com.newspro.alexnewspro.R;
@@ -18,10 +20,14 @@ import com.newspro.alexnewspro.presenter.user.RegisterAct;
 public class RegisterView extends MvpBaseView<RegisterAct> {
 
     private Toolbar register_toolbar;
+
+    private RadioGroup register_rg;
+    private LinearLayout phone_code_layout;
+
     private TextInputEditText register_acc,
-            register_pwd,
+            register_pwd, phone_edit, auth_code,
             register_repeat_pwd;
-    private Button register_register_btn;
+    private Button register_register_btn, send_code_btn;
 
     @Override
     public int setLayoutId() {
@@ -31,6 +37,11 @@ public class RegisterView extends MvpBaseView<RegisterAct> {
     @Override
     public void findMvpViews() {
         register_toolbar = findViewById(R.id.base_toolbar);
+        phone_code_layout = findViewById(R.id.register_phone_layout);
+        phone_edit = findViewById(R.id.phone_edit);
+        auth_code = findViewById(R.id.auth_code);
+        send_code_btn = findViewById(R.id.send_code_btn);
+        register_rg = findViewById(R.id.register_rg);
         register_acc = findViewById(R.id.register_acc);
         register_pwd = findViewById(R.id.register_pwd);
         register_repeat_pwd = findViewById(R.id.register_repeat_pwd);
@@ -41,6 +52,8 @@ public class RegisterView extends MvpBaseView<RegisterAct> {
     public void bindEvent() {
         super.bindEvent();
         register_register_btn.setOnClickListener(presenter);
+        register_rg.setOnCheckedChangeListener(presenter);
+        send_code_btn.setOnClickListener(presenter);
     }
 
     @Override
@@ -59,6 +72,27 @@ public class RegisterView extends MvpBaseView<RegisterAct> {
                 presenter.finish();
             }
         });
+    }
+
+    /**
+     * 设置是否是手机注册模式
+     *
+     * @param isPhone
+     */
+    public void setIsPhoneRegister(boolean isPhone) {
+        if (isPhone) {
+            phone_code_layout.setVisibility(View.VISIBLE);
+        } else {
+            phone_code_layout.setVisibility(View.GONE);
+        }
+    }
+
+    public void setSendBtnEnable(boolean isEnable){
+        send_code_btn.setEnabled(isEnable);
+    }
+
+    public void setSendBtnText(String s){
+        send_code_btn.setText(s);
     }
 
     public String getAcc() {
@@ -84,5 +118,21 @@ public class RegisterView extends MvpBaseView<RegisterAct> {
     public void setRePwdError(String s) {
         register_repeat_pwd.setError(s);
         register_repeat_pwd.setText("");
+    }
+
+    public String getPhone() {
+        return phone_edit.getText().toString();
+    }
+
+    public void setPhoneError(String s) {
+        phone_edit.setError(s);
+    }
+
+    public String getAuthCode() {
+        return auth_code.getText().toString();
+    }
+
+    public void setAuthCodeError(String s) {
+        auth_code.setError(s);
     }
 }

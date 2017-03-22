@@ -30,7 +30,7 @@ public class NewsDetailsAct extends MvpBaseAct<NewsDetailsView, NewsModel> imple
     public void created(Bundle saveInstance) {
         super.created(saveInstance);
         intent = getIntent();
-        contentlistBean = intent.getParcelableExtra("newsBean");
+        contentlistBean = (ContentlistBean) intent.getSerializableExtra("newsBean");
         mvpView.showAll(contentlistBean);
         imgs = contentlistBean.getImageurls();
         mvpView.setCollectBtnEnable(false);
@@ -51,6 +51,8 @@ public class NewsDetailsAct extends MvpBaseAct<NewsDetailsView, NewsModel> imple
                     mvpView.setCollect(isCollect);
                 }
             });
+        }else {
+            mvpView.setCollectBtnEnable(true);
         }
 
 
@@ -98,13 +100,16 @@ public class NewsDetailsAct extends MvpBaseAct<NewsDetailsView, NewsModel> imple
                         mvpView.setCollectBtnEnable(false);
                         addCollect();
                     }
+                }else {
+                    //提示请登录
+                    ToastUtils.showShort(this,"您还没有登录！");
                 }
                 break;
         }
     }
 
     private void deleteCollect() {
-        mvpModel.deleteCollect(collectObjId, new MvpModelCallBack<Void>() {
+        mvpModel.deleteCollect(contentlistBean,collectObjId, new MvpModelCallBack<Void>() {
             @Override
             public void result(Void data) {
                 ToastUtils.showShort(NewsDetailsAct.this, "删除收藏成功！");
@@ -124,7 +129,7 @@ public class NewsDetailsAct extends MvpBaseAct<NewsDetailsView, NewsModel> imple
     }
 
     private void addCollect() {
-        mvpModel.addCollect(BmobUtils.UserUtils.getUserId(), contentlistBean.getLink(), contentlistBean.getTitle(), new MvpModelCallBack<String>() {
+        mvpModel.addCollect(BmobUtils.UserUtils.getUserId(),contentlistBean, new MvpModelCallBack<String>() {
             @Override
             public void result(String data) {
                 ToastUtils.showShort(NewsDetailsAct.this, "添加成功！");
