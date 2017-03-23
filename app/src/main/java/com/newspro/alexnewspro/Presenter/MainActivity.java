@@ -10,10 +10,15 @@ import android.view.View;
 import com.example.alex.mvplibrary.model.MvpModel;
 import com.example.alex.mvplibrary.presenter.MvpBaseAct;
 import com.newspro.alexnewspro.R;
+import com.newspro.alexnewspro.event.user.UserIsLoginEvent;
 import com.newspro.alexnewspro.presenter.user.LoginAct;
 import com.newspro.alexnewspro.utils.BmobUtils;
 import com.newspro.alexnewspro.utils.common_util.ToastUtils;
 import com.newspro.alexnewspro.view.MainView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends MvpBaseAct<MainView, MvpModel>
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -48,13 +53,28 @@ public class MainActivity extends MvpBaseAct<MainView, MvpModel>
     @Override
     public void create(Bundle saveInstance) {
         super.create(saveInstance);
-        BmobUtils.UserUtils.initUser();
+        //注册用户登录状态改变事件
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void created(Bundle saveInstance) {
+        super.created(saveInstance);
+        if (BmobUtils.UserUtils.isLogin()) {
+            mvpView.userIsLogin(BmobUtils.UserUtils.getmBmobUser().getUsername());
+        } else {
+            mvpView.userIsLogOut();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (BmobUtils.UserUtils.isLogin()) {
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void changeLogin(UserIsLoginEvent event) {
+        if (event.isLogin()) {
             mvpView.userIsLogin(BmobUtils.UserUtils.getmBmobUser().getUsername());
         } else {
             mvpView.userIsLogOut();
@@ -69,11 +89,19 @@ public class MainActivity extends MvpBaseAct<MainView, MvpModel>
                     BmobUtils.UserUtils.logout();
                     ToastUtils.showShort(this, "退出成功");
                     mvpView.userIsLogOut();
+                    EventBus.getDefault().post(new UserIsLoginEvent(false));
                 } else {
                     startActivity(new Intent(this, LoginAct.class));
                 }
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //取消注册
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

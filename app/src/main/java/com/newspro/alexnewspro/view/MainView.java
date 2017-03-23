@@ -188,6 +188,7 @@ public class MainView extends MvpBaseView<MainActivity> {
     }
 
     private void addUserNavigationMenu(){
+        resetNavigationMenu();
         Menu menu = main_navigation_view.getMenu();
         SubMenu subMenu = menu.addSubMenu(R.string.user_string);
         subMenu.add(0,R.id.menu_navigation_uinfo,0,R.string.user_info);

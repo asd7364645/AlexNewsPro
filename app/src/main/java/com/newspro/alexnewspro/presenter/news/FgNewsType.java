@@ -7,9 +7,9 @@ import android.view.View;
 import com.example.alex.mvplibrary.model.MvpModel;
 import com.example.alex.mvplibrary.presenter.MvpBaseFrag;
 import com.newspro.alexnewspro.constant.Constant;
-import com.newspro.alexnewspro.event.NewsActionBtnEvent;
-import com.newspro.alexnewspro.event.NewsLoadingEvent;
-import com.newspro.alexnewspro.event.NewsRefreshEvent;
+import com.newspro.alexnewspro.event.news.NewsActionBtnEvent;
+import com.newspro.alexnewspro.event.news.NewsLoadingEvent;
+import com.newspro.alexnewspro.event.news.NewsRefreshEvent;
 import com.newspro.alexnewspro.view.news.FgNewsTypeView;
 
 import org.greenrobot.eventbus.EventBus;

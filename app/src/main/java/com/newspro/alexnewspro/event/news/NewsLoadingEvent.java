@@ -1,4 +1,4 @@
-package com.newspro.alexnewspro.event;
+package com.newspro.alexnewspro.event.news;
 
 /**
  * Created by Alex on 2017/1/4.

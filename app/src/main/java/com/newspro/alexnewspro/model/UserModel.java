@@ -4,9 +4,12 @@ import android.os.CountDownTimer;
 
 import com.example.alex.mvplibrary.model.MvpModel;
 import com.example.alex.mvplibrary.model.MvpModelCallBack;
+import com.newspro.alexnewspro.event.user.UserIsLoginEvent;
 import com.newspro.alexnewspro.utils.BmobUtils;
 import com.newspro.alexnewspro.utils.common_util.StringUtils;
 import com.newspro.alexnewspro.utils.common_util.ZhengZeUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -156,12 +159,19 @@ public class UserModel extends MvpModel {
                 if (e == null) {
                     BmobUtils.UserUtils.setmBmobUser(bmobUser);
                     success.result(null);
+                    EventBus.getDefault().post(new UserIsLoginEvent(true));
                 } else {
                     error.result(e.getErrorCode());
+                    EventBus.getDefault().post(new UserIsLoginEvent(true));
                 }
 
             }
         });
+    }
+
+    public void userLogout(){
+        EventBus.getDefault().post(new UserIsLoginEvent(false));
+        BmobUtils.UserUtils.logout();
     }
 
     /**

@@ -21,7 +21,7 @@
     <string name="register">注册</string>
     <string name="title_activity_login">用户登录</string>
     <string name="title_activity_login2">Sign in</string>
-    <string name="user_info">用户详情</string>
+    <string name="user_info">退出登录</string>
     <string name="user_string">用户</string>
     <string name="phone">手机号</string>
     <string name="auth_code">验证码</string>
