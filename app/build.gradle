@@ -1,14 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'key'
-            keyPassword 'game201501'
-            storeFile file('C:/Users/Alex/Desktop/　/high_game.jks')
-            storePassword 'game201501'
-        }
-    }
     compileSdkVersion 24
     buildToolsVersion '25.0.0'
     defaultConfig {
@@ -40,7 +32,6 @@ android {
             shrinkResources true
             //签名
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.config
         }
     }
 }
