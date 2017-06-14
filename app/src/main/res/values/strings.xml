@@ -26,5 +26,6 @@
     <string name="phone">手机号</string>
     <string name="auth_code">验证码</string>
     <string name="send_auth_code_str">发送验证码</string>
+    <string name="baisibudejie_str">百思不得姐</string>
 
 </resources>

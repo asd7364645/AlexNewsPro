@@ -2,7 +2,7 @@ package com.example.alex.mvplibrary.presenter;
 
 import android.os.Bundle;
 
-import com.example.alex.mvplibrary.model.MvpModelInterface;
+import com.example.alex.mvplibrary.model.MvpModel;
 import com.example.alex.mvplibrary.view.MvpView;
 
 /**
@@ -11,7 +11,7 @@ import com.example.alex.mvplibrary.view.MvpView;
  * Alex
  */
 
-public interface MvpPresenter<V extends MvpView, M extends MvpModelInterface> {
+public interface MvpPresenter<V extends MvpView, M extends MvpModel> {
 
     /**
      * 用于获取presenter中View的类，并在Mvp的基类中实例化它

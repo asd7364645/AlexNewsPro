@@ -1,12 +1,12 @@
 package com.newspro.alexnewspro.model;
 
-import com.example.alex.mvplibrary.model.MvpModelInterface;
+import com.example.alex.mvplibrary.model.MvpModel;
 import com.example.alex.mvplibrary.model.MvpModelCallBack;
+import com.newspro.alexnewspro.bean.doubanmovie.DetailsSubjectBean;
+import com.newspro.alexnewspro.bean.doubanmovie.MoviesListBean;
 import com.newspro.alexnewspro.constant.Constant;
 import com.newspro.alexnewspro.http.RetrofitUtil;
 import com.newspro.alexnewspro.http.httpinterface.DouBanMovieInterface;
-import com.newspro.alexnewspro.bean.doubanmovie.DetailsSubjectBean;
-import com.newspro.alexnewspro.bean.doubanmovie.MoviesListBean;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Alex
  */
 
-public class MovieModel implements MvpModelInterface {
+public class MovieModel extends MvpModel {
 
     private Call<MoviesListBean> inTheaters;
     private Call<MoviesListBean> top250;

@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.alex.mvplibrary.helper.GenericHelper;
-import com.example.alex.mvplibrary.model.MvpModelInterface;
+import com.example.alex.mvplibrary.model.MvpModel;
 import com.example.alex.mvplibrary.view.MvpBaseFragView;
 
 /**
@@ -18,7 +18,7 @@ import com.example.alex.mvplibrary.view.MvpBaseFragView;
  * Alex
  */
 
-public abstract class MvpBaseFrag<V extends MvpBaseFragView, M extends MvpModelInterface> extends Fragment implements MvpPresenter<V, M> {
+public abstract class MvpBaseFrag<V extends MvpBaseFragView, M extends MvpModel> extends Fragment implements MvpPresenter<V, M> {
     protected V mvpView;
     protected M mvpModel;
 
@@ -27,12 +27,12 @@ public abstract class MvpBaseFrag<V extends MvpBaseFragView, M extends MvpModelI
         create(savedInstanceState);
         View rootView = null;
         try {
-            //初始化mvpModel
-            mvpModel = getModelClass().newInstance();
             //初始化mvpView
             mvpView = getViewClass().newInstance();
             mvpView.bindPresenter(this);
+            mvpModel = getModelClass().newInstance();
             rootView = mvpView.createView(inflater, container, savedInstanceState);
+            //初始化mvpModel
             if (mvpView != null)
                 created(savedInstanceState);
         } catch (java.lang.InstantiationException e) {
@@ -102,6 +102,7 @@ public abstract class MvpBaseFrag<V extends MvpBaseFragView, M extends MvpModelI
     public void onDestroy() {
         mvpView.ondestroy();
         mvpView = null;
+        mvpModel.onDestroy();
         super.onDestroy();
     }
 

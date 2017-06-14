@@ -39,6 +39,11 @@ public class FgNews extends MvpBaseFrag<FgNewsView,NewsModel> implements XRecycl
 //        mvpModel = new NewsModel();
         Bundle arguments = getArguments();
         type = arguments.getString(Constant.NEWS_TYPE_STR);
+    }
+
+    @Override
+    public void created(Bundle saveInstance) {
+        super.created(saveInstance);
         EventBus.getDefault().register(this);
     }
 

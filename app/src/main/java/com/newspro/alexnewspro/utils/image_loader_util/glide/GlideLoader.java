@@ -142,6 +142,7 @@ public class GlideLoader implements ImageLoaderInterface {
         if (errorImg != 0) {
             request.error(errorImg);
         }
+
         request
                 /*
                 设置缓存策略，默认不缓存原始图，只缓存结果图

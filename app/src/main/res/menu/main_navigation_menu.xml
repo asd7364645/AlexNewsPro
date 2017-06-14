@@ -18,5 +18,10 @@
             android:checkable="true"
             android:icon="@drawable/ic_movie_black_24dp"
             android:title="@string/yingxun_str"/>
+        <item
+            android:id="@+id/menu_navigation_baisibudejie"
+            android:checkable="true"
+            android:icon="@drawable/ic_qiushibaike_24dp"
+            android:title="@string/baisibudejie_str"/>
     </group>
 </menu>

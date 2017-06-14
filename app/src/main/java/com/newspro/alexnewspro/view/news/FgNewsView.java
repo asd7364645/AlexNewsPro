@@ -76,7 +76,7 @@ public class FgNewsView extends MvpBaseFragView<FgNews> {
         //判断如果是空的或者是第一次加载则调用加载
         if (dataBeenList.isEmpty()) {
             //初始化完毕自动调用一次获取头条列表
-            refresh();
+//            refresh();
         }
 
     }

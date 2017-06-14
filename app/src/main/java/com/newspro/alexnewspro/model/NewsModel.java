@@ -3,14 +3,16 @@ package com.newspro.alexnewspro.model;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.alex.mvplibrary.model.MvpModel;
 import com.example.alex.mvplibrary.model.MvpModelCallBack;
-import com.example.alex.mvplibrary.model.MvpModelInterface;
 import com.newspro.alexnewspro.bean.NewsBean;
 import com.newspro.alexnewspro.bean.NewsBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean;
+import com.newspro.alexnewspro.bean.ShowApiBaseBean;
+import com.newspro.alexnewspro.bean.baisi.BaiSiBean;
 import com.newspro.alexnewspro.constant.Constant;
 import com.newspro.alexnewspro.http.RetrofitUtil;
 import com.newspro.alexnewspro.http.converter.JsonConverterFactory;
-import com.newspro.alexnewspro.http.httpinterface.NewsInterface;
+import com.newspro.alexnewspro.http.httpinterface.ShowApiInterface;
 import com.newspro.alexnewspro.utils.BmobUtils;
 
 import org.json.JSONArray;
@@ -26,13 +28,14 @@ import cn.bmob.v3.listener.UpdateListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Alex on 2016/12/26.
  * Alex
  */
 
-public class NewsModel implements MvpModelInterface {
+public class NewsModel extends MvpModel {
 
     private static final String TAG = "NewsModel";
 
@@ -44,12 +47,12 @@ public class NewsModel implements MvpModelInterface {
      * @param type
      */
     public void getNewsOfType(String type, int page, final MvpModelCallBack<NewsBean.ShowapiResBodyBean.PagebeanBean> success, final MvpModelCallBack<String> failure) {
-        newsBeanCall = RetrofitUtil.retrofitUtil(Constant.NEWS_URL, JsonConverterFactory.create()).create(NewsInterface.class).getNews(type, page);
+        newsBeanCall = RetrofitUtil.retrofitUtil(Constant.SHOW_API_URL, JsonConverterFactory.create()).create(ShowApiInterface.class).getNews(type, page);
         newsBeanCall.enqueue(new Callback<JSONObject>() {
             @Override
             public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
 
-                changeJsonToNewsBean(response.body(), success);
+                changeJsonToNewsBean(response.body(), success, failure);
 
             }
 
@@ -70,7 +73,7 @@ public class NewsModel implements MvpModelInterface {
      * @param result
      * @param callback
      */
-    private void changeJsonToNewsBean(JSONObject result, final MvpModelCallBack<NewsBean.ShowapiResBodyBean.PagebeanBean> callback) {
+    private void changeJsonToNewsBean(JSONObject result, final MvpModelCallBack<NewsBean.ShowapiResBodyBean.PagebeanBean> callback, final MvpModelCallBack<String> failure) {
 
         new AsyncTask<JSONObject, Void, NewsBean>() {
 
@@ -86,6 +89,8 @@ public class NewsModel implements MvpModelInterface {
                 super.onPostExecute(newsBean);
                 if (newsBean != null) {
                     callback.result(newsBean.getShowapi_res_body().getPagebean());
+                } else {
+                    failure.result("获取新闻出错！");
                 }
             }
         }.execute(result);
@@ -126,31 +131,65 @@ public class NewsModel implements MvpModelInterface {
 
             JSONArray allListArray = content.optJSONArray("allList");
             List<String> allListStr = new ArrayList<>();
-            if (null == allListArray)
-                return null;
-            for (int j = 0; j < allListArray.length(); j++) {
-                if (allListArray.opt(j) instanceof JSONObject) {
-                    JSONObject imgJSONObj = allListArray.optJSONObject(j);
-                    allListStr.add(imgJSONObj.optString("url"));
-                } else {
-                    allListStr.add(allListArray.optString(j));
+            if (null != allListArray) {
+                for (int j = 0; j < allListArray.length(); j++) {
+                    if (allListArray.opt(j) instanceof JSONObject) {
+                        JSONObject imgJSONObj = allListArray.optJSONObject(j);
+                        allListStr.add(imgJSONObj.optString("url"));
+                    } else {
+                        allListStr.add(allListArray.optString(j));
+                    }
                 }
             }
             JSONArray imgUrlsArray = content.optJSONArray("imageurls");
             List<String> imageurls = new ArrayList<>();
-            if (null == imgUrlsArray)
-                return null;
-            for (int j = 0; j < imgUrlsArray.length(); j++) {
-                JSONObject imgJsonObj = imgUrlsArray.optJSONObject(j);
-                imageurls.add(imgJsonObj.optString("url"));
+            if (null != imgUrlsArray) {
+                for (int j = 0; j < imgUrlsArray.length(); j++) {
+                    JSONObject imgJsonObj = imgUrlsArray.optJSONObject(j);
+                    imageurls.add(imgJsonObj.optString("url"));
+                }
+                ContentlistBean contentlistBean = new ContentlistBean(pubDate, havePic, title, channelName, desc, source, channelId, link, allListStr, imageurls);
+                contentlistBeans.add(contentlistBean);
             }
-            ContentlistBean contentlistBean = new ContentlistBean(pubDate, havePic, title, channelName, desc, source, channelId, link, allListStr, imageurls);
-            contentlistBeans.add(contentlistBean);
         }
         NewsBean.ShowapiResBodyBean.PagebeanBean pagebeanBean = new NewsBean.ShowapiResBodyBean.PagebeanBean(allPages, currentPage, allNum, maxResult, contentlistBeans);
         NewsBean.ShowapiResBodyBean showapiResBodyBean = new NewsBean.ShowapiResBodyBean(ret_code, pagebeanBean);
-        NewsBean newsBean = new NewsBean(showapi_res_code, showapi_res_error, showapiResBodyBean);
-        return newsBean;
+        return new NewsBean(showapi_res_code, showapi_res_error, showapiResBodyBean);
+    }
+
+    /**
+     * 根据type和页数来获取百思不得姐的数据
+     *
+     * @param type
+     * @param page
+     * @param success
+     * @param err
+     */
+    public void getBaiSiImgsWithPage(int type, int page, final MvpModelCallBack<BaiSiBean> success, final MvpModelCallBack<String> err) {
+
+        RetrofitUtil.retrofitUtil(Constant.SHOW_API_URL, GsonConverterFactory.create())
+                .create(ShowApiInterface.class).getBaiSiWithType(type, page).enqueue(new Callback<ShowApiBaseBean<BaiSiBean>>() {
+            @Override
+            public void onResponse(Call<ShowApiBaseBean<BaiSiBean>> call, Response<ShowApiBaseBean<BaiSiBean>> response) {
+                ShowApiBaseBean<BaiSiBean> baiSiBeanShowApiBaseBean = response.body();
+                if (baiSiBeanShowApiBaseBean.getShowapi_res_code() != 0) {
+                    sendCallback(err, baiSiBeanShowApiBaseBean.getShowapi_res_error());
+                    return;
+                }
+                BaiSiBean baiSiBean = baiSiBeanShowApiBaseBean.getShowapi_res_body();
+                if (baiSiBean.getRet_code() == 0) {
+                    sendCallback(success, baiSiBeanShowApiBaseBean.getShowapi_res_body());
+                } else {
+                    sendCallback(err, "获取失败");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ShowApiBaseBean<BaiSiBean>> call, Throwable t) {
+                sendCallback(err, t.getMessage());
+            }
+        });
+
     }
 
     /**

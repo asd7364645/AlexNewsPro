@@ -45,6 +45,10 @@ public class MainActivity extends MvpBaseAct<MainView, MvpModel>
                 ToastUtils.showShort(this, "退出成功");
                 mvpView.userIsLogOut();
                 break;
+            case R.id.menu_navigation_baisibudejie:
+                mvpView.closeDrawer();
+                mvpView.selectFg(3);
+                break;
         }
         return true;
     }

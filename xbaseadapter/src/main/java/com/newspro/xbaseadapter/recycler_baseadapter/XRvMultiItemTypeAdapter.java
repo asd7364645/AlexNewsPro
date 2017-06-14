@@ -67,7 +67,7 @@ public class XRvMultiItemTypeAdapter<T> extends RecyclerView.Adapter<XRvViewHold
 
     @Override
     public void onBindViewHolder(XRvViewHolder holder, int position) {
-
+        this.onBindViewHolder(holder,position,null);
     }
 
     @Override

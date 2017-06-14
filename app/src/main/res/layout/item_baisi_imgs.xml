@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="3dp">
+
+        <com.newspro.alexnewspro.customviews.CircleImageView
+            android:id="@+id/item_baisi_imgs_user_img"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@color/colorPrimaryDark"/>
+
+        <TextView
+            android:id="@+id/item_baisi_imgs_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/item_baisi_imgs_user_img"
+            android:layout_toRightOf="@+id/item_baisi_imgs_user_img"
+            android:text="Alex_ziqi"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_18sp"/>
+
+        <TextView
+            android:id="@+id/item_baisi_imgs_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/item_baisi_imgs_name"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/item_baisi_imgs_name"
+            android:layout_toRightOf="@+id/item_baisi_imgs_name"
+            android:text="02-02 12:00"
+            android:textSize="12sp"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/item_baisi_imgs_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="我是标题！！！"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_18sp"/>
+
+    <ImageView
+        android:id="@+id/item_baisi_imgs_img"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:src="@drawable/img"
+        android:scaleType="centerCrop"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/item_baisi_imgs_zan_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_zan"
+            android:gravity="center"
+            android:text="赞"
+            android:textColor="@android:color/black"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/darker_gray"
+            />
+
+        <TextView
+            android:id="@+id/item_baisi_imgs_cai_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_cai"
+            android:gravity="center"
+            android:text="踩"
+            android:textColor="@android:color/black"/>
+
+    </LinearLayout>
+
+</LinearLayout>
